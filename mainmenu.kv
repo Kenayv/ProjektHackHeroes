@@ -1,0 +1,31 @@
+#:kivy 2.2.1
+
+
+
+<MainMenuScreen>:
+    name: 'menuScr'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: "jesteś w main menu"
+            font_size: 48
+
+
+<PopUpScreen>:
+    BoxLayout:
+        name: 'myLayout'
+        orientation: 'vertical'
+
+        Button:
+            size_hint: None, None
+            size: 100, 100
+            text: 'Dalej'
+            font_size: 48
+
+
+<MainScreenManager>:
+    PopUpScreen:
+        BoxLayout:
+            Button:
+                on_press: app.root.current = 'menuScr'
+    MainMenuScreen:
