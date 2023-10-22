@@ -1,10 +1,12 @@
 from kivy.app import App
 
-from kivy.uix.label import Label
-from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
-from kivy.graphics import Canvas
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.image import Image
+from kivy.uix.widget import Widget
+
+
+class LogoImg(Widget):
+    pass
 
 
 class PopUpScreen(Screen):

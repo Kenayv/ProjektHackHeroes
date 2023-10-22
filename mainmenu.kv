@@ -1,7 +1,5 @@
 #:kivy 2.2.1
 
-
-
 <MainMenuScreen>:
     name: 'menuScr'
     BoxLayout:
@@ -10,22 +8,31 @@
             text: "jesteś w main menu"
             font_size: 48
 
+<LogoImg>:
+    canvas:
+        Rectangle:
+            source: "tempLogo.png"
+            size: 150, 121
+            pos: self.pos
+            Color:
+                rgba: 0, 1, 0, 0.25
 
 <PopUpScreen>:
     BoxLayout:
-        name: 'myLayout'
         orientation: 'vertical'
-
+        LogoImg:
+        Label:
+            width: self.width
+            text: "Lorem ipsum es dolor imet. Lorem ipsum es dolor imet"
         Button:
+            name: "test"
             size_hint: None, None
-            size: 100, 100
+            size: 140, 80
             text: 'Dalej'
             font_size: 48
+            on_press: root.manager.current = 'menuScr'
 
 
 <MainScreenManager>:
     PopUpScreen:
-        BoxLayout:
-            Button:
-                on_press: app.root.current = 'menuScr'
     MainMenuScreen:
