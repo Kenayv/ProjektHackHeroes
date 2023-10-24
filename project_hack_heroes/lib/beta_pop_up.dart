@@ -2,15 +2,7 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 
-class BetaPopUpPage extends StatefulWidget {
-  const BetaPopUpPage({super.key, required this.title});
-  final String title;
-
-  @override
-  State<BetaPopUpPage> createState() => _BetapopUpState();
-}
-
-class _BetapopUpState extends State<BetaPopUpPage> {
+class BetaPopUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +25,7 @@ class _BetapopUpState extends State<BetaPopUpPage> {
             TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                    text: 'Nazwa Projektu\n',
+                    text: 'Studi\n',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 32,
@@ -64,7 +56,7 @@ class _BetapopUpState extends State<BetaPopUpPage> {
         Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(.0),
+              padding: const EdgeInsets.all(32.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color.fromRGBO(128, 224, 62, 1),
@@ -75,7 +67,10 @@ class _BetapopUpState extends State<BetaPopUpPage> {
                   minimumSize: Size(200, 64),
                 ),
                 onPressed: () {
-                  changePageTo(context, 2);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
                 },
                 child: Text('Dalej', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
               ),

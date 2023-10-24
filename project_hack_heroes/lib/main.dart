@@ -1,7 +1,15 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_import
 import 'package:flutter/material.dart';
+import 'package:project_hack_heroes/pages/foo_page.dart';
 import 'beta_pop_up.dart';
-import 'studi_bottom_navigation_bar.dart';
+import 'pages/account_page.dart';
+import 'pages/todo_page.dart';
+import 'pages/home_page.dart';
+import 'pages/flash_cards_page.dart';
+
+//  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
+//  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
 void main() => runApp(const MyApp());
 
@@ -11,47 +19,74 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: const BetaPopUpPage(title: 'Flutter Demo Home Page'),
+      title: 'Studi - Hack Heroes Projekt',
+      home: BetaPopUpPage(),
     );
   }
 }
 
-//FIXME: stąd da się wrócić na poprzedni ekran używając <- (strzałki w lewo na telefonie)
-//FIXME: totalnie nie wiem, czy taki format Page i _state jest poprawny. trzeba to sprawdzić kiedyś
-class MainMenuPage extends StatefulWidget {
-  const MainMenuPage({super.key});
+//  -   -   -   -   -   -   ↑ void Main ↑   -   -   -   -   -   -   -
+
+//  -   -   -   -   -   -   ↓ Main page ↓   -   -   -   -   -   -   -
+
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<MainMenuPage> createState() => _MainMenuState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MainMenuState extends State<MainMenuPage> {
+class _MainPageState extends State<MainPage> {
+  int _selectedIndex = 2;
+
+  final screens = [
+    TodoPage(),
+    FlashCardsPage(),
+    HomePage(),
+    FooPage(),
+    AccountPage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: const [
-          Text('Dalej', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
-          StudiBottomNavigationBar()
+      body: screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_chart_sharp),
+            label: 'ToDo',
+            backgroundColor: Color.fromARGB(255, 236, 43, 43),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Fiszki',
+            backgroundColor: Color.fromRGBO(250, 146, 26, 1),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Menu',
+            backgroundColor: Color.fromARGB(255, 22, 170, 34),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'MemoRizz',
+            backgroundColor: Color.fromARGB(255, 35, 153, 231),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Konto',
+            backgroundColor: Color.fromRGBO(128, 128, 128, 1),
+          ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: const Color.fromRGBO(128, 224, 62, 1),
+        onTap: (int index) => setState(
+          () {
+            _selectedIndex = index;
+          },
+        ),
       ),
     );
-  }
-}
-
-void changePageTo(BuildContext context, int index) {
-  switch (index) {
-    case 0:
-    case 2:
-    case 3:
-    case 4:
-    case 1:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => MainMenuPage()),
-      );
-    default:
-      throw Exception("Page $index doesn't exist!");
   }
 }
