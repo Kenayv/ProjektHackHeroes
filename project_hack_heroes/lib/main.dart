@@ -50,6 +50,12 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        shadowColor: Color.fromRGBO(0, 0, 0, 0.3), // barely visible black shadow - looks like a line
+        backgroundColor: Color.fromRGBO(250, 250, 250, 1), //bar should be background color.
+        automaticallyImplyLeading: false,
+        actions: <Widget>[],
+      ),
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
