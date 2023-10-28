@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
                         width: 200,
                         height: 50,
                         child: Center(
-                          child: Text("Godzin nauki: 0h 57 min", style: TextStyle(fontSize: 18)),
+                          child: Text("Godzin nauki: 3h 57m", style: TextStyle(fontSize: 18)),
                         ),
                       ),
                     ],
@@ -47,11 +47,22 @@ class HomePage extends StatelessWidget {
             Container(
               child: SizedBox(
                 height: 50,
-                child: Center(
-                  child: Text(
-                    "Do Zrobienia:",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Zostało dziś jeszcze: ",
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "100% ",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color.fromRGBO(255, 0, 0, 1)),
+                    ),
+                    Text(
+                      "zadań.",
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -64,9 +75,12 @@ class HomePage extends StatelessWidget {
                     child: Container(
                       width: 360,
                       height: 200,
-                      color: Colors.red,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       child: Center(
-                        child: Text("Blok 1", style: TextStyle(fontSize: 20, color: Colors.white)),
+                        child: Text("Zadanie 1", style: TextStyle(fontSize: 20, color: Colors.white)),
                       ),
                     ),
                   ),
@@ -75,9 +89,12 @@ class HomePage extends StatelessWidget {
                     child: Container(
                       width: 360,
                       height: 200,
-                      color: Colors.orange,
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       child: Center(
-                        child: Text("Blok 2", style: TextStyle(fontSize: 20, color: Colors.white)),
+                        child: Text("Zadanie 2", style: TextStyle(fontSize: 20, color: Colors.white)),
                       ),
                     ),
                   ),
@@ -86,13 +103,84 @@ class HomePage extends StatelessWidget {
                     child: Container(
                       width: 360,
                       height: 200,
-                      color: Colors.blue,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       child: Center(
-                        child: Text("Blok 3", style: TextStyle(fontSize: 20, color: Colors.white)),
+                        child: Text("Zadanie 3", style: TextStyle(fontSize: 20, color: Colors.white)),
                       ),
                     ),
                   ),
                 ],
+              ),
+            ),
+            Container(
+              child: SizedBox(
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Statystyki",
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              child: SizedBox(
+                height: 200,
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: 400,
+                        height: 30,
+                        child: Center(
+                          child: Text("Ulubione: Fiszki", style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        height: 30,
+                        child: Center(
+                          child: Text("Ukończonych zadań: 72", style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        height: 30,
+                        child: Center(
+                          child: Text("Porzuconych zadań: 2", style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        height: 30,
+                        child: Center(
+                          child: Text("Procent ukończonych zadań: 96.72%", style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                      Container(
+                        width: 400,
+                        height: 30,
+                        child: Center(
+                          child: Text("Rekord Fiszki Rush: 93", style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                      Container(
+                        width: 200,
+                        height: 30,
+                        child: Center(
+                          child: Text("dołączono: 28.10.2023", style: TextStyle(fontSize: 18)),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
