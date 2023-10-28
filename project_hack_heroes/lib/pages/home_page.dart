@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
                         width: 200,
                         height: 50,
                         child: Center(
-                          child: Text("Godzin nauki: 3h 57m", style: TextStyle(fontSize: 18)),
+                          child: Text("Łącznie nauki: 3h 57m", style: TextStyle(fontSize: 18)),
                         ),
                       ),
                     ],
@@ -55,8 +55,8 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "100% ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Color.fromRGBO(255, 0, 0, 1)),
+                      "57% ",
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                     ),
                     Text(
                       "zadań.",
@@ -130,56 +130,61 @@ class HomePage extends StatelessWidget {
               ),
             ),
 
-            Container(
-              child: SizedBox(
-                height: 200,
-                child: Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 400,
-                        height: 30,
-                        child: Center(
-                          child: Text("Ulubione: Fiszki", style: TextStyle(fontSize: 18)),
-                        ),
+            SizedBox(
+              height: 250,
+              child: Container(
+                child: Column(
+                  children: [
+                    Container(
+                      width: 400,
+                      height: 30,
+                      child: Center(
+                        child: Text("Ulubione: Fiszki", style: TextStyle(fontSize: 18)),
                       ),
-                      Container(
-                        width: 400,
-                        height: 30,
-                        child: Center(
-                          child: Text("Ukończonych zadań: 72", style: TextStyle(fontSize: 18)),
-                        ),
+                    ),
+                    Container(
+                      width: 400,
+                      height: 30,
+                      child: Center(
+                        child: Text("Ukończonych zadań: 72", style: TextStyle(fontSize: 18)),
                       ),
-                      Container(
-                        width: 400,
-                        height: 30,
-                        child: Center(
-                          child: Text("Porzuconych zadań: 2", style: TextStyle(fontSize: 18)),
-                        ),
+                    ),
+                    Container(
+                      width: 400,
+                      height: 30,
+                      child: Center(
+                        child: Text("Porzuconych zadań: 2", style: TextStyle(fontSize: 18)),
                       ),
-                      Container(
-                        width: 400,
-                        height: 30,
-                        child: Center(
-                          child: Text("Procent ukończonych zadań: 96.72%", style: TextStyle(fontSize: 18)),
-                        ),
+                    ),
+                    Container(
+                      width: 400,
+                      height: 30,
+                      child: Center(
+                        child: Text("Procent ukończonych zadań: 96.72%", style: TextStyle(fontSize: 18)),
                       ),
-                      Container(
-                        width: 400,
-                        height: 30,
-                        child: Center(
-                          child: Text("Rekord Fiszki Rush: 93", style: TextStyle(fontSize: 18)),
-                        ),
+                    ),
+                    Container(
+                      width: 400,
+                      height: 30,
+                      child: Center(
+                        child: Text("Rekord Fiszki Rush: 93", style: TextStyle(fontSize: 18)),
                       ),
-                      Container(
-                        width: 200,
-                        height: 30,
-                        child: Center(
-                          child: Text("dołączono: 28.10.2023", style: TextStyle(fontSize: 18)),
-                        ),
+                    ),
+                    Container(
+                      width: 400,
+                      height: 30,
+                      child: Center(
+                        child: Text("Najdłuższy streak: 9 dni", style: TextStyle(fontSize: 18)),
                       ),
-                    ],
-                  ),
+                    ),
+                    Container(
+                      width: 200,
+                      height: 30,
+                      child: Center(
+                        child: Text("dołączono: 28.10.2023", style: TextStyle(fontSize: 18)),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

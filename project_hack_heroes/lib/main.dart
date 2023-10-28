@@ -65,7 +65,7 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Menu',
+            label: 'HomePage',
             backgroundColor: Color.fromARGB(255, 22, 170, 34),
           ),
           BottomNavigationBarItem(
