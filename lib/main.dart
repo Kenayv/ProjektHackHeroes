@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, unused_import
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/pages/foo_page.dart';
 import 'beta_pop_up.dart';
@@ -51,10 +50,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shadowColor: Color.fromRGBO(
-            0, 0, 0, 0.3), // barely visible black shadow - looks like a line
-        backgroundColor:
-            Color.fromRGBO(250, 250, 250, 1), //bar should be background color.
+        shadowColor: Color.fromRGBO(0, 0, 0, 0.3), // barely visible black shadow - looks like a line
+        backgroundColor: Color.fromRGBO(250, 250, 250, 1), //bar should be background color.
         automaticallyImplyLeading: false,
         actions: <Widget>[],
       ),

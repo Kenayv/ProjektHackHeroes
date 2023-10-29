@@ -3,12 +3,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-void main() {
-  runApp(MaterialApp(
-    home: TodoPage(),
-  ));
-}
-
 class Todo {
   String task;
   bool isCompleted;
@@ -58,8 +52,7 @@ class _TodoPageState extends State<TodoPage> {
 
   void _saveTasks() {
     File file = File(_filePath);
-    List<Map<String, dynamic>> jsonTasks =
-        tasks.map((todo) => todo.toJson()).toList();
+    List<Map<String, dynamic>> jsonTasks = tasks.map((todo) => todo.toJson()).toList();
     file.writeAsStringSync(jsonEncode(jsonTasks));
   }
 
@@ -69,8 +62,7 @@ class _TodoPageState extends State<TodoPage> {
       if (file.existsSync()) {
         String content = file.readAsStringSync();
         List<dynamic> decodedTasks = jsonDecode(content);
-        List<Todo> loadedTasks =
-            decodedTasks.map((task) => Todo.fromJson(task)).toList();
+        List<Todo> loadedTasks = decodedTasks.map((task) => Todo.fromJson(task)).toList();
         setState(() {
           tasks = loadedTasks;
         });
@@ -79,6 +71,7 @@ class _TodoPageState extends State<TodoPage> {
       print("Error loading tasks: $e");
     }
   }
+
   void _toggleTaskCompletion(int index) {
     setState(() {
       tasks[index].isCompleted = !tasks[index].isCompleted;
@@ -99,9 +92,9 @@ class _TodoPageState extends State<TodoPage> {
       _saveTasks();
     });
   }
-Future<void> _editTaskDialog(BuildContext context, int index) async {
-    TextEditingController editTaskController =
-        TextEditingController(text: tasks[index].task);
+
+  Future<void> _editTaskDialog(BuildContext context, int index) async {
+    TextEditingController editTaskController = TextEditingController(text: tasks[index].task);
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -136,16 +129,13 @@ Future<void> _editTaskDialog(BuildContext context, int index) async {
       },
     );
   }
-  
-    @override
+
+  @override
   Widget build(BuildContext context) {
     List<Todo> incompleteTasks = tasks.where((task) => !task.isCompleted).toList();
     List<Todo> completedTasks = tasks.where((task) => task.isCompleted).toList();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('ToDo'),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -229,9 +219,9 @@ Future<void> _editTaskDialog(BuildContext context, int index) async {
             Icons.check,
             color: Colors.white,
             size: 30,
-                    ),
-                  ),
-                ),
-              );
-          }
+          ),
+        ),
+      ),
+    );
+  }
 }
