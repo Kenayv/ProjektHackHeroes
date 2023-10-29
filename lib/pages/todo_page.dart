@@ -79,7 +79,6 @@ class _TodoPageState extends State<TodoPage> {
       print("Error loading tasks: $e");
     }
   }
-
   void _toggleTaskCompletion(int index) {
     setState(() {
       tasks[index].isCompleted = !tasks[index].isCompleted;
@@ -94,145 +93,13 @@ class _TodoPageState extends State<TodoPage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<Todo> incompleteTasks =
-        tasks.where((task) => !task.isCompleted).toList();
-    List<Todo> completedTasks =
-        tasks.where((task) => task.isCompleted).toList();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('ToDo'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: incompleteTasks.length,
-              itemBuilder: (context, index) {
-                Todo todo = incompleteTasks[index];
-                return Dismissible(
-                  key: Key(todo.hashCode.toString()),
-                  onDismissed: (direction) {
-                    setState(() {
-                      tasks.remove(todo);
-                    });
-                    _saveTasks();
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                      size: 30,
-                    ),
-                    alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 20.0),
-                  ),
-                  child: ListTile(
-                    title: Text(
-                      todo.task,
-                      style: TextStyle(
-                        decoration: todo.isCompleted
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none,
-                      ),
-                    ),
-                    onTap: () {
-                      _toggleTaskCompletion(tasks.indexOf(todo));
-                    },
-                    onLongPress: () {
-                      _editTaskDialog(context, tasks.indexOf(todo));
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          Divider(),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Completed Tasks',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: completedTasks.length,
-              itemBuilder: (context, index) {
-                Todo todo = completedTasks[index];
-                return ListTile(
-                  title: Text(
-                    todo.task,
-                    style: TextStyle(
-                      decoration: TextDecoration.lineThrough,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  onTap: () {
-                    _toggleTaskCompletion(tasks.indexOf(todo));
-                  },
-                  onLongPress: () {
-                    _editTaskDialog(context, tasks.indexOf(todo));
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _addTaskDialog(context);
-        },
-        child: Icon(Icons.add),
-      ),
-    );
+  void _deleteTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+      _saveTasks();
+    });
   }
-
-  Future<void> _addTaskDialog(BuildContext context) async {
-    TextEditingController taskController = TextEditingController();
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Add Task'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                TextField(
-                  controller: taskController,
-                  decoration: InputDecoration(labelText: 'Task'),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Add'),
-              onPressed: () {
-                String task = taskController.text;
-                if (task.isNotEmpty) {
-                  _addTask(task);
-                  Navigator.of(context).pop();
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _editTaskDialog(BuildContext context, int index) async {
+Future<void> _editTaskDialog(BuildContext context, int index) async {
     TextEditingController editTaskController =
         TextEditingController(text: tasks[index].task);
     return showDialog<void>(
@@ -269,4 +136,102 @@ class _TodoPageState extends State<TodoPage> {
       },
     );
   }
+  
+    @override
+  Widget build(BuildContext context) {
+    List<Todo> incompleteTasks = tasks.where((task) => !task.isCompleted).toList();
+    List<Todo> completedTasks = tasks.where((task) => task.isCompleted).toList();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('ToDo'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Tasks',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: incompleteTasks.length,
+              itemBuilder: (context, index) {
+                Todo todo = incompleteTasks[index];
+                return _buildTaskItem(todo);
+              },
+            ),
+            Divider(),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Completed Tasks',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: completedTasks.length,
+              itemBuilder: (context, index) {
+                Todo todo = completedTasks[index];
+                return _buildTaskItem(todo);
+              },
+            ),
+            // Dodaj więcej sekcji, jeśli są potrzebne.
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTaskItem(Todo todo) {
+    return ListTile(
+      title: Dismissible(
+        key: Key(todo.hashCode.toString()),
+        child: ListTile(
+          title: Text(
+            todo.task,
+            style: TextStyle(
+              decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+            ),
+          ),
+          onLongPress: () {
+            _editTaskDialog(context, tasks.indexOf(todo));
+          },
+        ),
+        onDismissed: (direction) {
+          if (direction == DismissDirection.startToEnd) {
+            _deleteTask(tasks.indexOf(todo));
+          } else if (direction == DismissDirection.endToStart) {
+            _toggleTaskCompletion(tasks.indexOf(todo));
+          }
+        },
+        background: Container(
+          color: Colors.red,
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.only(left: 20.0),
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+        secondaryBackground: Container(
+          color: Colors.green,
+          alignment: Alignment.centerRight,
+          padding: EdgeInsets.only(right: 20.0),
+          child: Icon(
+            Icons.check,
+            color: Colors.white,
+            size: 30,
+                    ),
+                  ),
+                ),
+              );
+          }
 }
