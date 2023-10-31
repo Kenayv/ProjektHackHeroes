@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 //FIXME: stąd da się wrócić na poprzedni ekran używając <- (strzałki w lewo na telefonie)

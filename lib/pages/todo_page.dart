@@ -1,13 +1,18 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, unused_element, avoid_print, prefer_const_constructors, sort_child_properties_last
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-class Todo {
+//  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
+//A logical representation of the ToDoPage task. contains the tasks string and information whether the task is completed. Saved tasks are stored in tasks.json file.
+class TodoTask {
   String task;
   bool isCompleted;
 
-  Todo({
+  TodoTask({
     required this.task,
     this.isCompleted = false,
   });
@@ -19,13 +24,15 @@ class Todo {
     };
   }
 
-  factory Todo.fromJson(Map<String, dynamic> json) {
-    return Todo(
+  factory TodoTask.fromJson(Map<String, dynamic> json) {
+    return TodoTask(
       task: json['task'],
       isCompleted: json['isCompleted'] ?? false,
     );
   }
 }
+
+//  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
 class TodoPage extends StatefulWidget {
   @override
@@ -33,41 +40,31 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  List<Todo> tasks = [];
   TextEditingController taskController = TextEditingController();
-  final String _filePath = "tasks.json";
+  List<TodoTask> tasks = [];
+  final String _filePath = "tasks.json"; //FIXME: będzie trzeba zmienić patha na potrzeby faktycznej aplkikacji
 
-  @override
-  void initState() {
-    super.initState();
-    _loadTasks();
-  }
-
-  void _addTask(String task) {
-    setState(() {
-      tasks.insert(0, Todo(task: task));
-      _saveTasks();
-    });
-  }
-
+  //saves tasks in tasks.json file. this function is invoked on every tasks[] array change.
   void _saveTasks() {
     File file = File(_filePath);
     List<Map<String, dynamic>> jsonTasks = tasks.map((todo) => todo.toJson()).toList();
     file.writeAsStringSync(jsonEncode(jsonTasks));
   }
 
+  //Reads tasks saved in tasks.json file and pushes them into tasks[] array
   void _loadTasks() {
     try {
       File file = File(_filePath);
       if (file.existsSync()) {
         String content = file.readAsStringSync();
         List<dynamic> decodedTasks = jsonDecode(content);
-        List<Todo> loadedTasks = decodedTasks.map((task) => Todo.fromJson(task)).toList();
+        List<TodoTask> loadedTasks = decodedTasks.map((task) => TodoTask.fromJson(task)).toList();
         setState(() {
           tasks = loadedTasks;
         });
       }
     } catch (e) {
+      //FIXME: Tu powinien się wyświetlać na stronie TODO komunikat że się nie udało.
       print("Error loading tasks: $e");
     }
   }
@@ -75,6 +72,13 @@ class _TodoPageState extends State<TodoPage> {
   void _toggleTaskCompletion(int index) {
     setState(() {
       tasks[index].isCompleted = !tasks[index].isCompleted;
+      _saveTasks();
+    });
+  }
+
+  void _addTask(String task) {
+    setState(() {
+      tasks.insert(0, TodoTask(task: task));
       _saveTasks();
     });
   }
@@ -93,6 +97,7 @@ class _TodoPageState extends State<TodoPage> {
     });
   }
 
+  //Opens a new pop-up window allowing user to change a task content. Invoked on a task's long press.
   Future<void> _editTaskDialog(BuildContext context, int index) async {
     TextEditingController editTaskController = TextEditingController(text: tasks[index].task);
     return showDialog<void>(
@@ -130,56 +135,40 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<Todo> incompleteTasks = tasks.where((task) => !task.isCompleted).toList();
-    List<Todo> completedTasks = tasks.where((task) => task.isCompleted).toList();
+  //Opens a new pop-up window allowing user to add a task. Function invoked on (+) button press.
 
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: incompleteTasks.length,
-              itemBuilder: (context, index) {
-                Todo todo = incompleteTasks[index];
-                return _buildTaskItem(todo);
+  Future<dynamic> _addTaskDialog() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Dodaj zadanie'),
+          content: TextField(
+            controller: taskController,
+            decoration: InputDecoration(labelText: 'Nowe zadanie'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Anuluj'),
+              onPressed: () {
+                Navigator.of(context).pop();
               },
             ),
-            Divider(),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Completed Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: completedTasks.length,
-              itemBuilder: (context, index) {
-                Todo todo = completedTasks[index];
-                return _buildTaskItem(todo);
+            TextButton(
+              child: Text('Dodaj'),
+              onPressed: () {
+                _addTask(taskController.text);
+                Navigator.of(context).pop();
               },
             ),
-            // Dodaj więcej sekcji, jeśli są potrzebne.
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _buildTaskItem(Todo todo) {
+  //Returns an object which is visual representation of the task. This function is used to draw a task item on the screen.
+  Widget _buildTaskItem(TodoTask todo) {
     return ListTile(
       title: Dismissible(
         key: Key(todo.hashCode.toString()),
@@ -221,6 +210,68 @@ class _TodoPageState extends State<TodoPage> {
             size: 30,
           ),
         ),
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<TodoTask> incompleteTasks = tasks.where((task) => !task.isCompleted).toList();
+    List<TodoTask> completedTasks = tasks.where((task) => task.isCompleted).toList();
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Tasks',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: incompleteTasks.length,
+              itemBuilder: (context, index) {
+                TodoTask todo = incompleteTasks[index];
+                return _buildTaskItem(todo);
+              },
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Completed Tasks',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: completedTasks.length,
+              itemBuilder: (context, index) {
+                TodoTask todo = completedTasks[index];
+                return _buildTaskItem(todo);
+              },
+            ),
+          ],
+        ),
+      ),
+
+      // Przycisk "Dodaj zadanie"
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _addTaskDialog();
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
       ),
     );
   }

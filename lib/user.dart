@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_final_fields, unused_field
+
 class User {
   var _userName = "";
 
