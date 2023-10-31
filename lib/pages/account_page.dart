@@ -52,6 +52,7 @@ class AccountPage extends StatelessWidget {
                   _buildStatItem('High Score Flash Cards Rush', '98'),
                   _buildStatItem('Completed Flash Cards', '200'),
                   _buildStatItem('Longest Streak', '15'),
+                  _buildStatItem('Statistics', '90%'),
                 ],
               ),
             ),
