@@ -1,4 +1,7 @@
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
+import '../user.dart';
 
 class AccountPage extends StatelessWidget {
   @override
@@ -38,21 +41,23 @@ class AccountPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Stats',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                  Center(
+                    child: Text(
+                      'Statystyki:',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
-                  _buildStatItem('Day Streak', '10'),
-                  _buildStatItem('Finished Tasks', '25'),
-                  _buildStatItem('Failed Tasks', '5'),
-                  _buildStatItem('High Score Flash Cards Rush', '98'),
-                  _buildStatItem('Completed Flash Cards', '200'),
-                  _buildStatItem('Longest Streak', '15'),
-                  _buildStatItem('Statistics', '90%'),
+                  _buildStatItem('Obecny Streak', currentUser.getDayStreak().toString()),
+                  _buildStatItem('Ukończone zadania', currentUser.getFinishedTasks().toString()),
+                  _buildStatItem('Nieukończone zadania', currentUser.getFailedTasks().toString()),
+                  _buildStatItem('Wykonanych zadań', currentUser.getTaskCompletion().toString() + '%'),
+                  _buildStatItem('Rekord Fiszki Rush', currentUser.getHighScoreFCRush().toString()),
+                  _buildStatItem('Ukończone Fiszki', currentUser.getDayStreak().toString()),
+                  _buildStatItem('Najdłuższy Streak', currentUser.getLongestStreak().toString()),
                 ],
               ),
             ),

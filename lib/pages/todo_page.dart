@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import '../user.dart';
 
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
@@ -71,6 +72,11 @@ class _TodoPageState extends State<TodoPage> {
 
   void _toggleTaskCompletion(int index) {
     setState(() {
+      if (!tasks[index].isCompleted) {
+        currentUser.addFinishedTask();
+      } else {
+        currentUser.removeFinishedTask();
+      }
       tasks[index].isCompleted = !tasks[index].isCompleted;
       _saveTasks();
     });
