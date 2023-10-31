@@ -136,7 +136,6 @@ class _TodoPageState extends State<TodoPage> {
   }
 
   //Opens a new pop-up window allowing user to add a task. Function invoked on (+) button press.
-
   Future<dynamic> _addTaskDialog() {
     return showDialog(
       context: context,
