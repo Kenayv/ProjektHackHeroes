@@ -73,9 +73,9 @@ class _TodoPageState extends State<TodoPage> {
   void _toggleTaskCompletion(int index) {
     setState(() {
       if (!tasks[index].isCompleted) {
-        currentUser.addFinishedTask();
+        currentUser.incrFinishedTask();
       } else {
-        currentUser.removeFinishedTask();
+        currentUser.decrFinishedTask();
       }
       tasks[index].isCompleted = !tasks[index].isCompleted;
       _saveTasks();

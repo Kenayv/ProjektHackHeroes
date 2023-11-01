@@ -15,6 +15,8 @@ class User {
     _loadStats();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
   //Loads user stats and saves them as variables in User class.
   Future<void> _loadStats() async {
     final SharedPreferences userStats = await SharedPreferences.getInstance();
@@ -40,28 +42,30 @@ class User {
     userStats.setInt('dayStreak', _dayStreak);
   }
 
-  addFlashCardHighScore(int highScore) {
+  //  -   -   -   -   ↓ Functions changing user's variables ↓    -   -   -   -   -   -
+
+  updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
     _highScoreFlashCardsRush += highScore;
     _saveStats();
   }
 
-  addCompletedFlashCard() {
+  incrCompletedFlashCard() {
     _completedFlashCards++;
     _saveStats();
   }
 
-  addFinishedTask() {
+  incrFinishedTask() {
     _finishedTasks++;
     _saveStats();
   }
 
-  removeFinishedTask() {
+  decrFinishedTask() {
     _finishedTasks--;
     _saveStats();
   }
 
-  addFailedTask() {
+  incrFailedTask() {
     _failedTasks++;
     _saveStats();
   }
@@ -72,6 +76,8 @@ class User {
     _dayStreak = newDaysStreak;
     _saveStats();
   }
+
+  //  -   -   -   -   ↓ Functions returning user's variables ↓    -   -   -   -   -   -
 
   int getDayStreak() {
     return _dayStreak;
@@ -103,6 +109,9 @@ class User {
   int getHighScoreFCRush() {
     return _highScoreFlashCardsRush;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 }
 
+//User object that will
 final User currentUser = User();

@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.add_chart_sharp),
-            label: 'ToDo',
+            label: 'To-Do',
             backgroundColor: Color.fromARGB(255, 236, 43, 43),
           ),
           BottomNavigationBarItem(
@@ -68,12 +68,12 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'HomePage',
+            label: 'Home',
             backgroundColor: Color.fromARGB(255, 22, 170, 34),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'MemoRizz',
+            label: 'Medale',
             backgroundColor: Color.fromARGB(255, 35, 153, 231),
           ),
           BottomNavigationBarItem(

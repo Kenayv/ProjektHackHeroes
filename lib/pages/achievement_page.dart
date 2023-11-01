@@ -4,26 +4,42 @@ class AchievementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Achievements'),
-      ),
-      body: GridView.count(
-        crossAxisCount: 3, // 3x3 grid
-        padding: EdgeInsets.all(16.0),
-        childAspectRatio: 0.8, // Adjust this value to control the aspect ratio of each grid item
-        mainAxisSpacing: 16.0, // Add vertical padding
-        crossAxisSpacing: 16.0, // Add horizontal padding
+      body: Column(
         children: <Widget>[
-          AchievementTile('Achievement 1', 'Description 1', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 2', 'Description 2', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 3', 'Description 3', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 4', 'Description 4', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 5', 'Description 5', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 6', 'Description 6', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 7', 'Description 7', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 8', 'Description 8', 'lib/assets/temporaryLogo.png'),
-          AchievementTile('Achievement 9', 'Description 9', 'lib/assets/temporaryLogo.png'),
-          // Add more AchievementTile widgets as needed
+          SizedBox(
+            height: 40,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Osiągnięcia",
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            // Używamy Expanded, aby siatka (grid) wypełniła dostępne miejsce
+            child: GridView.count(
+              crossAxisCount: 3, // 3x3 grid
+              padding: EdgeInsets.all(16.0),
+              childAspectRatio: 0.8, // Adjust this value to control the aspect ratio of each grid item
+              mainAxisSpacing: 16.0, // Add vertical padding
+              crossAxisSpacing: 16.0, // Add horizontal padding
+              children: <Widget>[
+                AchievementTile('Achievement 1', 'Description 1', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 2', 'Description 2', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 3', 'Description 3', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 4', 'Description 4', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 5', 'Description 5', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 6', 'Description 6', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 7', 'Description 7', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 8', 'Description 8', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 9', 'Description 9', 'lib/assets/temporaryLogo.png'),
+                // Add more AchievementTile widgets as needed
+              ],
+            ),
+          ),
         ],
       ),
     );
