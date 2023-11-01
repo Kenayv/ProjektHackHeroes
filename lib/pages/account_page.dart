@@ -13,12 +13,12 @@ class AccountPage extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             CircleAvatar(
-              radius: 80,
-              // backgroundImage: AssetImage('assets/profile_image.jpg'),
+              radius: 70,
+              backgroundImage: AssetImage('lib/assets/temporaryLogo.png'),
             ),
             SizedBox(height: 10),
             Text(
-              'Username',
+              'SigmaLoneWolf2008',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

@@ -23,20 +23,29 @@ class AchievementPage extends StatelessWidget {
             child: GridView.count(
               crossAxisCount: 3, // 3x3 grid
               padding: EdgeInsets.all(16.0),
-              childAspectRatio: 0.8, // Adjust this value to control the aspect ratio of each grid item
+              childAspectRatio: 0.7, // Adjust this value to control the aspect ratio of each grid item
               mainAxisSpacing: 16.0, // Add vertical padding
               crossAxisSpacing: 16.0, // Add horizontal padding
               children: <Widget>[
-                AchievementTile('Achievement 1', 'Description 1', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 2', 'Description 2', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 3', 'Description 3', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 4', 'Description 4', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 5', 'Description 5', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 6', 'Description 6', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 7', 'Description 7', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 8', 'Description 8', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 9', 'Description 9', 'lib/assets/temporaryLogo.png'),
-                // Add more AchievementTile widgets as needed
+                AchievementTile('Pierwsze kroki', 'Zdobądź 1-dniowy Streak', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Zostajesz z nami?', 'Zdobądź 3-dniowy Streak', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('To już tydzień!', 'Zdobądź 7-dniowy Streak', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Sigma Grindset', 'Zdobądź 14-dniowy Streak', 'lib/assets/temporaryLogo.png'),
+                //
+                AchievementTile('Eat that frog!', 'ukończ 1 zadanie', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Piątka z głowy', 'ukończ 5 zadań', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 1', 'ukończ 20 zadań', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Hustler', 'ukończ 50 zadań', 'lib/assets/temporaryLogo.png'),
+                //
+                AchievementTile('Achievement 2', 'Osiągnij rekord 5 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Piątka z głowy', 'Osiągnij rekord 15 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Achievement 3', 'Osiągnij rekord 25 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Hush Hush', 'Osiągnij rekord 45 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                //
+                AchievementTile('Achievement 4', 'Odgadnij 1 fiszkę', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('10/10', 'Odgadnij 10 fiszek', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Fifty-fifty', 'Odgadnij 50 fiszek', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Non-Stop ', 'Odgadnij 250 fiszek', 'lib/assets/temporaryLogo.png'),
               ],
             ),
           ),
@@ -61,17 +70,26 @@ class AchievementTile extends StatelessWidget {
       },
       child: Card(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Image.asset(
               imagePath,
               width: 80.0, // Adjust the image size as needed
               height: 80.0,
             ),
-            Text(title, style: TextStyle(fontSize: 16.0)),
-            Text(
-              description,
-              style: TextStyle(fontSize: 12.0, color: Colors.grey),
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 16.0),
+                textAlign: TextAlign.center, // Center the text horizontally
+              ),
+            ),
+            Center(
+              child: Text(
+                description,
+                style: TextStyle(fontSize: 12.0, color: const Color.fromARGB(255, 100, 100, 79)),
+                textAlign: TextAlign.center, // Center the text horizontally
+              ),
             ),
           ],
         ),
