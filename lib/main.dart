@@ -7,14 +7,41 @@ import 'pages/account_page.dart';
 import 'pages/todo_page.dart';
 import 'pages/home_page.dart';
 import 'pages/flash_cards_page.dart';
+import 'notification_controller.dart';
 
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
-void main() => runApp(const MyApp());
+void main() {
+  initNotifications();
+  runApp(const MyApp());
+}
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  //required for async notifications
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    // MOVED TO notification_controller.dart. If something goes wrong, listenersshould be brought back there
+
+    // // Only after at least the action method is set, the notification events are delivered
+    // AwesomeNotifications().setListeners(
+    //     onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+    //     onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
+    //     onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
+    //     onDismissActionReceivedMethod: NotificationController.onDismissActionReceivedMethod);
+
+    super.initState();
+  }
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,7 +50,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
 //  -   -   -   -   -   -   ↓ Main page ↓   -   -   -   -   -   -   -
 
 class MainPage extends StatefulWidget {

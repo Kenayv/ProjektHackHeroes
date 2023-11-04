@@ -30,10 +30,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  awesome_notifications_core: ^0.8.0 # <~ always ensure to use the latest version
+  awesome_notifications: any # <~ this version is managed by awesome_notifications_core package
   shared_preferences: ^2.0.7
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
