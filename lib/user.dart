@@ -14,8 +14,11 @@ class User {
   late int _statsLongestStreak;
 
   late DateTime _lastLearnedDate;
+  late bool _learnedToday;
+  late bool _tasksFinishedToday;
 
   late int _configPrefHour;
+  late int _configPrefDailyTasks;
 
   User() {
     _loadStats();
