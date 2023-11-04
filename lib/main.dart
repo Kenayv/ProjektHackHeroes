@@ -31,8 +31,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // MOVED TO notification_controller.dart. If something goes wrong, listenersshould be brought back there
 
-    // // Only after at least the action method is set, the notification events are delivered
-    // AwesomeNotifications().setListeners(
+    //     Only after at least the action method is set, the notification events are delivered
+    //     AwesomeNotifications().setListeners(
     //     onActionReceivedMethod: NotificationController.onActionReceivedMethod,
     //     onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
     //     onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
