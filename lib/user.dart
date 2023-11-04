@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
   // WARNING: Those variables can be easily accessed and changed. They're found as SharedPreferences in the file system. It is not a problem though, as long, as there is no competetive use of those variables, such as friends leaderboard. The only "cheating" that can be done at the current state is user changing the variables for personal use.
+  //user stats, will be stored in SharedPreferences
   late int _statsDayStreak;
   late int _statsFinishedTasks;
   late int _statsFailedTasks;
@@ -13,10 +14,12 @@ class User {
   late int _statsCompletedFlashCards;
   late int _statsLongestStreak;
 
+  //user variables, will be stored in SharedPreferences
   late DateTime _lastLearnedDate;
   late bool _learnedToday;
   late bool _tasksFinishedToday;
 
+  //user config variables, will be stored in SharedPreferences
   late int _configPrefHour;
   late int _configPrefDailyTasks;
   late int _configPrefDailyFlashCards;
