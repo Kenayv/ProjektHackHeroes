@@ -1,37 +1,46 @@
-// ignore_for_file: unused_element, prefer_final_fields
-
-import 'dart:ffi';
+// ignore_for_file: unused_element, prefer_final_fields, unused_field, curly_braces_in_flow_control_structures
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
-  // WARNING: Those variables can be easily accessed and changed. They're found as SharedPreferences in the file system. It is not a problem though, as long, as there is no competetive use of those variables, such as friends leaderboard. The only "cheating" that can be done at the current state is user changing the variables for personal use.
+  // WARNING: Those variables can be easily accessed and changed. They're found as SharedPreferences in the file system. It is not a problem though, as long, as there is no competetive use of those variables, such as friends-leaderboard. The only "cheating" that can be done at the current state is user changing the variables for personal use.
+
   //user stats, will be stored in SharedPreferences
-  late int _statsDayStreak;
-  late int _statsFinishedTasks;
-  late int _statsFailedTasks;
   late int _statsHighScoreFlashCardsRush;
   late int _statsCompletedFlashCards;
+  late int _statsFinishedTasks;
   late int _statsLongestStreak;
+  late int _statsFailedTasks;
+  late int _statsDayStreak;
 
   //user variables, will be stored in SharedPreferences
-  late DateTime _varLastLearnedDate;
   late DateTime _varLastDailyGoalCompletionDate;
-  late int _varTasksFinishedToday;
-  late int _varFlashCardsFinishedToday;
+  late DateTime _varLastLearnedDate;
   late bool _varDailyGoalAchieved;
+  late int _varFlashCardsFinishedToday;
+  late int _varTasksFinishedToday;
 
   //user config variables, will be stored in SharedPreferences
-  late int _configPrefHour;
-  late int _configPrefDailyTasks;
+  late String _configUserName;
   late int _configPrefDailyFlashCards;
+  late int _configPrefDailyTasks;
+  late int _configPrefHour;
 
+  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+  //
 
-  User() {
-    _loadStats();
-    _loadVars();
-    _loadConfig();
+  User();
+
+  //
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+  //
+
+  Future initUser() async {
+    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    _loadStats(sharedPrefs);
+    _loadVars(sharedPrefs);
+    _loadConfig(sharedPrefs);
   }
 
   //
@@ -39,25 +48,23 @@ class User {
   //
 
   //Loads user stats and saves them as variables in User class.
-  Future<void> _loadStats() async {
-    final SharedPreferences userStats = await SharedPreferences.getInstance();
-
-    _statsHighScoreFlashCardsRush = userStats.getInt('highScoreFlashCardsRush') ?? 0;
-    _statsCompletedFlashCards = userStats.getInt('completedFlashCards') ?? 0;
-    _statsFinishedTasks = userStats.getInt('finishedTasks') ?? 0;
-    _statsLongestStreak = userStats.getInt('longestStreak') ?? 0;
-    _statsFailedTasks = userStats.getInt('failedTasks') ?? 0;
-    _statsDayStreak = userStats.getInt('dayStreak') ?? 0;
+  Future<void> _loadStats(SharedPreferences sharedPrefs) async {
+    _statsHighScoreFlashCardsRush = sharedPrefs.getInt('highScoreFlashCardsRush') ?? 0;
+    _statsCompletedFlashCards = sharedPrefs.getInt('completedFlashCards') ?? 0;
+    _statsFinishedTasks = sharedPrefs.getInt('finishedTasks') ?? 0;
+    _statsLongestStreak = sharedPrefs.getInt('longestStreak') ?? 0;
+    _statsFailedTasks = sharedPrefs.getInt('failedTasks') ?? 0;
+    _statsDayStreak = sharedPrefs.getInt('dayStreak') ?? 0;
   }
 
+  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+  //
 
-  Future<void> _loadVars() async {
-    final SharedPreferences userVars = await SharedPreferences.getInstance();
-
-    final lastLearnedYear = userVars.getInt('lastLearnedYear') ?? 1999;
-    final lastLearnedMonth = userVars.getInt('lastLearnedMonth') ?? 1;
-    final lastLearnedDay = userVars.getInt('lastLearnedDay') ?? 1;
+  Future<void> _loadVars(SharedPreferences sharedPrefs) async {
+    final lastLearnedYear = sharedPrefs.getInt('lastLearnedYear') ?? 1999;
+    final lastLearnedMonth = sharedPrefs.getInt('lastLearnedMonth') ?? 1;
+    final lastLearnedDay = sharedPrefs.getInt('lastLearnedDay') ?? 1;
     _varLastLearnedDate = DateTime(lastLearnedYear, lastLearnedMonth, lastLearnedDay);
 
     if (_varLastLearnedDate.day != DateTime.now().day) {
@@ -65,23 +72,22 @@ class User {
       _varFlashCardsFinishedToday = 0;
     }
 
-    final lastGoalYear = userVars.getInt('lastGoalYear') ?? 1999;
-    final lastGoalMonth = userVars.getInt('lastGoalMonth') ?? 1;
-    final lastGoalDay = userVars.getInt('lastGoalDay') ?? 1;
-
+    final lastGoalYear = sharedPrefs.getInt('lastGoalYear') ?? 1999;
+    final lastGoalMonth = sharedPrefs.getInt('lastGoalMonth') ?? 1;
+    final lastGoalDay = sharedPrefs.getInt('lastGoalDay') ?? 1;
     _varDailyGoalAchieved = _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay);
-    if (!_varDailyGoalAchieved && lastGoalDay != DateTime.now().day - 1) _statsDayStreak = 0;
   }
 
+  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+  //
 
   //Loads user config and saves them as variables in User class.
-  Future<void> _loadConfig() async {
-    final SharedPreferences userConfig = await SharedPreferences.getInstance();
-
-    _configPrefHour = userConfig.getInt('configPrefHour') ?? 18;
-    _configPrefDailyTasks = userConfig.getInt('configPrefDailyTasks') ?? 5;
-    _configPrefDailyFlashCards = userConfig.getInt('configPrefFlashCards') ?? 20;
+  Future<void> _loadConfig(SharedPreferences sharedPrefs) async {
+    _configPrefHour = sharedPrefs.getInt('configPrefHour') ?? 18;
+    _configPrefDailyTasks = sharedPrefs.getInt('configPrefDailyTasks') ?? 5;
+    _configPrefDailyFlashCards = sharedPrefs.getInt('configPrefFlashCards') ?? 20;
+    _configUserName = sharedPrefs.getString("configUserName") ?? "Hello dolly!";
   }
 
   //
@@ -96,8 +102,8 @@ class User {
     userStats.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
     userStats.setInt('completedFlashCards', _statsCompletedFlashCards);
     userStats.setInt('longestStreak', _statsLongestStreak);
-    userStats.setInt('failedTasks', _statsFailedTasks);
     userStats.setInt('finishedTasks', _statsFinishedTasks);
+    userStats.setInt('failedTasks', _statsFailedTasks);
     userStats.setInt('dayStreak', _statsDayStreak);
   }
 
@@ -109,9 +115,16 @@ class User {
     _varLastDailyGoalCompletionDate = DateTime(lastGoalYear, lastGoalMonth, lastGoalDay);
 
     switch (_varLastDailyGoalCompletionDate.day - DateTime.now().day) {
+      //if DailyGoal was completed today
       case 0:
+        _statsDayStreak = 0;
         return true;
 
+      //case -1 simply returns false and doesnt change dayStreak, because the user has studied yesterday and can keep the streak up today.
+      case -1:
+        return false;
+
+      //if the last month was 31 days long, and has just ended
       case 30:
         if (_varLastDailyGoalCompletionDate.month == DateTime.january ||
             _varLastDailyGoalCompletionDate.month == DateTime.march ||
@@ -121,21 +134,28 @@ class User {
             _varLastDailyGoalCompletionDate.month == DateTime.october ||
             _varLastDailyGoalCompletionDate.month == DateTime.december) return true;
 
+      //if the last month was 30 days long, and has just ended
       case 29:
         if (_varLastDailyGoalCompletionDate.month == DateTime.april ||
             _varLastDailyGoalCompletionDate.month == DateTime.june ||
             _varLastDailyGoalCompletionDate.month == DateTime.september ||
             _varLastDailyGoalCompletionDate.month == DateTime.november) return true;
 
+      //if the last month was 29 days long, and it's a leap year, skip to case 27:
       case 28:
         if (_varLastDailyGoalCompletionDate.year % 4 == 0 && _varLastDailyGoalCompletionDate.month == DateTime.february)
           return true;
 
+      //if the last month was 28 days long and it was february
       case 27:
         if (_varLastDailyGoalCompletionDate.month == DateTime.february) return true;
     }
+
+    _statsDayStreak = 0;
     return false;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
@@ -143,25 +163,35 @@ class User {
     _saveStats();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   incrCompletedFlashCard() {
     _statsCompletedFlashCards++;
     _saveStats();
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   incrFinishedTask() {
     _statsFinishedTasks++;
     _saveStats();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   decrFinishedTask() {
     _statsFinishedTasks--;
     _saveStats();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   incrFailedTask() {
     _statsFailedTasks++;
     _saveStats();
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   _updateDaysStreak(int newDaysStreak) {
     if (newDaysStreak <= 0) return;
@@ -176,17 +206,25 @@ class User {
     return _statsDayStreak;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   int getCompletedFC() {
     return _statsCompletedFlashCards;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   int getLongestStreak() {
     return _statsLongestStreak;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   int getFailedTasks() {
     return _statsFailedTasks;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   double getTaskCompletion() {
     if (_statsFinishedTasks == 0) return 0.00;
@@ -195,16 +233,17 @@ class User {
     return _statsFinishedTasks / totalTasks * 100.00;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   int getFinishedTasks() {
     return _statsFinishedTasks;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   int getHighScoreFCRush() {
     return _statsHighScoreFlashCardsRush;
   }
-
-  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 }
 
-//User object that will
 final User currentUser = User();

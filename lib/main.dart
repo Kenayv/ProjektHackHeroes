@@ -1,7 +1,8 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/pages/achievement_page.dart';
+import 'package:project_hack_heroes/user.dart';
 import 'beta_pop_up.dart';
 import 'pages/account_page.dart';
 import 'pages/todo_page.dart';
@@ -11,8 +12,9 @@ import 'notification_controller.dart';
 
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
-void main() {
-  initNotifications();
+void main() async {
+  await currentUser.initUser();
+  await notificationController.initNotifications();
   runApp(const MyApp());
 }
 
