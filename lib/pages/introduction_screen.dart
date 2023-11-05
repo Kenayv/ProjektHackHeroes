@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/main.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import '../beta_pop_up.dart';
 import 'package:project_hack_heroes/user.dart';
 import 'time_picker_screen.dart';
 /*
