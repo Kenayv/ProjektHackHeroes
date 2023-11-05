@@ -13,14 +13,9 @@ import 'time_picker_screen.dart';
 *
 * */
 
-
 //smieszne funkcje do smiesznych rzeczy
 
-
 //intrdduction screen
-
-
-
 
 class IntroductionScreens extends StatefulWidget {
   const IntroductionScreens({Key? key}) : super(key: key);
@@ -28,6 +23,7 @@ class IntroductionScreens extends StatefulWidget {
   @override
   _IntroductionScreensState createState() => _IntroductionScreensState();
 }
+
 class _IntroductionScreensState extends State<IntroductionScreens> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String selectedTheme = 'White';
@@ -39,8 +35,7 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
     return Scaffold(
         appBar: AppBar(),
         body: SizedBox(
-          height:MediaQuery.of(context).size.height,
-
+          height: MediaQuery.of(context).size.height,
           child: IntroductionScreen(
               pages: [
                 PageViewModel(
@@ -87,7 +82,6 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                           });
                         },
                       ),
-
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Username'),
                         validator: (value) {
@@ -102,36 +96,31 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                       ),
                       Center(
                           child: ElevatedButton(
-                            onPressed: () async {
-                              final time = await Navigator.of(context).push(
-                                MaterialPageRoute<TimeOfDay?>(
-                                  builder: (context) => TimePickerScreen(
-                                    initialTime: selectedNotificationTime,
-                                  ),
-                                ),
-                              );
+                        onPressed: () async {
+                          final time = await Navigator.of(context).push(
+                            MaterialPageRoute<TimeOfDay?>(
+                              builder: (context) => TimePickerScreen(
+                                initialTime: selectedNotificationTime,
+                              ),
+                            ),
+                          );
 
-                              if (time != null) {
-                                setState(() {
-                                  selectedNotificationTime = time;
-                                });
-                              }
-                            },
-                            child: Text('Select Notification Time'),
-                          )),
-
-
+                          if (time != null) {
+                            setState(() {
+                              selectedNotificationTime = time;
+                            });
+                          }
+                        },
+                        child: Text('Select Notification Time'),
+                      )),
                     ],
                   ),
                 ),
               ],
               onDone: () {
-
                 /*
             setting the perfsharedvariables
              */
-
-
 
                 Navigator.push(
                   context,
@@ -139,31 +128,23 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                 );
 
                 currentUser.setHasSeenIntroductionTrue();
-
               },
               //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
               scrollPhysics: const ClampingScrollPhysics(),
               showDoneButton: true,
               showNextButton: true,
               showBackButton: true,
-
-              back:
-              const Icon(Icons.arrow_back),
-
+              back: const Icon(Icons.arrow_back),
               next: const Icon(Icons.forward),
-              done:
-              const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
+              done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
               dotsDecorator: getDotsDecorator()),
         ));
   }
 
-
   //method to customise the page style
   PageDecoration getPageDecoration() {
     return const PageDecoration(
-
       pageColor: Colors.white,
-
       titlePadding: EdgeInsets.only(top: 50),
       bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
     );
@@ -182,8 +163,6 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
     );
   }
 }
-
-
 
 class BulletPointListItem extends StatelessWidget {
   final String text;
