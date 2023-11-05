@@ -65,6 +65,11 @@ class User {
     if (_varLastLearnedDate.day != DateTime.now().day) {
       _varTasksFinishedToday = 0;
       _varFlashCardsFinishedToday = 0;
+      sharedPrefs.setInt('tasksFinishedToday', _varTasksFinishedToday);
+      sharedPrefs.setInt('flashCardsFinishedToday', _varFlashCardsFinishedToday);
+    } else {
+      _varTasksFinishedToday = sharedPrefs.getInt('tasksFinishedToday') ?? 0;
+      _varFlashCardsFinishedToday = sharedPrefs.getInt('flashCardsFinishedToday') ?? 0;
     }
 
     final lastGoalYear = sharedPrefs.getInt('lastGoalYear') ?? 1999;
@@ -80,6 +85,7 @@ class User {
   //Loads user config and saves them as variables in User class.
   Future<void> _loadConfig(SharedPreferences sharedPrefs) async {
     _configPrefHour = sharedPrefs.getInt('configPrefHour') ?? 18;
+    _configPrefMin = sharedPrefs.getInt('configPrefMin') ?? 0;
     _configPrefDailyTasks = sharedPrefs.getInt('configPrefDailyTasks') ?? 5;
     _configPrefDailyFlashCards = sharedPrefs.getInt('configPrefFlashCards') ?? 20;
     _configUserName = sharedPrefs.getString("configUserName") ?? "Hello dolly!";
@@ -90,14 +96,14 @@ class User {
   //Saves user stats as SharedPrefs.
   Future<void> _saveStats() async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
-    final SharedPreferences userStats = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
-    userStats.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
-    userStats.setInt('completedFlashCards', _statsCompletedFlashCards);
-    userStats.setInt('longestStreak', _statsLongestStreak);
-    userStats.setInt('finishedTasks', _statsFinishedTasks);
-    userStats.setInt('failedTasks', _statsFailedTasks);
-    userStats.setInt('dayStreak', _statsDayStreak);
+    sharedPrefs.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
+    sharedPrefs.setInt('completedFlashCards', _statsCompletedFlashCards);
+    sharedPrefs.setInt('longestStreak', _statsLongestStreak);
+    sharedPrefs.setInt('finishedTasks', _statsFinishedTasks);
+    sharedPrefs.setInt('failedTasks', _statsFailedTasks);
+    sharedPrefs.setInt('dayStreak', _statsDayStreak);
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
@@ -111,20 +117,27 @@ class User {
     final lastGoalDay = sharedPrefs.getInt('lastGoalDay') ?? 1;
     _varDailyGoalAchieved = _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay);
     if (_varDailyGoalAchieved) noController.cancelUpcomingReminders();
+
+    sharedPrefs.setInt('lastLearnedYear', _varLastLearnedDate.year);
+    sharedPrefs.setInt('lastLearnedMonth', _varLastLearnedDate.month);
+    sharedPrefs.setInt('lastLearnedDay', _varLastLearnedDate.day);
+
+    sharedPrefs.setInt('tasksFinishedToday', _varTasksFinishedToday);
+    sharedPrefs.setInt('flashCardsFinishedToday', _varFlashCardsFinishedToday);
+    sharedPrefs.setBool('upcomingNotification', _upcomingNotification);
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
   Future<void> _saveConfig() async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
-    final SharedPreferences userStats = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
-    userStats.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
-    userStats.setInt('completedFlashCards', _statsCompletedFlashCards);
-    userStats.setInt('longestStreak', _statsLongestStreak);
-    userStats.setInt('finishedTasks', _statsFinishedTasks);
-    userStats.setInt('failedTasks', _statsFailedTasks);
-    userStats.setInt('dayStreak', _statsDayStreak);
+    sharedPrefs.setString('configUserName', _configUserName);
+    sharedPrefs.setInt('configPrefDailyFlashCards', _configPrefDailyFlashCards);
+    sharedPrefs.setInt('configPrefDailyTasks', _configPrefDailyTasks);
+    sharedPrefs.setInt('PrefHour', _configPrefHour);
+    sharedPrefs.setInt('configPrefMin', _configPrefMin);
   }
 
   //  -   -   -   -   ↓ Functions changing user's variables ↓    -   -   -   -   -   -
