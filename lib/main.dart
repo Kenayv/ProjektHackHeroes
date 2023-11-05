@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}'); //sprawdza czy introduction
           } else {
+            //bylo juz raz wyswietlane
             if (!currentUser.hasSeenIntroduction()) {
               return const IntroductionScreens();
             } else {

@@ -1,10 +1,62 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_unnecessary_containers, sized_box_for_whitespace, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project_hack_heroes/user.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+import 'todo_page.dart';
+import 'dart:math';
+import 'dart:io';
 
 class HomePage extends StatelessWidget {
+  List<TodoTask> tasks = TodoPage().getTasks();
+
+  void _loadTasks() async {
+    try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String filePath = '${appDocDir.path}/tasks.json';
+      File file = File(filePath);
+      if (file.existsSync()) {
+        String content = file.readAsStringSync();
+        List<dynamic> decodedTasks = jsonDecode(content);
+        List<TodoTask> loadedTasks = decodedTasks.map((task) => TodoTask.fromJson(task)).toList();
+        tasks = loadedTasks;
+      }
+    } catch (e) {
+      //FIXME: Tu powinien się wyświetlać na stronie TODO komunikat że się nie udało.
+      print("Error loading tasks: $e");
+    }
+  }
+
+  Padding _buildTaskItem(String taskText) {
+    final randomColor = Color.fromRGBO(
+      Random().nextInt(256),
+      Random().nextInt(256),
+      Random().nextInt(256),
+      1.0,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(
+          color: randomColor,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Center(
+          child: Text(
+            taskText,
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _loadTasks();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -69,50 +121,19 @@ class HomePage extends StatelessWidget {
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Container(
-                    width: 360,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Text("Zadanie 1", style: TextStyle(fontSize: 20, color: Colors.white)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Container(
-                    width: 360,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Text("Zadanie 2", style: TextStyle(fontSize: 20, color: Colors.white)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Container(
-                    width: 360,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Zadanie 3",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                    ),
-                  ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    TodoTask todo = tasks[index];
+                    if (todo.isCompleted) return null;
+                    return SizedBox(
+                      // Wrap the Container with a SizedBox
+                      width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of the screen width
+                      child: _buildTaskItem(todo.task),
+                    );
+                  },
                 ),
               ],
             ),

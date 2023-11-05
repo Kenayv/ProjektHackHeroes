@@ -315,10 +315,12 @@ class User {
     return _upcomingNotification;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   bool hasSeenIntroduction() {
     return _hasSeenIntroduction;
   }
-  
+
   //  -   -   -   -   -   -   -   -   -   -
 
   int getPrefHour() {
