@@ -46,8 +46,8 @@ class _TodoPageState extends State<TodoPage> {
   List<TodoTask> tasks = [];
   void _saveTasks() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
-    String _filePath = '${appDocDir.path}/tasks.json';
-    File file = File(_filePath);
+    String filePath = '${appDocDir.path}/tasks.json';
+    File file = File(filePath);
     List<Map<String, dynamic>> jsonTasks = tasks.map((todo) => todo.toJson()).toList();
     file.writeAsStringSync(jsonEncode(jsonTasks));
   }
@@ -56,8 +56,8 @@ class _TodoPageState extends State<TodoPage> {
   void _loadTasks() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String _filePath = '${appDocDir.path}/tasks.json';
-      File file = File(_filePath);
+      String filePath = '${appDocDir.path}/tasks.json';
+      File file = File(filePath);
       if (file.existsSync()) {
         String content = file.readAsStringSync();
         List<dynamic> decodedTasks = jsonDecode(content);

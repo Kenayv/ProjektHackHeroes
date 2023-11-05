@@ -62,16 +62,24 @@ class NotificationController {
       "Twój $currentStreak dniowy streak zbliża się do końca, nie przerywaj go!",
     ];
     await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: scheduledReminderId,
-          channelKey: 'scheduled',
-          title: 'Czas na naukę!',
-          body: messages[Random().nextInt(messages.length - 1)],
-          notificationLayout: NotificationLayout.BigPicture,
-          bigPicture: 'asset://assets/images/melted-clock.png',
+      content: NotificationContent(
+        id: scheduledReminderId,
+        channelKey: 'scheduled',
+        title: 'Czas na naukę!',
+        body: messages[Random().nextInt(messages.length - 1)],
+        notificationLayout: NotificationLayout.BigPicture,
+        bigPicture: 'asset://assets/images/melted-clock.png',
+      ),
+      schedule: NotificationCalendar.fromDate(
+        date: DateTime(
+          currentDate.year,
+          currentDate.month,
+          currentDate.day + 1,
+          currentUser.getPrefHour(),
         ),
-        schedule: NotificationCalendar.fromDate(
-            date: DateTime(currentDate.year, currentDate.month, currentDate.day + 1, currentUser.getPrefHour())));
+      ),
+    );
+    currentUser.switchUpcomingReminder();
   }
 
   Future initNotifications() async {
@@ -100,7 +108,7 @@ class NotificationController {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    noController.scheduleNextReminderNotificantion();
+    if(!currentUser.isReminderUpcoming()) noController.scheduleNextReminderNotificantion();
   }
 }
 

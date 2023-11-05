@@ -163,7 +163,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  updateFCRushHighScore(int highScore) {
+  void updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
     _statsHighScoreFlashCardsRush += highScore;
     _saveStats();
@@ -171,35 +171,38 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  incrCompletedFlashCard() {
+  void incrCompletedFlashCard() {
     _statsCompletedFlashCards++;
     _saveStats();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  incrFinishedTask() {
+  void incrFinishedTask() {
     _statsFinishedTasks++;
     _saveStats();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  decrFinishedTask() {
+  void decrFinishedTask() {
     _statsFinishedTasks--;
     _saveStats();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  incrFailedTask() {
+  void incrFailedTask() {
     _statsFailedTasks++;
     _saveStats();
   }
 
+  void switchUpcomingReminder() {
+    _upcomingNotification = !_upcomingNotification;
+  }
   //  -   -   -   -   -   -   -   -   -   -
 
-  _updateDaysStreak(int newDaysStreak) {
+  void _updateDaysStreak(int newDaysStreak) {
     if (newDaysStreak <= 0) return;
     if (_statsLongestStreak < newDaysStreak) _statsLongestStreak = newDaysStreak;
     _statsDayStreak = newDaysStreak;
@@ -253,7 +256,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  bool isNotificationIncoming() {
+  bool isReminderUpcoming() {
     return _upcomingNotification;
   }
 
@@ -262,6 +265,8 @@ class User {
   int getPrefHour() {
     return _configPrefHour;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   bool isDailyGoalAchieved() {
     return _varDailyGoalAchieved;
