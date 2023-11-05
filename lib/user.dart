@@ -1,5 +1,6 @@
 // ignore_for_file: unused_element, prefer_final_fields, unused_field, curly_braces_in_flow_control_structures
 
+import 'package:project_hack_heroes/notification_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
@@ -26,16 +27,13 @@ class User {
   late int _configPrefDailyFlashCards;
   late int _configPrefDailyTasks;
   late int _configPrefHour;
+  late int _configPrefMin;
 
-  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
-  //
 
   User();
 
-  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
-  //
 
   Future initUser() async {
     final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
@@ -44,9 +42,7 @@ class User {
     _loadVars(sharedPrefs);
   }
 
-  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
-  //
 
   //Loads user stats and saves them as variables in User class.
   Future<void> _loadStats(SharedPreferences sharedPrefs) async {
@@ -58,9 +54,7 @@ class User {
     _statsDayStreak = sharedPrefs.getInt('dayStreak') ?? 0;
   }
 
-  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
-  //
 
   Future<void> _loadVars(SharedPreferences sharedPrefs) async {
     final lastLearnedYear = sharedPrefs.getInt('lastLearnedYear') ?? 1999;
@@ -77,12 +71,11 @@ class User {
     final lastGoalMonth = sharedPrefs.getInt('lastGoalMonth') ?? 1;
     final lastGoalDay = sharedPrefs.getInt('lastGoalDay') ?? 1;
     _varDailyGoalAchieved = _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay);
+    if (_varDailyGoalAchieved) noController.cancelUpcomingReminders();
     _upcomingNotification = sharedPrefs.getBool('upcomingNotification') ?? false;
   }
 
-  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
-  //
 
   //Loads user config and saves them as variables in User class.
   Future<void> _loadConfig(SharedPreferences sharedPrefs) async {
@@ -92,9 +85,7 @@ class User {
     _configUserName = sharedPrefs.getString("configUserName") ?? "Hello dolly!";
   }
 
-  //
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
-  //
 
   //Saves user stats as SharedPrefs.
   Future<void> _saveStats() async {
@@ -109,9 +100,34 @@ class User {
     userStats.setInt('dayStreak', _statsDayStreak);
   }
 
-  //
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
+  Future<void> _saveVars() async {
+    //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
+    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+
+    final lastGoalYear = sharedPrefs.getInt('lastGoalYear') ?? 1999;
+    final lastGoalMonth = sharedPrefs.getInt('lastGoalMonth') ?? 1;
+    final lastGoalDay = sharedPrefs.getInt('lastGoalDay') ?? 1;
+    _varDailyGoalAchieved = _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay);
+    if (_varDailyGoalAchieved) noController.cancelUpcomingReminders();
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
+  Future<void> _saveConfig() async {
+    //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
+    final SharedPreferences userStats = await SharedPreferences.getInstance();
+
+    userStats.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
+    userStats.setInt('completedFlashCards', _statsCompletedFlashCards);
+    userStats.setInt('longestStreak', _statsLongestStreak);
+    userStats.setInt('finishedTasks', _statsFinishedTasks);
+    userStats.setInt('failedTasks', _statsFailedTasks);
+    userStats.setInt('dayStreak', _statsDayStreak);
+  }
+
   //  -   -   -   -   ↓ Functions changing user's variables ↓    -   -   -   -   -   -
-  //
 
   bool _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay) {
     if (_varTasksFinishedToday >= _configPrefDailyTasks && _varFlashCardsFinishedToday >= _configPrefDailyFlashCards) {
@@ -197,9 +213,12 @@ class User {
     _saveStats();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   void switchUpcomingReminder() {
     _upcomingNotification = !_upcomingNotification;
   }
+
   //  -   -   -   -   -   -   -   -   -   -
 
   void _updateDaysStreak(int newDaysStreak) {
@@ -207,6 +226,18 @@ class User {
     if (_statsLongestStreak < newDaysStreak) _statsLongestStreak = newDaysStreak;
     _statsDayStreak = newDaysStreak;
     _saveStats();
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  void setPrefHour(int h) {
+    _configPrefHour = h;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  void setPrefMin(int mins) {
+    _configPrefMin = mins;
   }
 
   //  -   -   -   -   ↓ Functions returning user's variables ↓    -   -   -   -   -   -
@@ -264,6 +295,12 @@ class User {
 
   int getPrefHour() {
     return _configPrefHour;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  int getPrefMin() {
+    return _configPrefMin;
   }
 
   //  -   -   -   -   -   -   -   -   -   -

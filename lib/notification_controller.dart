@@ -48,7 +48,6 @@ class NotificationController {
   }
 
   Future scheduleNextReminderNotificantion() async {
-    if (currentUser.isDailyGoalAchieved()) AwesomeNotifications().cancel(scheduledReminderId);
     final int currentStreak = currentUser.getDayStreak();
     final DateTime currentDate = DateTime.now();
     final List messages = [
@@ -108,7 +107,11 @@ class NotificationController {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-    if(!currentUser.isReminderUpcoming()) noController.scheduleNextReminderNotificantion();
+    if (!currentUser.isReminderUpcoming()) noController.scheduleNextReminderNotificantion();
+  }
+
+  void cancelUpcomingReminders() {
+    AwesomeNotifications().cancel(scheduledReminderId);
   }
 }
 
