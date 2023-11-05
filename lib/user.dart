@@ -13,7 +13,7 @@ class User {
   late int _statsLongestStreak;
   late int _statsFailedTasks;
   late int _statsDayStreak;
-  late bool _hasSeenIntroduction=false;
+  late bool _hasSeenIntroduction;
 
   //user variables, will be stored in SharedPreferences
   late DateTime _varLastDailyGoalCompletionDate;
@@ -329,35 +329,29 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  String getUserName() {
+    return _configUserName;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
   bool isDailyGoalAchieved() {
     return _varDailyGoalAchieved;
   }
 
-  Future <bool> getHasSeenIntroduction() async{
-
-
-
+  Future<bool> getHasSeenIntroduction() async {
     return _hasSeenIntroduction;
   }
 
-
-  void setHasSeenIntroductionTrue(){
-    _hasSeenIntroduction=true;
+  void setHasSeenIntroductionTrue() {
+    _hasSeenIntroduction = true;
     saveAll();
-
   }
 
-  void setHasSeenIntroductionFalse(){
-    _hasSeenIntroduction=false;
+  void setHasSeenIntroductionFalse() {
+    _hasSeenIntroduction = false;
     saveAll();
-
   }
-
-
-
-
-
-
 }
 
 final User currentUser = User();

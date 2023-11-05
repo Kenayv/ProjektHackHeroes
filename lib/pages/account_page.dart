@@ -18,7 +18,7 @@ class AccountPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'SigmaLoneWolf2008',
+              currentUser.getUserName(),
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
