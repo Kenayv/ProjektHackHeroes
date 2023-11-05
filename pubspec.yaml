@@ -34,6 +34,7 @@ dependencies:
   awesome_notifications: any # <~ this version is managed by awesome_notifications_core package
   shared_preferences: ^2.0.7
   cupertino_icons: ^1.0.2
+  path_provider: ^2.0.3
 
 dev_dependencies:
   flutter_test:

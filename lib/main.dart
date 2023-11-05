@@ -13,8 +13,9 @@ import 'notification_controller.dart';
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await currentUser.initUser();
-  await notificationController.initNotifications();
+  await noController.initNotifications();
   runApp(const MyApp());
 }
 
@@ -31,15 +32,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // MOVED TO notification_controller.dart. If something goes wrong, listenersshould be brought back there
-
-    //     Only after at least the action method is set, the notification events are delivered
-    //     AwesomeNotifications().setListeners(
-    //     onActionReceivedMethod: NotificationController.onActionReceivedMethod,
-    //     onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
-    //     onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
-    //     onDismissActionReceivedMethod: NotificationController.onDismissActionReceivedMethod);
-
+    //WARNING: onActionReceivedMethod: NotificationController.on MOVED TO notification_controller.dart. If something goes wrong, listenersshould be brought back there
     super.initState();
   }
 

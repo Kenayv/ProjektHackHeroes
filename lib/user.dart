@@ -19,6 +19,7 @@ class User {
   late bool _varDailyGoalAchieved;
   late int _varFlashCardsFinishedToday;
   late int _varTasksFinishedToday;
+  late bool _upcomingNotification;
 
   //user config variables, will be stored in SharedPreferences
   late String _configUserName;
@@ -38,9 +39,9 @@ class User {
 
   Future initUser() async {
     final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    _loadConfig(sharedPrefs);
     _loadStats(sharedPrefs);
     _loadVars(sharedPrefs);
-    _loadConfig(sharedPrefs);
   }
 
   //
@@ -76,6 +77,7 @@ class User {
     final lastGoalMonth = sharedPrefs.getInt('lastGoalMonth') ?? 1;
     final lastGoalDay = sharedPrefs.getInt('lastGoalDay') ?? 1;
     _varDailyGoalAchieved = _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay);
+    _upcomingNotification = sharedPrefs.getBool('upcomingNotification') ?? false;
   }
 
   //
@@ -112,6 +114,10 @@ class User {
   //
 
   bool _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay) {
+    if (_varTasksFinishedToday >= _configPrefDailyTasks && _varFlashCardsFinishedToday >= _configPrefDailyFlashCards) {
+      return true;
+    }
+
     _varLastDailyGoalCompletionDate = DateTime(lastGoalYear, lastGoalMonth, lastGoalDay);
 
     switch (_varLastDailyGoalCompletionDate.day - DateTime.now().day) {
@@ -243,6 +249,18 @@ class User {
 
   int getHighScoreFCRush() {
     return _statsHighScoreFlashCardsRush;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  bool isNotificationIncoming() {
+    return _upcomingNotification;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  int getPrefHour() {
+    return _configPrefHour;
   }
 }
 

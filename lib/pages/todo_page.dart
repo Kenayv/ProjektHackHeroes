@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import '../user.dart';
+import 'package:path_provider/path_provider.dart';
 
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
@@ -43,18 +44,19 @@ class TodoPage extends StatefulWidget {
 class _TodoPageState extends State<TodoPage> {
   TextEditingController taskController = TextEditingController();
   List<TodoTask> tasks = [];
-  final String _filePath = "tasks.json"; //FIXME: będzie trzeba zmienić patha na potrzeby faktycznej aplkikacji
-
-  //saves tasks in tasks.json file. this function is invoked on every tasks[] array change.
-  void _saveTasks() {
+  void _saveTasks() async {
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String _filePath = '${appDocDir.path}/tasks.json';
     File file = File(_filePath);
     List<Map<String, dynamic>> jsonTasks = tasks.map((todo) => todo.toJson()).toList();
     file.writeAsStringSync(jsonEncode(jsonTasks));
   }
 
   //Reads tasks saved in tasks.json file and pushes them into tasks[] array
-  void _loadTasks() {
+  void _loadTasks() async {
     try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String _filePath = '${appDocDir.path}/tasks.json';
       File file = File(_filePath);
       if (file.existsSync()) {
         String content = file.readAsStringSync();

@@ -3,6 +3,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'main.dart';
+import 'user.dart';
+import 'dart:math';
 
 class NotificationController {
   NotificationController() {
@@ -43,6 +45,32 @@ class NotificationController {
         arguments: receivedAction);
   }
 
+  Future scheduleNextReminderNotificantion() async {
+    final int currentStreak = currentUser.getDayStreak();
+    final DateTime currentDate = DateTime.now();
+    final List messages = [
+      "Uwaga! Twój codzienny streak zbliża się do końca!",
+      "Jeszcze kilka godzin do zakończenia twojego $currentStreak dniowego streaka!",
+      "Czas biegnie, twój $currentStreak dniowy streak powoli zanika.",
+      "Nie zapomnij o swoim dziennym celu - zbliża się koniec streaka!",
+      "Masz chwilę, aby się pouczyć?",
+      "Nie pozwól, aby twój codzienny streak się przerwał. Poucz się teraz!",
+      "Streak nadal trwa, ale czas ucieka - działaj teraz!",
+      "Twój $currentStreak dniowy streak zbliża się do końca, nie przerywaj go!",
+    ];
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: 2,
+          channelKey: 'scheduled',
+          title: 'Czas na naukę!',
+          body: messages[Random().nextInt(messages.length - 1)],
+          notificationLayout: NotificationLayout.BigPicture,
+          bigPicture: 'asset://assets/images/melted-clock.png',
+        ),
+        schedule: NotificationCalendar.fromDate(
+            date: DateTime(currentDate.year, currentDate.month, currentDate.day + 1, 16, 28)));
+  }
+
   Future initNotifications() async {
     AwesomeNotifications().initialize(
         // set the icon to null if you want to use the default app icon
@@ -69,26 +97,8 @@ class NotificationController {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
+    noController.scheduleNextReminderNotificantion();
   }
 }
 
-NotificationController notificationController = NotificationController();
-
-// Jakiś tam testowy przycisk z funkcją repeatującą się co 60 sekund
-/*
-  void testowanko() async {
-    String localTimeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
-    String utcTimeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
-
-    await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: 10,
-            channelKey: 'scheduled',
-            title: 'Notification every single minute',
-            body: 'This notification was scheduled to repeat every minute.',
-            notificationLayout: NotificationLayout.BigPicture,
-            bigPicture: 'asset://assets/images/melted-clock.png'),
-        schedule: NotificationInterval(interval: 60, timeZone: localTimeZone, repeats: true));
-  }
-  ElevatedButton(onPressed: () => testowanko(), child: Text("woooo")),
-*/
+NotificationController noController = NotificationController();

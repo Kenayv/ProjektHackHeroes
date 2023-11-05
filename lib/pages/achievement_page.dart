@@ -30,24 +30,24 @@ class AchievementPage extends StatelessWidget {
               crossAxisSpacing: 16.0, // Add horizontal padding
               children: <Widget>[
                 AchievementTile('Pierwsze kroki', 'Zdobądź 1-dniowy Streak', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Zostajesz z nami?', 'Zdobądź 3-dniowy Streak', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Bez Dnia Przerwy', 'Zdobądź 3-dniowy Streak', 'lib/assets/temporaryLogo.png'),
                 AchievementTile('To już tydzień!', 'Zdobądź 7-dniowy Streak', 'lib/assets/temporaryLogo.png'),
                 AchievementTile('Sigma Grindset', 'Zdobądź 14-dniowy Streak', 'lib/assets/temporaryLogo.png'),
                 //
                 AchievementTile('Eat that frog!', 'ukończ 1 zadanie', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Piątka z głowy', 'ukończ 5 zadań', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 1', 'ukończ 20 zadań', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Szybka piątka', 'ukończ 5 zadań', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Hush-Hush', 'ukończ 20 zadań', 'lib/assets/temporaryLogo.png'),
                 AchievementTile('Hustler', 'ukończ 50 zadań', 'lib/assets/temporaryLogo.png'),
                 //
-                AchievementTile('Achievement 2', 'Osiągnij rekord 5 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Piątka z głowy', 'Osiągnij rekord 15 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Achievement 3', 'Osiągnij rekord 25 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Hush Hush', 'Osiągnij rekord 45 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Study', 'Osiągnij rekord 5 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Studi', 'Osiągnij rekord 15 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Stoody', 'Osiągnij rekord 25 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Stoodee', 'Osiągnij rekord 45 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
                 //
-                AchievementTile('Achievement 4', 'Odgadnij 1 fiszkę', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Le Fishe', 'Odgadnij 1 fiszkę', 'lib/assets/temporaryLogo.png'),
                 AchievementTile('10/10', 'Odgadnij 10 fiszek', 'lib/assets/temporaryLogo.png'),
                 AchievementTile('Fifty-fifty', 'Odgadnij 50 fiszek', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Non-Stop ', 'Odgadnij 250 fiszek', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Unstoppable ', 'Odgadnij 250 fiszek', 'lib/assets/temporaryLogo.png'),
               ],
             ),
           ),
