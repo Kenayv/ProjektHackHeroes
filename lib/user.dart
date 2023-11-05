@@ -262,6 +262,10 @@ class User {
   int getPrefHour() {
     return _configPrefHour;
   }
+
+  bool isDailyGoalAchieved() {
+    return _varDailyGoalAchieved;
+  }
 }
 
 final User currentUser = User();

@@ -7,6 +7,8 @@ import 'user.dart';
 import 'dart:math';
 
 class NotificationController {
+  static const int scheduledReminderId = 2;
+
   NotificationController() {
     AwesomeNotifications().setListeners(
       onActionReceivedMethod: NotificationController.onActionReceivedMethod,
@@ -46,6 +48,7 @@ class NotificationController {
   }
 
   Future scheduleNextReminderNotificantion() async {
+    if (currentUser.isDailyGoalAchieved()) AwesomeNotifications().cancel(scheduledReminderId);
     final int currentStreak = currentUser.getDayStreak();
     final DateTime currentDate = DateTime.now();
     final List messages = [
@@ -60,7 +63,7 @@ class NotificationController {
     ];
     await AwesomeNotifications().createNotification(
         content: NotificationContent(
-          id: 2,
+          id: scheduledReminderId,
           channelKey: 'scheduled',
           title: 'Czas na naukę!',
           body: messages[Random().nextInt(messages.length - 1)],
@@ -68,7 +71,7 @@ class NotificationController {
           bigPicture: 'asset://assets/images/melted-clock.png',
         ),
         schedule: NotificationCalendar.fromDate(
-            date: DateTime(currentDate.year, currentDate.month, currentDate.day + 1, 16, 28)));
+            date: DateTime(currentDate.year, currentDate.month, currentDate.day + 1, currentUser.getPrefHour())));
   }
 
   Future initNotifications() async {
