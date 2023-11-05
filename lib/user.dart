@@ -13,6 +13,7 @@ class User {
   late int _statsLongestStreak;
   late int _statsFailedTasks;
   late int _statsDayStreak;
+  late bool _hasSeenIntroduction=false;
 
   //user variables, will be stored in SharedPreferences
   late DateTime _varLastDailyGoalCompletionDate;
@@ -59,6 +60,7 @@ class User {
     _statsLongestStreak = sharedPrefs.getInt('longestStreak') ?? 0;
     _statsFailedTasks = sharedPrefs.getInt('failedTasks') ?? 0;
     _statsDayStreak = sharedPrefs.getInt('dayStreak') ?? 0;
+    _hasSeenIntroduction = sharedPrefs.getBool('hasSeenIntroduction') ?? false;
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
@@ -110,7 +112,7 @@ class User {
     sharedPrefs.setInt('finishedTasks', _statsFinishedTasks);
     sharedPrefs.setInt('failedTasks', _statsFailedTasks);
     sharedPrefs.setInt('dayStreak', _statsDayStreak);
-
+    sharedPrefs.setBool('hasSeenIntroduction', _hasSeenIntroduction);
     _varLastLearnedDate = DateTime.now();
   }
 
@@ -330,6 +332,32 @@ class User {
   bool isDailyGoalAchieved() {
     return _varDailyGoalAchieved;
   }
+
+  Future <bool> getHasSeenIntroduction() async{
+
+
+
+    return _hasSeenIntroduction;
+  }
+
+
+  void setHasSeenIntroductionTrue(){
+    _hasSeenIntroduction=true;
+    saveAll();
+
+  }
+
+  void setHasSeenIntroductionFalse(){
+    _hasSeenIntroduction=false;
+    saveAll();
+
+  }
+
+
+
+
+
+
 }
 
 final User currentUser = User();
