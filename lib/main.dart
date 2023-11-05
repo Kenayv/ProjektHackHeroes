@@ -7,8 +7,16 @@ import 'pages/account_page.dart';
 import 'pages/todo_page.dart';
 import 'pages/home_page.dart';
 import 'pages/flash_cards_page.dart';
-
+import 'pages/introduction_screen.dart';
+import 'user.dart';
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
+
+
+
+
+
+
 
 void main() => runApp(const MyApp());
 
@@ -19,7 +27,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Studi - Hack Heroes Projekt',
-      home: BetaPopUpPage(),
+      home: FutureBuilder<bool>(                        //od tąd
+        future: currentUser.getHasSeenIntroduction(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
+          } else {                                         //bylo juz raz wyswietlane
+            //final hasSeenIntroduction = snapshot.data;
+            final hasSeenIntroduction=false;
+            if (hasSeenIntroduction == false) {
+              return const IntroductionScreens();
+            } else if (hasSeenIntroduction == true) {
+              return BetaPopUpPage();
+            } else {
+              // Return a default widget here, e.g., an empty Container.
+              return Container();                   //do tąd
+            }
+          }
+        },
+      ),
     );
   }
 }
@@ -42,6 +70,7 @@ class _MainPageState extends State<MainPage> {
     HomePage(),
     AchievementPage(),
     AccountPage(),
+    IntroductionScreens(),
   ];
 
   @override
