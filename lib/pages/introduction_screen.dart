@@ -118,10 +118,6 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                 ),
               ],
               onDone: () {
-                /*
-            setting the perfsharedvariables
-             */
-
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MainPage()),

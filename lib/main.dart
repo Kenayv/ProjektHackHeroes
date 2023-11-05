@@ -42,29 +42,24 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Studi - Hack Heroes Projekt',
-      home: FutureBuilder<bool>(                        //od tąd
+      home: FutureBuilder<bool>(
+        //od tąd
         future: currentUser.getHasSeenIntroduction(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
-          } else {                                         //bylo juz raz wyswietlane
-            //final hasSeenIntroduction = snapshot.data;
-            final hasSeenIntroduction=false;
-            if (hasSeenIntroduction == false) {
+            return Text('Error: ${snapshot.error}'); //sprawdza czy introduction
+          } else {
+            if (!currentUser.hasSeenIntroduction()) {
               return const IntroductionScreens();
-            } else if (hasSeenIntroduction == true) {
-              return BetaPopUpPage();
             } else {
-              // Return a default widget here, e.g., an empty Container.
-              return Container();                   //do tąd
+              return BetaPopUpPage();
             }
           }
         },
       ),
     );
-
   }
 }
 //  -   -   -   -   -   -   ↓ Main page ↓   -   -   -   -   -   -   -
