@@ -9,6 +9,7 @@ import 'pages/todo_page.dart';
 import 'pages/home_page.dart';
 import 'pages/flash_cards_page.dart';
 import 'notification_controller.dart';
+import 'pages/introduction_screen.dart';
 
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
@@ -41,8 +42,29 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Studi - Hack Heroes Projekt',
-      home: BetaPopUpPage(),
+      home: FutureBuilder<bool>(                        //od tąd
+        future: currentUser.getHasSeenIntroduction(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
+          } else {                                         //bylo juz raz wyswietlane
+            //final hasSeenIntroduction = snapshot.data;
+            final hasSeenIntroduction=false;
+            if (hasSeenIntroduction == false) {
+              return const IntroductionScreens();
+            } else if (hasSeenIntroduction == true) {
+              return BetaPopUpPage();
+            } else {
+              // Return a default widget here, e.g., an empty Container.
+              return Container();                   //do tąd
+            }
+          }
+        },
+      ),
     );
+
   }
 }
 //  -   -   -   -   -   -   ↓ Main page ↓   -   -   -   -   -   -   -
