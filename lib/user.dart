@@ -42,6 +42,13 @@ class User {
     _loadVars(sharedPrefs);
   }
 
+  Future saveAll() async {
+    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
+    _saveConfig(sharedPrefs);
+    _saveStats(sharedPrefs);
+    _saveVars(sharedPrefs);
+  }
+
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
   //Loads user stats and saves them as variables in User class.
@@ -94,9 +101,8 @@ class User {
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
   //Saves user stats as SharedPrefs.
-  Future<void> _saveStats() async {
+  Future<void> _saveStats(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
-    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
     sharedPrefs.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
     sharedPrefs.setInt('completedFlashCards', _statsCompletedFlashCards);
@@ -104,13 +110,14 @@ class User {
     sharedPrefs.setInt('finishedTasks', _statsFinishedTasks);
     sharedPrefs.setInt('failedTasks', _statsFailedTasks);
     sharedPrefs.setInt('dayStreak', _statsDayStreak);
+
+    _varLastLearnedDate = DateTime.now();
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
-  Future<void> _saveVars() async {
+  Future<void> _saveVars(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
-    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
     final lastGoalYear = sharedPrefs.getInt('lastGoalYear') ?? 1999;
     final lastGoalMonth = sharedPrefs.getInt('lastGoalMonth') ?? 1;
@@ -129,9 +136,8 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
-  Future<void> _saveConfig() async {
+  Future<void> _saveConfig(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
-    final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
 
     sharedPrefs.setString('configUserName', _configUserName);
     sharedPrefs.setInt('configPrefDailyFlashCards', _configPrefDailyFlashCards);
@@ -195,41 +201,42 @@ class User {
   void updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
     _statsHighScoreFlashCardsRush += highScore;
-    _saveStats();
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void incrCompletedFlashCard() {
     _statsCompletedFlashCards++;
-    _saveStats();
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void incrFinishedTask() {
     _statsFinishedTasks++;
-    _saveStats();
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void decrFinishedTask() {
     _statsFinishedTasks--;
-    _saveStats();
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void incrFailedTask() {
     _statsFailedTasks++;
-    _saveStats();
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void switchUpcomingReminder() {
     _upcomingNotification = !_upcomingNotification;
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
@@ -238,19 +245,21 @@ class User {
     if (newDaysStreak <= 0) return;
     if (_statsLongestStreak < newDaysStreak) _statsLongestStreak = newDaysStreak;
     _statsDayStreak = newDaysStreak;
-    _saveStats();
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void setPrefHour(int h) {
     _configPrefHour = h;
+    saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
   void setPrefMin(int mins) {
     _configPrefMin = mins;
+    saveAll();
   }
 
   //  -   -   -   -   ↓ Functions returning user's variables ↓    -   -   -   -   -   -
