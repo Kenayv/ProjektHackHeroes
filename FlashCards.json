@@ -1,0 +1,12 @@
+{
+    "FlashCardSetName": [
+        {
+            "front": "strona1",
+            "back": "strona2"
+        },
+        {
+            "front": "strona3",
+            "back": "strona4"
+        }
+    ]
+}
