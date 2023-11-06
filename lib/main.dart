@@ -10,14 +10,20 @@ import 'pages/home_page.dart';
 import 'pages/flash_cards_page.dart';
 import 'notification_controller.dart';
 import 'pages/introduction_screen.dart';
+import 'theme.dart';
 
-//  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+//  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await currentUser.initUser();
   await noController.initNotifications();
+
+  usertheme=whitetheme;
   runApp(const MyApp());
+
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -50,8 +56,8 @@ class _MyAppState extends State<MyApp> {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
           } else {                                         //bylo juz raz wyswietlane
-            //final hasSeenIntroduction = snapshot.data;
-            final hasSeenIntroduction=false;
+            final hasSeenIntroduction = snapshot.data;
+
             if (hasSeenIntroduction == false) {
               return const IntroductionScreens();
             } else if (hasSeenIntroduction == true) {
@@ -74,10 +80,12 @@ class MainPage extends StatefulWidget {
 
   @override
   State<MainPage> createState() => _MainPageState();
+
 }
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
+  String currentPageTitle = 'Home';
 
   final screens = [
     TodoPage(),
@@ -90,12 +98,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shadowColor: Color.fromRGBO(0, 0, 0, 0.3), // barely visible black shadow - looks like a line
-        backgroundColor: Color.fromRGBO(250, 250, 250, 1), //bar should be background color.
-        automaticallyImplyLeading: false,
-        actions: <Widget>[],
-      ),
+      appBar: usertheme.getAppBar(currentPageTitle),
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -130,9 +133,31 @@ class _MainPageState extends State<MainPage> {
         onTap: (int index) => setState(
           () {
             _selectedIndex = index;
+            currentPageTitle=_getPageTitle(index);
           },
         ),
       ),
+
+
     );
   }
+
+
+  String _getPageTitle(int index) {
+    switch (index) {
+      case 0:
+        return 'To-Do';
+      case 1:
+        return 'Fiszki';
+      case 2:
+        return 'Home';
+      case 3:
+        return 'Medale';
+      case 4:
+        return 'Konto';
+      default:
+        return 'Home';
+    }
+  }
+
 }

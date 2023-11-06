@@ -18,7 +18,7 @@ class AccountPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'SigmaLoneWolf2008',
+              currentUser.getName(),
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -70,8 +70,13 @@ class AccountPage extends StatelessWidget {
   Widget _buildPopupButton(BuildContext context, String title) {
     return ElevatedButton(
       onPressed: () {
-        // Show the corresponding pop-up based on the title
-        // You can implement this part based on your requirements
+        if(title=="About Us") {
+          _showAboutUsDialog(context);
+        }
+        else if(title=="Settings"){
+          _showSettingsDialog(context);
+        }
+
       },
       child: Text(title),
     );
@@ -92,6 +97,146 @@ class AccountPage extends StatelessWidget {
       ],
     );
   }
+}
+
+
+void _showAboutUsDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text('About Us'),
+        content: Container(
+          height: 380, // Adjust the height as needed
+          child: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+
+
+                // Add your about us content here
+
+               Image.asset('lib/assets/zdjecie2.png',width: 150,height: 150),
+
+                Container(
+                  margin: EdgeInsets.only(top: 3.0), // Adjust the margin as needed
+                  child: Text(
+                    'Aplikacja Studee',
+                    textAlign: TextAlign.center, // Set your desired alignment
+                  ),
+                ),
+
+
+                Container(
+                  margin: EdgeInsets.only(top: 12.0), // Adjust the margin as needed
+                  child: Text(
+                    'Jestesmy uczniami Szkoly ZSTiO Meritum, klasy 4Bt',
+                    textAlign: TextAlign.center, // Set your desired alignment
+                  ),
+                ),
+
+                Container(
+                  margin: EdgeInsets.only(top: 4.0,bottom: 4.0), // Adjust the margin as needed
+                  child: Text(
+                    'Autorzy:',
+                    textAlign: TextAlign.center, // Set your desired alignment
+                  ),
+                ),
+                Text('1. Janek Grosicki - ogólna struktura aplikacji'),
+                Text('2. Wiktor Gradzik -Lista ToDo  '),
+                Text('3. Konrad Kaspirowicz- Fiszki, ikonki'),
+                Text('4. Marcin Skrzypek - Introduction Screen, mniejsze screeny'),
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Close'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
+void _showSettingsDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      String username = currentUser.getName(); // Initialize with your default username.
+      String selectedTheme =  currentUser.getTheme(); // Initialize with your default theme.
+      TimeOfDay selectedNotificationTime = TimeOfDay(hour:currentUser.getPrefHour() ,minute:currentUser.getPrefMin() ); // Initialize with your default time.
+
+      return AlertDialog(
+        title: Text('Customize Your Experience'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            DropdownButtonFormField<String>(
+              value: selectedTheme,
+              items: ['White', 'Black'].map((theme) {
+                return DropdownMenuItem<String>(
+                  value: theme,
+                  child: Text(theme),
+                );
+              }).toList(),
+              onChanged: (value) {
+                selectedTheme = value!;
+              },
+            ),
+            TextFormField(
+              initialValue: username,
+              decoration: InputDecoration(labelText: 'Username'),
+              onChanged: (value) {
+                username = value;
+              },
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final time = await showTimePicker(
+                  context: context,
+                  initialTime: selectedNotificationTime,
+                );
+
+                if (time != null) {
+                  selectedNotificationTime = time;
+                }
+              },
+              child: Text('Notification Time'),
+            ),
+          ],
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Save'),
+            onPressed: () {
+
+              currentUser.setName(username!);
+
+              currentUser.setPrefHour(selectedNotificationTime!.hour);
+              currentUser.setPrefMin(selectedNotificationTime!.minute);
+
+              currentUser.setTheme(selectedTheme);
+
+
+
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Close'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
 
 void main() {
