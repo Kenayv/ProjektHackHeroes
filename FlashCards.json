@@ -1,12 +1,1 @@
-{
-    "FlashCardSetName": [
-        {
-            "front": "strona1",
-            "back": "strona2"
-        },
-        {
-            "front": "strona3",
-            "back": "strona4"
-        }
-    ]
-}
+{"FlashCardSetName":[{"front":"strona1","back":"strona2"},{"front":"strona3","back":"strona4"}],"skibidiPop":[{"front":"strona1","back":"strona2"},{"front":"strona3","back":"strona4"},{"front":"test123","back":"lol ale padakson"},{"front":"123","back":"23"},{"front":"1233123","back":"123123"}],"testowanko":[{"front":"strona1","back":"strona2"},{"front":"strona3","back":"strona2"},{"front":"12312","back":"123123"}],"NowyZestaw":[],"123":[],"":[]}
