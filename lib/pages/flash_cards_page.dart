@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'dart:math';
+import 'flash_card_set_page.dart';
 
 class FlashCardSet {
   final String fcSetName;
@@ -30,7 +31,7 @@ class FlashCardSet {
   void _saveFlashCards() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = 'FlashCards.json'; //FIXME
+      String filePath = '${appDocDir.path}/FlashCards.json';
       File file = File(filePath);
 
       Map<String, dynamic> jsonData = {};
@@ -58,7 +59,7 @@ class FlashCardSet {
   void _loadFlashCards() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = 'FlashCards.json'; //FIXME
+      String filePath = '${appDocDir.path}/FlashCards.json';
       File file = File(filePath);
       if (file.existsSync()) {
         String content = file.readAsStringSync();
@@ -82,6 +83,7 @@ class FlashCardSet {
   }
 
   FlashCard getRandFlashCard() {
+    if (_flashCards.length <= 0) throw Exception("brak kart w tym zestawie!");
     final randomIndex = Random().nextInt(_flashCards.length);
     return _flashCards[randomIndex];
   }
@@ -125,16 +127,7 @@ class FlashCardsPage extends StatefulWidget {
 }
 
 class _FlashCardsPageState extends State<FlashCardsPage> {
-  bool isFlipped = false;
-  bool showRatingButtons = false;
   List<FlashCardSet> flashCardSets = [];
-
-  void flipCard() {
-    setState(() {
-      isFlipped = !isFlipped;
-      showRatingButtons = isFlipped;
-    });
-  }
 
   void saveFlashCardSets() {
     for (int i = 0; i < flashCardSets.length; i++) {
@@ -145,7 +138,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   Future<void> loadFlashCardSets() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = 'FlashCards.json'; //FIXME:
+      String filePath = '${appDocDir.path}/FlashCards.json'; //FIXME:
       File file = File(filePath);
 
       if (file.existsSync()) {
@@ -299,7 +292,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
     );
   }
 
-  Widget _buildFlashCardSetItem(FlashCardSet flashCardSet) {
+  Widget _buildFlashCardSetItem(FlashCardSet currentFlashCardSet) {
     final randomColor = Color.fromRGBO(
       Random().nextInt(256),
       Random().nextInt(256),
@@ -307,28 +300,44 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       1.0,
     );
 
-    return ListTile(
-      title: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Container(
-          height: 64,
-          decoration: BoxDecoration(
-            color: randomColor,
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  flashCardSet.getName(),
-                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Ilość kart: ${flashCardSet.getLength()}',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ],
+    return GestureDetector(
+      onTap: () {
+        if (currentFlashCardSet.getLength() > 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return FlashCardSetPage(
+                  flashCardSet: currentFlashCardSet,
+                );
+              },
+            ),
+          );
+        }
+      },
+      child: ListTile(
+        title: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            height: 64,
+            decoration: BoxDecoration(
+              color: randomColor,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    currentFlashCardSet.getName(),
+                    style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Ilość kart: ${currentFlashCardSet.getLength()}',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -336,74 +345,3 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
     );
   }
 }
-
-
-// return Scaffold(
-    //   body: FutureBuilder<void>(
-    //     future: loadFlashCardSets(), // Call the function here
-    //     builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         // Now you can safely access flashCardSets
-    //         FlashCard? testowa = flashCardSets.isNotEmpty ? flashCardSets[0].getRandFlashCard() : null;
-
-    //         return Center(
-    // child: Column(
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   children: [
-    //     Container(
-    //       width: 200,
-    //       height: 400,
-    //       decoration: BoxDecoration(
-    //         color: Colors.white,
-    //         border: Border.all(color: Colors.black),
-    //       ),
-    //       child: Center(
-    //         child: AnimatedCrossFade(
-    //           duration: Duration(milliseconds: 300),
-    //           crossFadeState: isFlipped ? CrossFadeState.showSecond : CrossFadeState.showFirst,
-    //           firstChild: Text(
-    //             testowa?.front ?? 'Front text not available',
-    //             style: TextStyle(fontSize: 20),
-    //           ),
-    //           secondChild: Text(
-    //             testowa?.back ?? 'Back text not available',
-    //             style: TextStyle(fontSize: 20),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //     SizedBox(height: 20),
-    //     if (!showRatingButtons)
-    //       ElevatedButton(
-    //         onPressed: flipCard,
-    //         child: Text('Flip Card'),
-    //       ),
-    //     if (showRatingButtons)
-    //       Row(
-    //         mainAxisAlignment: MainAxisAlignment.center,
-    //         children: [
-    //           ElevatedButton(
-    //             onPressed: () {
-    //               flipCard();
-    //             },
-    //             child: Text('Dobrze'),
-    //           ),
-    //           SizedBox(width: 20),
-    //           ElevatedButton(
-    //             onPressed: () {
-    //               flipCard();
-    //             },
-    //             child: Text('Źle'),
-    //           ),
-    //         ],
-    //       ),
-    //   ],
-    // ),
-    // );
-    //   } else {
-    //     // Handle loading state, for example, display a loading indicator
-    //     return Center(child: CircularProgressIndicator());
-    //   }
-    // },
-    //   ),
-    // );
