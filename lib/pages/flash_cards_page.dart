@@ -31,24 +31,13 @@ class FlashCardSet {
   void _saveFlashCards() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = '${appDocDir.path}/FlashCards.json';
+      String filePath = '${appDocDir.path}/flashcards.json';
       File file = File(filePath);
 
-      Map<String, dynamic> jsonData = {};
-
-      // Check if the file exists and read its content
-      if (file.existsSync()) {
-        String content = file.readAsStringSync();
-        jsonData = jsonDecode(content);
-      }
-
-      // Convert the flashcards to JSON format
       List<Map<String, dynamic>> jsonFlashCards = _flashCards.map((card) => card.toJson()).toList();
+      Map<String, dynamic> jsonData = {fcSetName: jsonFlashCards};
 
-      // Store the flashcards in the "setOne" object in the JSON data
-      jsonData[fcSetName] = jsonFlashCards;
-
-      // Write the updated JSON data back to the file
+      // Write the JSON data to the file (this will overwrite any existing content)
       file.writeAsStringSync(jsonEncode(jsonData));
     } catch (e) {
       print("Error while saving flashcards: $e");
@@ -59,7 +48,7 @@ class FlashCardSet {
   void _loadFlashCards() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = '${appDocDir.path}/FlashCards.json';
+      String filePath = '${appDocDir.path}/flashcards.json';
       File file = File(filePath);
       if (file.existsSync()) {
         String content = file.readAsStringSync();
@@ -138,7 +127,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   Future<void> loadFlashCardSets() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
-      String filePath = '${appDocDir.path}/FlashCards.json'; //FIXME:
+      String filePath = '${appDocDir.path}/flashcards.json';
       File file = File(filePath);
 
       if (file.existsSync()) {
@@ -221,47 +210,51 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Dodaj Fiszkę'),
+          title: Text('Dodaj fiszkę lub zestaw'),
           content: StatefulBuilder(builder: (context, setState) {
-            return Column(
-              children: <Widget>[
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(labelText: 'Zestaw fiszek'),
-                  items: fcSetNames.map((theme) {
-                    return DropdownMenuItem<String>(
-                      value: theme,
-                      child: Text(theme),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedValue = value;
-                    });
-                  },
-                ),
-                Visibility(
-                  visible: selectedValue == newSetVal,
-                  child: TextField(
-                    controller: inputName,
-                    decoration: InputDecoration(labelText: 'Nazwa'),
+            return SizedBox(
+              width: 250, // Set the desired width
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  DropdownButtonFormField<String>(
+                    decoration: InputDecoration(labelText: 'Zestaw fiszek'),
+                    items: fcSetNames.map((theme) {
+                      return DropdownMenuItem<String>(
+                        value: theme,
+                        child: Text(theme),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedValue = value;
+                      });
+                    },
                   ),
-                ),
-                Visibility(
-                  visible: selectedValue != newSetVal,
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: inputFront,
-                        decoration: InputDecoration(labelText: 'Przód karty'),
-                      ),
-                      TextField(
-                        controller: inputBack,
-                        decoration: InputDecoration(labelText: 'Tył karty'),
-                      ),
-                    ],
+                  Visibility(
+                    visible: selectedValue == newSetVal,
+                    child: TextField(
+                      controller: inputName,
+                      decoration: InputDecoration(labelText: 'Nazwa'),
+                    ),
                   ),
-                ),
-              ],
+                  Visibility(
+                    visible: selectedValue != newSetVal,
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: inputFront,
+                          decoration: InputDecoration(labelText: 'Przód karty'),
+                        ),
+                        TextField(
+                          controller: inputBack,
+                          decoration: InputDecoration(labelText: 'Tył karty'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             );
           }),
           actions: <Widget>[
@@ -319,7 +312,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
         title: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
-            height: 64,
+            height: 92,
             decoration: BoxDecoration(
               color: randomColor,
               borderRadius: BorderRadius.all(Radius.circular(10)),

@@ -31,7 +31,8 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
     return Scaffold(
       // Wrap your content in a Scaffold to get the default app background
       appBar: AppBar(
-        title: Text(currentFlashCardSet.getName()), // Add an AppBar if needed
+        title: Text(currentFlashCardSet.getName()),
+        centerTitle: true,
       ),
       body: Container(
         color: Colors.white, // Set the background color to white
@@ -45,7 +46,10 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: Colors.white, // Set the color to white as well
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 4.0, // Adjust this value to make the border thicker
+                  ),
                 ),
                 child: Center(
                   child: AnimatedCrossFade(
@@ -70,7 +74,12 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                       isFlipped = !isFlipped;
                     });
                   },
-                  child: Text('Pokaż odpowiedź'),
+                  child: Container(
+                    height: 40,
+                    width: 120,
+                    alignment: Alignment.center,
+                    child: Text('Pokaż odpowiedź'),
+                  ),
                 ),
               if (isFlipped)
                 Row(
@@ -82,7 +91,12 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                           flipCard();
                         });
                       },
-                      child: Text('Dobrze'),
+                      child: Container(
+                        height: 50,
+                        width: 80,
+                        alignment: Alignment.center,
+                        child: Text('Dobrze'),
+                      ),
                     ),
                     SizedBox(width: 20),
                     ElevatedButton(
@@ -91,10 +105,15 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                           flipCard();
                         });
                       },
-                      child: Text('Źle'),
+                      child: Container(
+                        height: 50,
+                        width: 80,
+                        alignment: Alignment.center,
+                        child: Text('Źle'),
+                      ),
                     ),
                   ],
-                ),
+                )
             ],
           ),
         ),
