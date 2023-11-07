@@ -44,28 +44,28 @@ class Theme {
       automaticallyImplyLeading: false,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
-          margin: EdgeInsets.only(top: 5.0, bottom: 5.0), // Add top margin
+          margin: EdgeInsets.only(top: 15.0, bottom: 5.0), // Add top margin
           child: Row(
             children: [
               Expanded(
                 child: Text(
                   currentUser.getDayStreak().toString() + "🔥",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: usertheme.TextColor),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: usertheme.TextColor),
                 ), // Move to the center
               ),
               Expanded(
                 child: Text(
                   pagetitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: usertheme.TextColor),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28, color: usertheme.TextColor),
                 ), // Move to the center
               ),
               Expanded(
                 child: Text(" 🏅" + currentUser.getLongestStreak().toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 32, color: usertheme.TextColor)), // Move to the right
+                        fontWeight: FontWeight.bold, fontSize: 28, color: usertheme.TextColor)), // Move to the right
               ),
             ],
           ),
@@ -81,8 +81,8 @@ final Theme whitetheme = Theme(
   Color.fromRGBO(248, 245, 250, 1.0),
   Color.fromRGBO(1, 5, 255, 1.0),
   Color.fromRGBO(1, 5, 255, 1.0),
-  Color.fromRGBO(248, 245, 250, 0.8),
-  Color.fromRGBO(201, 201, 201, 0.7),
+  Color.fromRGBO(248, 245, 250, 0.9999),
+  Color.fromRGBO(201, 201, 201, 0.1),
   Color.fromRGBO(0, 0, 0, 1),
   Color.fromRGBO(106, 163, 248, 1),
   Color.fromRGBO(252, 102, 102, 1),
@@ -102,8 +102,8 @@ final Theme blacktheme = Theme(
   Color.fromRGBO(31, 42, 95, 1.0),
   Color.fromRGBO(1, 5, 255, 1.0),
   Color.fromRGBO(1, 5, 255, 1.0),
-  Color.fromRGBO(31, 42, 95, 0.85),
-  Color.fromRGBO(201, 201, 201, 0.7),
+  Color.fromRGBO(31, 42, 95, 0.99999),
+  Color.fromRGBO(40, 40, 80, 0.7),
   Color.fromRGBO(255, 255, 255, 1),
   Color.fromRGBO(89, 155, 255, 1.0),
   Color.fromRGBO(173, 138, 253, 1.0), //PLACEHOLDERS LAST 4

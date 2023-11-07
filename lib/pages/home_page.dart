@@ -135,50 +135,19 @@ class HomePage extends StatelessWidget {
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Container(
-                    width: 360,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Text("Zadanie 1", style: TextStyle(fontSize: 20, color: usertheme.TextColor)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Container(
-                    width: 360,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Text("Zadanie 2", style: TextStyle(fontSize: 20, color: usertheme.TextColor)),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Container(
-                    width: 360,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Zadanie 3",
-                        style: TextStyle(fontSize: 20, color: usertheme.TextColor),
-                      ),
-                    ),
-                  ),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    TodoTask todo = tasks[index];
+                    if (todo.isCompleted) return null;
+                    return SizedBox(
+                      // Wrap the Container with a SizedBox
+                      width: MediaQuery.of(context).size.width * 0.8, // Set width to 80% of the screen width
+                      child: _buildTaskItem(todo.task),
+                    );
+                  },
                 ),
               ],
             ),

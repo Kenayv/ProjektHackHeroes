@@ -9,7 +9,6 @@ import 'dart:math';
 import 'flash_card_set_page.dart';
 import 'package:project_hack_heroes/main.dart';
 
-
 class FlashCardSet {
   final String fcSetName;
   List<FlashCard> _flashCards = [];
@@ -157,8 +156,6 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   void initState() {
     super.initState();
     loadFlashCardSets().then((_) {
-
-
       setState(() {}); // Trigger a rebuild after loading data.
     });
   }
@@ -174,7 +171,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Twoje zestawy fiszek:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: usertheme.TextColor),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
               ),
             ),
             ListView.builder(
@@ -289,6 +286,40 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
     );
   }
 
+  Future<void> _editSetDialog(FlashCardSet currentSet) async {
+    TextEditingController editTaskController = TextEditingController();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Task'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  controller: editTaskController,
+                  decoration: InputDecoration(labelText: 'Task'),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Save'),
+              onPressed: () {},
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildFlashCardSetItem(FlashCardSet currentFlashCardSet) {
     final randomColor = Color.fromRGBO(
       Random().nextInt(256),
@@ -311,6 +342,9 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
             ),
           );
         }
+      },
+      onLongPress: () {
+        _editSetDialog(currentFlashCardSet);
       },
       child: ListTile(
         title: Padding(

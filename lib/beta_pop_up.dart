@@ -11,7 +11,7 @@ class BetaPopUpPage extends StatelessWidget {
       body: Stack(children: [
         Positioned(
           width: MediaQuery.of(context).size.width,
-          top: MediaQuery.of(context).size.width * 0.52,
+          top: MediaQuery.of(context).size.height * 0.25,
           child: Image(
             image: AssetImage('lib/assets/temporaryLogo.png'),
             width: 150,
@@ -20,33 +20,37 @@ class BetaPopUpPage extends StatelessWidget {
         ),
         Positioned(
           width: MediaQuery.of(context).size.width,
-          top: MediaQuery.of(context).size.width * 0.85,
+          top: MediaQuery.of(context).size.height * 0.50,
           child: const Text.rich(
             textAlign: TextAlign.center,
             TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                    text: 'Studi\n',
+                    text: 'Studee\n',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 32,
                       color: Colors.white,
                     )),
                 TextSpan(
-                    text: 'Lorem ipsum dolor sit amet\nNaciśnij ',
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      color: Color.fromRGBO(128, 128, 128, 1),
-                    )),
-                TextSpan(
-                    text: 'dalej',
+                    text: 'UWAGA!',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
+                      fontSize: 16,
                       color: Color.fromRGBO(128, 128, 128, 1),
                     )),
                 TextSpan(
-                    text: ' aby przejść dalej.',
+                    text:
+                        ' Studee jest w stanie beta.\nOznacza to, że błędy mogą nadal występować\nProsimy, miej to na uwadze podczas nauki.\n',
                     style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                      fontSize: 16,
+                      color: Color.fromRGBO(128, 128, 128, 1),
+                    )),
+                TextSpan(
+                    text: 'Naciśnij przycisk poniżej przejść dalej.',
+                    style: TextStyle(
+                      fontSize: 18,
                       fontStyle: FontStyle.italic,
                       color: Color.fromRGBO(128, 128, 128, 1),
                     )),
