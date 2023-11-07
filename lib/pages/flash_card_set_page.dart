@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/user.dart';
 import 'flash_cards_page.dart';
@@ -25,6 +27,59 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
     });
   }
 
+  void showSettingsDialog(BuildContext context, FlashCardSet currentFlashCardSet, FlashCard currentFlashCard) {
+    TextEditingController frontController = TextEditingController(text: currentFlashCard.front);
+    TextEditingController backController = TextEditingController(text: currentFlashCard.back);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edytuj fiszkę'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: frontController,
+                decoration: InputDecoration(labelText: currentFlashCard.front),
+              ),
+              TextField(
+                controller: backController,
+                decoration: InputDecoration(labelText: currentFlashCard.back),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                currentFlashCardSet.getFlashCards().removeWhere((element) => element == currentFlashCard);
+                Navigator.of(context).pop();
+                setState(() {});
+              },
+              child: Text('Usuń'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Anuluj'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                  currentFlashCard.front = frontController.text;
+                  currentFlashCard.back = backController.text;
+                });
+              },
+              child: Text('Zapisz'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   _FlashCardSetPageState({required this.currentFlashCardSet});
 
   @override
@@ -34,6 +89,29 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
       appBar: AppBar(
         title: Text(currentFlashCardSet.getName()),
         centerTitle: true,
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: (String choice) {
+              if (choice == 'settings') {
+                showSettingsDialog(context, currentFlashCardSet, currentCard);
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return ['settings'].map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Row(
+                    children: [
+                      Icon(Icons.settings),
+                      SizedBox(width: 8),
+                      Text('Settings'),
+                    ],
+                  ),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: Container(
         color: Colors.white, // Set the background color to white

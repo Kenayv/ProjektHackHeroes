@@ -10,27 +10,27 @@ import 'flash_card_set_page.dart';
 import 'package:project_hack_heroes/main.dart';
 
 class FlashCardSet {
-  final String fcSetName;
+  String fcSetName;
   List<FlashCard> _flashCards = [];
 
   FlashCardSet({required this.fcSetName}) {
-    _loadFlashCards();
+    loadFlashCards();
   }
 
   void addFlashCard(String frontText, String backText) {
     var contains = _flashCards.where((card) => card.front == frontText && card.back == backText);
     if (contains.isNotEmpty) return;
     _flashCards.add(FlashCard(front: frontText, back: backText));
-    _saveFlashCards();
+    saveFlashCards();
   }
 
   void removeById(int id) {
     if (_flashCards.length - 1 < id || id < 0) return;
     _flashCards.removeAt(id);
-    _saveFlashCards();
+    saveFlashCards();
   }
 
-  void _saveFlashCards() async {
+  void saveFlashCards() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String filePath = '${appDocDir.path}/flashcards.json';
@@ -47,7 +47,7 @@ class FlashCardSet {
   }
 
   //Reads FlashCards saved in FlashCards.json file and pushes them into FlashCards[] array
-  void _loadFlashCards() async {
+  void loadFlashCards() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String filePath = '${appDocDir.path}/flashcards.json';
@@ -79,8 +79,16 @@ class FlashCardSet {
     return _flashCards[randomIndex];
   }
 
+  List<FlashCard> getFlashCards() {
+    return _flashCards;
+  }
+
   String getName() {
     return fcSetName;
+  }
+
+  void setName(String newName) {
+    fcSetName = newName;
   }
 
   int getLength() {
@@ -122,7 +130,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
 
   void saveFlashCardSets() {
     for (int i = 0; i < flashCardSets.length; i++) {
-      flashCardSets[i]._saveFlashCards();
+      flashCardSets[i].saveFlashCards();
     }
   }
 
@@ -142,7 +150,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
           if (setData is List) {
             FlashCardSet flashCardSet = FlashCardSet(fcSetName: setName);
 
-            flashCardSet._loadFlashCards();
+            flashCardSet.loadFlashCards();
             flashCardSets.add(flashCardSet);
           }
         });
@@ -292,17 +300,17 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   }
 
   Future<void> _editSetDialog(FlashCardSet currentSet) async {
-    TextEditingController editTaskController = TextEditingController();
+    TextEditingController editSetController = TextEditingController();
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Zmień nazwę'),
+          title: Text('Usuń lub zmień nazwę'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
-                  controller: editTaskController,
+                  controller: editSetController,
                   decoration: InputDecoration(labelText: 'Nowa nazwa'),
                 ),
               ],
@@ -325,7 +333,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
             ),
             TextButton(
               child: Text('Zmień nazwę'),
-              onPressed: () {},
+              onPressed: () {
+                currentSet.setName(editSetController.text);
+                Navigator.of(context).pop();
+                setState(() {});
+              },
             ),
           ],
         );
