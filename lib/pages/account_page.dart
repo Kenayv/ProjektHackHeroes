@@ -15,7 +15,7 @@ class AccountPage extends StatelessWidget {
             SizedBox(height: 20),
             CircleAvatar(
               radius: 70,
-              backgroundImage: AssetImage('lib/assets/temporaryLogo.png'),
+              backgroundImage: AssetImage('lib/assets/BurnOutSorry.png'),
             ),
             SizedBox(height: 10),
             Text(
