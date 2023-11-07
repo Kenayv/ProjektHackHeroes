@@ -38,8 +38,8 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: SizedBox(
-          height:MediaQuery.of(context).size.height,
+        body: Form(
+          key: _formKey,
 
           child: IntroductionScreen(
               pages: [
@@ -49,8 +49,8 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                   decoration: getPageDecoration(),
                 ),
                 PageViewModel(
-                  title: 'Meet the Creators',
-                  body: 'This app is made by:',
+                  title: 'Autorzy',
+                  body: 'Aplikacja została zrobiona przez:',
                   image: AspectRatio(
                     aspectRatio: 1100 / 876,
                     child: Image.asset('lib/assets/zdjecie1.png'),
@@ -96,8 +96,10 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                           }
                           return null;
                         },
-                        onSaved: (value) {
+                        onChanged: (value) {    //nieoptymalne
+
                           username = value;
+
                         },
                       ),
                       Center(
@@ -117,7 +119,7 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                                 });
                               }
                             },
-                            child: Text('Select Notification Time'),
+                            child: Text('Select Notification Time',overflow: TextOverflow.ellipsis),
                           )),
 
 
@@ -127,10 +129,12 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
               ],
               onDone: () {
 
-                /*
-            setting the perfsharedvariables
-             */
+                currentUser.setName(username!);
 
+                currentUser.setPrefHour(selectedNotificationTime!.hour);
+                currentUser.setPrefMin(selectedNotificationTime!.minute);
+
+                currentUser.setTheme(selectedTheme);
 
 
                 Navigator.push(
@@ -139,6 +143,8 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                 );
 
                 currentUser.setHasSeenIntroductionTrue();
+
+
 
               },
               //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.

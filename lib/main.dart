@@ -10,14 +10,21 @@ import 'pages/home_page.dart';
 import 'pages/flash_cards_page.dart';
 import 'notification_controller.dart';
 import 'pages/introduction_screen.dart';
+import 'theme.dart';
 
-//  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+//  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await currentUser.initUser();
   await noController.initNotifications();
+
+
+
   runApp(const MyApp());
+
+
+
 }
 
 class MyApp extends StatefulWidget {
@@ -40,33 +47,37 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Studi - Hack Heroes Projekt',
-      home: FutureBuilder<bool>(                        //od tąd
-        future: currentUser.getHasSeenIntroduction(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
-          } else {                                         //bylo juz raz wyswietlane
-            //final hasSeenIntroduction = snapshot.data;
-            final hasSeenIntroduction=false;
-            if (hasSeenIntroduction == false) {
-              return const IntroductionScreens();
-            } else if (hasSeenIntroduction == true) {
-              return BetaPopUpPage();
-            } else {
-              // Return a default widget here, e.g., an empty Container.
-              return Container();                   //do tąd
+
+      return MaterialApp(
+
+        title: 'Studi - Hack Heroes Projekt',
+
+        home: FutureBuilder<bool>(                        //od tąd
+          future: currentUser.getHasSeenIntroduction(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
+            } else {                                         //bylo juz raz wyswietlane
+              final hasSeenIntroduction = snapshot.data;
+
+              if (hasSeenIntroduction == false) {
+                return const IntroductionScreens();
+              } else if (hasSeenIntroduction == true) {
+                return BetaPopUpPage();
+              } else {
+                // Return a default widget here, e.g., an empty Container.
+                return Container();                   //do tąd
+              }
             }
-          }
-        },
-      ),
-    );
+          },
+        ),
+      );
+    }
 
   }
-}
+
 //  -   -   -   -   -   -   ↓ Main page ↓   -   -   -   -   -   -   -
 
 class MainPage extends StatefulWidget {
@@ -74,10 +85,12 @@ class MainPage extends StatefulWidget {
 
   @override
   State<MainPage> createState() => _MainPageState();
+
 }
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
+  String currentPageTitle = 'Home';
 
   final screens = [
     TodoPage(),
@@ -89,35 +102,37 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(currentUser.getTheme()=="White"){
+      usertheme=whitetheme;
+    }
+    else {
+      usertheme = blacktheme;
+    }
     return Scaffold(
-      appBar: AppBar(
-        shadowColor: Color.fromRGBO(0, 0, 0, 0.3), // barely visible black shadow - looks like a line
-        backgroundColor: Color.fromRGBO(250, 250, 250, 1), //bar should be background color.
-        automaticallyImplyLeading: false,
-        actions: <Widget>[],
-      ),
+      appBar: usertheme.getAppBar(currentPageTitle),
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items:  <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.add_chart_sharp),
             label: 'To-Do',
-            backgroundColor: Color.fromARGB(255, 236, 43, 43),
+            backgroundColor: usertheme.Page1,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Fiszki',
-            backgroundColor: Color.fromRGBO(250, 146, 26, 1),
+            backgroundColor: usertheme.Page2,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            backgroundColor: Color.fromARGB(255, 22, 170, 34),
+            backgroundColor: usertheme.Page3,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Medale',
-            backgroundColor: Color.fromARGB(255, 35, 153, 231),
+            backgroundColor:usertheme.Page4,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -130,9 +145,31 @@ class _MainPageState extends State<MainPage> {
         onTap: (int index) => setState(
           () {
             _selectedIndex = index;
+            currentPageTitle=_getPageTitle(index);
           },
         ),
       ),
+
+
     );
   }
+
+
+  String _getPageTitle(int index) {
+    switch (index) {
+      case 0:
+        return 'To-Do';
+      case 1:
+        return 'Fiszki';
+      case 2:
+        return 'Home';
+      case 3:
+        return 'Medale';
+      case 4:
+        return 'Konto';
+      default:
+        return 'Home';
+    }
+  }
+
 }

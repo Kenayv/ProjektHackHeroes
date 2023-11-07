@@ -29,6 +29,7 @@ class User {
   late int _configPrefDailyTasks;
   late int _configPrefHour;
   late int _configPrefMin;
+  late String _configTheme;
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
@@ -98,6 +99,7 @@ class User {
     _configPrefDailyTasks = sharedPrefs.getInt('configPrefDailyTasks') ?? 5;
     _configPrefDailyFlashCards = sharedPrefs.getInt('configPrefFlashCards') ?? 20;
     _configUserName = sharedPrefs.getString("configUserName") ?? "Hello dolly!";
+    _configTheme=sharedPrefs.getString("configTheme")?? "White";
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
@@ -144,8 +146,9 @@ class User {
     sharedPrefs.setString('configUserName', _configUserName);
     sharedPrefs.setInt('configPrefDailyFlashCards', _configPrefDailyFlashCards);
     sharedPrefs.setInt('configPrefDailyTasks', _configPrefDailyTasks);
-    sharedPrefs.setInt('PrefHour', _configPrefHour);
+    sharedPrefs.setInt('configPrefHour', _configPrefHour);
     sharedPrefs.setInt('configPrefMin', _configPrefMin);
+    sharedPrefs.setString("configTheme", _configTheme);
   }
 
   //  -   -   -   -   ↓ Functions changing user's variables ↓    -   -   -   -   -   -
@@ -264,6 +267,29 @@ class User {
     saveAll();
   }
 
+  void setName(String s){
+    _configUserName=s;
+    saveAll();
+
+  }
+
+
+  void setTheme(String s){
+
+    if(s=="White"){
+      _configTheme="White";
+    }
+    else if(s=="Black"){
+      _configTheme="Black";
+    }
+    else _configTheme="Error";
+
+    saveAll();
+
+
+  }
+
+
   //  -   -   -   -   ↓ Functions returning user's variables ↓    -   -   -   -   -   -
 
   int getDayStreak() {
@@ -353,7 +379,19 @@ class User {
 
   }
 
+  bool hasSeenIntroduction(){
+    return _hasSeenIntroduction;
+  }
 
+
+
+  String getName(){
+    return _configUserName;
+  }
+
+  String getTheme() {
+    return _configTheme;
+  }
 
 
 

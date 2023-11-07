@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
-
+import 'package:project_hack_heroes/main.dart';
+import 'package:project_hack_heroes/theme.dart';
 class AchievementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Container(
+        color: usertheme.Primarybgcolor,
+      child: Column(
         children: <Widget>[
           SizedBox(
             height: 40,
@@ -15,7 +18,7 @@ class AchievementPage extends StatelessWidget {
               children: [
                 Text(
                   "Osiągnięcia",
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold,color: usertheme.TextColor),
                 ),
               ],
             ),
@@ -53,7 +56,7 @@ class AchievementPage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }
 

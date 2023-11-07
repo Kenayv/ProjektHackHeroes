@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, unused_element, avoid_print, prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:project_hack_heroes/theme.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -183,7 +184,7 @@ class _TodoPageState extends State<TodoPage> {
           title: Text(
             todo.task,
             style: TextStyle(
-              decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+              decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,color: usertheme.TextColor
             ),
           ),
           onLongPress: () {
@@ -232,7 +233,11 @@ class _TodoPageState extends State<TodoPage> {
     List<TodoTask> incompleteTasks = tasks.where((task) => !task.isCompleted).toList();
     List<TodoTask> completedTasks = tasks.where((task) => task.isCompleted).toList();
 
+
+
     return Scaffold(
+
+      backgroundColor: usertheme.Primarybgcolor, // Set the background color here
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -240,7 +245,7 @@ class _TodoPageState extends State<TodoPage> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: usertheme.TextColor),
               ),
             ),
             ListView.builder(
@@ -256,7 +261,7 @@ class _TodoPageState extends State<TodoPage> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Completed Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: usertheme.TextColor),
               ),
             ),
             ListView.builder(
@@ -271,14 +276,12 @@ class _TodoPageState extends State<TodoPage> {
           ],
         ),
       ),
-
-      // Przycisk "Dodaj zadanie"
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _addTaskDialog();
         },
         child: Icon(Icons.add),
-        backgroundColor: Colors.blue,
+        backgroundColor: usertheme.Page1,
       ),
     );
   }
