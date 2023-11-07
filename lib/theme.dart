@@ -39,12 +39,12 @@ class Theme {
 
   AppBar getAppBar(String pagetitle) {
     late AppBar appbar = AppBar(
-      shadowColor: AppBarshadowcolor, // barely visible black shadow
+      shadowColor: AppBarshadowcolor, // barely visible black shadow - works as a line dividing appbar and body
       backgroundColor: Appbarbgcolor,
       automaticallyImplyLeading: false,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
-          margin: EdgeInsets.only(top: 15.0, bottom: 5.0), // Add top margin
+          margin: EdgeInsets.only(top: 15.0, bottom: 5.0),
           child: Row(
             children: [
               Expanded(

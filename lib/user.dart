@@ -18,7 +18,7 @@ class User {
   late bool _varDailyGoalAchieved;
   late int _varFlashCardsFinishedToday;
   late int _varTasksFinishedToday;
-  late bool _upcomingNotification; // WORK-IN-PROGRESS
+  late bool _upcomingNotification;
 
   late String _configUserName;
   late int _configPrefDailyFlashCards;
@@ -40,6 +40,8 @@ class User {
     _loadVars(sharedPrefs);
   }
 
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
   Future saveAll() async {
     final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
     _saveConfig(sharedPrefs);
@@ -49,7 +51,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
-  //Loads user stats and saves them as variables in User class.
+  //Loads user stats from SharedPreferences and saves them as variables in User class.
   Future<void> _loadStats(SharedPreferences sharedPrefs) async {
     _statsHighScoreFlashCardsRush = sharedPrefs.getInt('highScoreFlashCardsRush') ?? 0; // WORK-IN-PROGRESS
     _statsCompletedFlashCards = sharedPrefs.getInt('completedFlashCards') ?? 0;
@@ -62,6 +64,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
+  //Loads user variables from SharedPreferences and saves them as variables in User class.
   Future<void> _loadVars(SharedPreferences sharedPrefs) async {
     final lastLearnedYear = sharedPrefs.getInt('lastLearnedYear') ?? 1999;
     final lastLearnedMonth = sharedPrefs.getInt('lastLearnedMonth') ?? 1;
@@ -88,7 +91,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
-  //Loads user config and saves them as variables in User class.
+  //Loads user config from SharedPreferences and saves them as variables in User class.
   Future<void> _loadConfig(SharedPreferences sharedPrefs) async {
     _configPrefHour = sharedPrefs.getInt('configPrefHour') ?? 18;
     _configPrefMin = sharedPrefs.getInt('configPrefMin') ?? 0;
@@ -116,6 +119,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
+  //Saves user variables stats as SharedPrefs.
   Future<void> _saveVars(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
 
@@ -136,6 +140,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
+  //Saves config variables stats as SharedPrefs.
   Future<void> _saveConfig(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
 
@@ -149,6 +154,7 @@ class User {
 
   //  -   -   -   -   ↓ Functions changing user's variables ↓    -   -   -   -   -   -
 
+  //checks if the daily goal is completed or last daily goal's date equals today
   bool _isDailyGoalCompleted(lastGoalYear, lastGoalMonth, lastGoalDay) {
     if (_varTasksFinishedToday >= _configPrefDailyTasks && _varFlashCardsFinishedToday >= _configPrefDailyFlashCards) {
       return true;
@@ -199,6 +205,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //changes daily goal's state to achieved and updates day streak
   void achieveDailyGoal() {
     if (!_varDailyGoalAchieved) {
       _varDailyGoalAchieved = true;
@@ -216,6 +223,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //increments CompletedFlashCard stat and checks for daily goal completion
   void incrCompletedFlashCard() {
     _statsCompletedFlashCards++;
     _varFlashCardsFinishedToday++;
@@ -227,6 +235,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //increments tasks stat and checks for daily goal completion
   void incrFinishedTask() {
     _statsFinishedTasks++;
     _varTasksFinishedToday++;
@@ -253,6 +262,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //Switches the boolean value of upcomingNotification var used for scheduling new notifications
   void switchUpcomingReminder() {
     _upcomingNotification = !_upcomingNotification;
     saveAll();
@@ -260,6 +270,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //changes the streak value
   void _updateDaysStreak(int newDaysStreak) {
     if (newDaysStreak <= 0) return;
     if (_statsLongestStreak < newDaysStreak) _statsLongestStreak = newDaysStreak;
@@ -281,10 +292,14 @@ class User {
     saveAll();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   void setName(String s) {
     _configUserName = s;
     saveAll();
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   void setTheme(String s) {
     if (s == "White") {
@@ -323,6 +338,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //returns tasks completion percentage in (00.00) format
   double getTaskCompletion() {
     if (_statsFinishedTasks == 0) return 0.00;
     if (_statsFailedTasks == 0) return 100;
@@ -390,31 +406,44 @@ class User {
     return _varDailyGoalAchieved;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   Future<bool> getHasSeenIntroduction() async {
     return _hasSeenIntroduction;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   void setHasSeenIntroductionTrue() {
     _hasSeenIntroduction = true;
     saveAll();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   void setHasSeenIntroductionFalse() {
     _hasSeenIntroduction = false;
     saveAll();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   bool hasSeenIntroduction() {
     return _hasSeenIntroduction;
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   String getName() {
     return _configUserName;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   String getTheme() {
     return _configTheme;
   }
 }
 
+//Current user object, used in the entire App for accesing/changing config/stats/variables.
 final User currentUser = User();
