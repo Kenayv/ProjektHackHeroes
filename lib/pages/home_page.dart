@@ -60,9 +60,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     _loadTasks();
     return Scaffold(
+        backgroundColor: usertheme.Primarybgcolor,
         body: SingleChildScrollView(
       child: Container(
-        color: usertheme.Primarybgcolor,
+
         child: Column(
           children: [
             Container(
