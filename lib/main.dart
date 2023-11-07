@@ -15,14 +15,19 @@ import 'theme.dart';
 //  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
 void main() async {
+  await initAll();
+  runApp(const MyApp());
+}
 
+//  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
+Future<void> initAll() async {
   WidgetsFlutterBinding.ensureInitialized();
   await currentUser.initUser();
   await noController.initNotifications();
-
-  runApp(const MyApp());
 }
+
+//  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -33,6 +38,8 @@ class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+
+//  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
 class _MyAppState extends State<MyApp> {
   @override
@@ -104,42 +111,46 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: usertheme.getAppBar(currentPageTitle),
       body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_chart_sharp),
-            label: 'To-Do',
-            backgroundColor: usertheme.Page1,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Fiszki',
-            backgroundColor: usertheme.Page2,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: usertheme.Page3,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Medale',
-            backgroundColor: usertheme.Page4,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Konto',
-            backgroundColor: Color.fromRGBO(128, 128, 128, 1),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
-        onTap: (int index) => setState(
-          () {
-            _selectedIndex = index;
-            currentPageTitle = _getPageTitle(index);
-          },
+      bottomNavigationBar: studeeNavBar(),
+    );
+  }
+
+  BottomNavigationBar studeeNavBar() {
+    return BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.add_chart_sharp),
+          label: 'To-Do',
+          backgroundColor: usertheme.Page1,
         ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.school),
+          label: 'Fiszki',
+          backgroundColor: usertheme.Page2,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+          backgroundColor: usertheme.Page3,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.school),
+          label: 'Medale',
+          backgroundColor: usertheme.Page4,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'Konto',
+          backgroundColor: Color.fromRGBO(128, 128, 128, 1),
+        ),
+      ],
+      currentIndex: _selectedIndex,
+      selectedItemColor: Color.fromARGB(255, 255, 255, 255),
+      onTap: (int index) => setState(
+        () {
+          _selectedIndex = index;
+          currentPageTitle = _getPageTitle(index);
+        },
       ),
     );
   }

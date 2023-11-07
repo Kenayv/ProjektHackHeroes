@@ -12,6 +12,7 @@ class Theme {
   late Color Page2;
   late Color Page3;
   late Color Page4;
+  late Color Taskcolor;
 
   Theme(
     Color primarybgcolor,
@@ -24,6 +25,9 @@ class Theme {
     Color page2,
     Color page3,
     Color page4,
+    Color taskcolor,
+
+
   ) {
     Primarybgcolor = primarybgcolor;
     Secondarybgcolor = secondarybgcolor;
@@ -35,16 +39,17 @@ class Theme {
     Page2 = page2;
     Page3 = page3;
     Page4 = page4;
+    Taskcolor=taskcolor;
   }
 
   AppBar getAppBar(String pagetitle) {
     late AppBar appbar = AppBar(
-      shadowColor: AppBarshadowcolor, // barely visible black shadow - works as a line dividing appbar and body
+      shadowColor: AppBarshadowcolor, // barely visible black shadow
       backgroundColor: Appbarbgcolor,
       automaticallyImplyLeading: false,
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
-          margin: EdgeInsets.only(top: 15.0, bottom: 5.0),
+          margin: EdgeInsets.only(top: 15.0, bottom: 5.0), // Add top margin
           child: Row(
             children: [
               Expanded(
@@ -88,6 +93,7 @@ final Theme whitetheme = Theme(
   Color.fromRGBO(252, 102, 102, 1),
   Color.fromRGBO(139, 91, 227, 1.0),
   Color.fromRGBO(252, 161, 66, 1.0),
+  Color.fromRGBO(139, 91, 227, 1.0),
 );
 
 /*
@@ -109,6 +115,7 @@ final Theme blacktheme = Theme(
   Color.fromRGBO(173, 138, 253, 1.0), //PLACEHOLDERS LAST 4
   Color.fromRGBO(255, 119, 46, 1.0),
   Color.fromRGBO(0, 204, 189, 1.0),
+  Color.fromRGBO(255, 119, 46, 1.0),
 );
 
 /*
