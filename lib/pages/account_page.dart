@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/theme.dart';
 import '../user.dart';

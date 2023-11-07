@@ -1,5 +1,3 @@
-// ignore_for_file: unused_element, prefer_final_fields, unused_field, curly_braces_in_flow_control_structures
-
 import 'package:project_hack_heroes/notification_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
