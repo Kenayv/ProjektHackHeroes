@@ -3,22 +3,23 @@
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/main.dart';
 import 'package:project_hack_heroes/theme.dart';
+
 class AchievementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: usertheme.Primarybgcolor,
+        body: Container(
+      color: usertheme.Primarybgcolor,
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 40,
+            height: 64,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Osiągnięcia",
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold,color: usertheme.TextColor),
+                  "Twoje osiągnięcia",
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: usertheme.TextColor),
                 ),
               ],
             ),

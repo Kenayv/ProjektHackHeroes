@@ -3,16 +3,67 @@
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/theme.dart';
 import 'package:project_hack_heroes/user.dart';
-import 'package:project_hack_heroes/main.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+import 'todo_page.dart';
+import 'dart:math';
+import 'dart:io';
 
 class HomePage extends StatelessWidget {
+  List<TodoTask> tasks = TodoPage().getTasks();
+
+  void _loadTasks() async {
+    try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String filePath = '${appDocDir.path}/tasks.json';
+      File file = File(filePath);
+      if (file.existsSync()) {
+        String content = file.readAsStringSync();
+        List<dynamic> decodedTasks = jsonDecode(content);
+        List<TodoTask> loadedTasks = decodedTasks.map((task) => TodoTask.fromJson(task)).toList();
+        tasks = loadedTasks;
+      }
+    } catch (e) {
+      //FIXME: Tu powinien się wyświetlać na stronie TODO komunikat że się nie udało.
+      print("Error loading tasks: $e");
+    }
+  }
+
+  Padding _buildTaskItem(String taskText) {
+    final randomColor = Color.fromRGBO(
+      Random().nextInt(256),
+      Random().nextInt(256),
+      Random().nextInt(256),
+      1.0,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Container(
+        height: 200,
+        decoration: BoxDecoration(
+          color: randomColor,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        child: Center(
+          child: Text(
+            taskText,
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _loadTasks();
     return Scaffold(
-      body: SingleChildScrollView(
-        child:Container(
-          color:usertheme.Primarybgcolor,
-          child: Column(
+        body: SingleChildScrollView(
+      child: Container(
+        color: usertheme.Primarybgcolor,
+        child: Column(
           children: [
             Container(
               height: 120,
@@ -33,17 +84,35 @@ class HomePage extends StatelessWidget {
                 child: Row(
                   children: [
                     Container(
-                      width: 200,
+                      width: 110,
                       height: 50,
                       child: Center(
-                        child: Text("Streak: 6 Dni🔥", style: TextStyle(fontSize: 18,color: usertheme.TextColor)),
+                        child: Text("Streak: " + currentUser.getDayStreak().toString() + '🔥',
+                            style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
                       ),
                     ),
                     Container(
-                      width: 200,
+                      width: 170,
                       height: 50,
                       child: Center(
-                        child: Text("Łącznie nauki: 3h 57m", style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
+                        child: Text(
+                            "Dzisiaj fiszek: " +
+                                currentUser.getFlashCardsFinishedToday().toString() +
+                                '/' +
+                                currentUser.getFlashCardGoal().toString(),
+                            style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
+                      ),
+                    ),
+                    Container(
+                      width: 170,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                            "Dzisiaj zadań:" +
+                                currentUser.getTasksFinishedToday().toString() +
+                                '/' +
+                                currentUser.getTasksGoal().toString(),
+                            style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
                       ),
                     ),
                   ],
@@ -57,15 +126,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Zostało dziś jeszcze: ",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: usertheme.TextColor),
-                    ),
-                    Text(
-                      "57% ",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: usertheme.TextColor),
-                    ),
-                    Text(
-                      "zadań.",
+                      "Zadania do ukończenia:",
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: usertheme.TextColor),
                     ),
                   ],
@@ -120,18 +181,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            SizedBox(
-              height: 50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Dzisiaj to już na tyle!",
-                    style: TextStyle(fontSize: 20, color: usertheme.TextColor),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

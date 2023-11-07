@@ -19,12 +19,7 @@ void main() async {
   await currentUser.initUser();
   await noController.initNotifications();
 
-
-
   runApp(const MyApp());
-
-
-
 }
 
 class MyApp extends StatefulWidget {
@@ -47,36 +42,34 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Studi - Hack Heroes Projekt',
+      home: FutureBuilder<bool>(
+        //od tąd
+        future: currentUser.getHasSeenIntroduction(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}'); //sprawdza czy introduction
+          } else {
+            //bylo juz raz wyswietlane
+            final hasSeenIntroduction = snapshot.data;
 
-      return MaterialApp(
-
-        title: 'Studi - Hack Heroes Projekt',
-
-        home: FutureBuilder<bool>(                        //od tąd
-          future: currentUser.getHasSeenIntroduction(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');       //sprawdza czy introduction
-            } else {                                         //bylo juz raz wyswietlane
-              final hasSeenIntroduction = snapshot.data;
-
-              if (hasSeenIntroduction == false) {
-                return const IntroductionScreens();
-              } else if (hasSeenIntroduction == true) {
-                return BetaPopUpPage();
-              } else {
-                // Return a default widget here, e.g., an empty Container.
-                return Container();                   //do tąd
-              }
+            if (hasSeenIntroduction == false) {
+              return const IntroductionScreens();
+            } else if (hasSeenIntroduction == true) {
+              return BetaPopUpPage();
+            } else {
+              // Return a default widget here, e.g., an empty Container.
+              return Container(); //do tąd
             }
-          },
-        ),
-      );
-    }
-
+          }
+        },
+      ),
+    );
   }
+}
 
 //  -   -   -   -   -   -   ↓ Main page ↓   -   -   -   -   -   -   -
 
@@ -85,7 +78,6 @@ class MainPage extends StatefulWidget {
 
   @override
   State<MainPage> createState() => _MainPageState();
-
 }
 
 class _MainPageState extends State<MainPage> {
@@ -102,18 +94,16 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(currentUser.getTheme()=="White"){
-      usertheme=whitetheme;
-    }
-    else {
+    if (currentUser.getTheme() == "White") {
+      usertheme = whitetheme;
+    } else {
       usertheme = blacktheme;
     }
     return Scaffold(
       appBar: usertheme.getAppBar(currentPageTitle),
       body: screens[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        items:  <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.add_chart_sharp),
             label: 'To-Do',
@@ -132,7 +122,7 @@ class _MainPageState extends State<MainPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
             label: 'Medale',
-            backgroundColor:usertheme.Page4,
+            backgroundColor: usertheme.Page4,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -141,19 +131,16 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromRGBO(128, 224, 62, 1),
+        selectedItemColor: Color.fromARGB(255, 255, 255, 255),
         onTap: (int index) => setState(
           () {
             _selectedIndex = index;
-            currentPageTitle=_getPageTitle(index);
+            currentPageTitle = _getPageTitle(index);
           },
         ),
       ),
-
-
     );
   }
-
 
   String _getPageTitle(int index) {
     switch (index) {
@@ -171,5 +158,4 @@ class _MainPageState extends State<MainPage> {
         return 'Home';
     }
   }
-
 }

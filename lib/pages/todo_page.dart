@@ -40,11 +40,16 @@ class TodoTask {
 class TodoPage extends StatefulWidget {
   @override
   _TodoPageState createState() => _TodoPageState();
+
+  final List<TodoTask> tasks = [];
+  List<TodoTask> getTasks() {
+    return tasks;
+  }
 }
 
 class _TodoPageState extends State<TodoPage> {
   TextEditingController taskController = TextEditingController();
-  List<TodoTask> tasks = [];
+  List<TodoTask> tasks = TodoPage().getTasks();
   void _saveTasks() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String filePath = '${appDocDir.path}/tasks.json';
@@ -184,8 +189,8 @@ class _TodoPageState extends State<TodoPage> {
           title: Text(
             todo.task,
             style: TextStyle(
-              decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,color: usertheme.TextColor
-            ),
+                decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+                color: usertheme.TextColor),
           ),
           onLongPress: () {
             _editTaskDialog(context, tasks.indexOf(todo));
@@ -193,6 +198,7 @@ class _TodoPageState extends State<TodoPage> {
         ),
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
+            if (!todo.isCompleted) currentUser.incrFailedTask();
             _deleteTask(tasks.indexOf(todo));
           } else if (direction == DismissDirection.endToStart) {
             _toggleTaskCompletion(tasks.indexOf(todo));
@@ -233,10 +239,7 @@ class _TodoPageState extends State<TodoPage> {
     List<TodoTask> incompleteTasks = tasks.where((task) => !task.isCompleted).toList();
     List<TodoTask> completedTasks = tasks.where((task) => task.isCompleted).toList();
 
-
-
     return Scaffold(
-
       backgroundColor: usertheme.Primarybgcolor, // Set the background color here
       body: SingleChildScrollView(
         child: Column(
@@ -245,7 +248,7 @@ class _TodoPageState extends State<TodoPage> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: usertheme.TextColor),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
               ),
             ),
             ListView.builder(
@@ -261,7 +264,7 @@ class _TodoPageState extends State<TodoPage> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Completed Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: usertheme.TextColor),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
               ),
             ),
             ListView.builder(

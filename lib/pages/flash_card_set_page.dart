@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_hack_heroes/user.dart';
 import 'flash_cards_page.dart';
 
 class FlashCardSetPage extends StatefulWidget {
@@ -87,6 +88,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
+                        currentUser.incrCompletedFlashCard();
                         setState(() {
                           flipCard();
                         });

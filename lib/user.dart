@@ -13,7 +13,7 @@ class User {
   late int _statsLongestStreak;
   late int _statsFailedTasks;
   late int _statsDayStreak;
-  late bool _hasSeenIntroduction=false;
+  late bool _hasSeenIntroduction = false;
 
   //user variables, will be stored in SharedPreferences
   late DateTime _varLastDailyGoalCompletionDate;
@@ -99,7 +99,7 @@ class User {
     _configPrefDailyTasks = sharedPrefs.getInt('configPrefDailyTasks') ?? 5;
     _configPrefDailyFlashCards = sharedPrefs.getInt('configPrefFlashCards') ?? 20;
     _configUserName = sharedPrefs.getString("configUserName") ?? "Hello dolly!";
-    _configTheme=sharedPrefs.getString("configTheme")?? "White";
+    _configTheme = sharedPrefs.getString("configTheme") ?? "White";
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
@@ -203,6 +203,14 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  void achieveDailyGoal() {
+    if (!_varDailyGoalAchieved) {
+      _varDailyGoalAchieved = true;
+      _updateDaysStreak(_statsDayStreak + 1);
+    }
+  }
+  //  -   -   -   -   -   -   -   -   -   -
+
   void updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
     _statsHighScoreFlashCardsRush += highScore;
@@ -213,6 +221,10 @@ class User {
 
   void incrCompletedFlashCard() {
     _statsCompletedFlashCards++;
+    _varFlashCardsFinishedToday++;
+    if (_varFlashCardsFinishedToday == _configPrefDailyFlashCards && _varTasksFinishedToday == _configPrefDailyTasks) {
+      achieveDailyGoal();
+    }
     saveAll();
   }
 
@@ -220,6 +232,10 @@ class User {
 
   void incrFinishedTask() {
     _statsFinishedTasks++;
+    _varTasksFinishedToday++;
+    if (_varFlashCardsFinishedToday == _configPrefDailyFlashCards && _varTasksFinishedToday == _configPrefDailyTasks) {
+      achieveDailyGoal();
+    }
     saveAll();
   }
 
@@ -227,6 +243,7 @@ class User {
 
   void decrFinishedTask() {
     _statsFinishedTasks--;
+    _varTasksFinishedToday--;
     saveAll();
   }
 
@@ -267,28 +284,21 @@ class User {
     saveAll();
   }
 
-  void setName(String s){
-    _configUserName=s;
+  void setName(String s) {
+    _configUserName = s;
     saveAll();
-
   }
 
-
-  void setTheme(String s){
-
-    if(s=="White"){
-      _configTheme="White";
-    }
-    else if(s=="Black"){
-      _configTheme="Black";
-    }
-    else _configTheme="Error";
+  void setTheme(String s) {
+    if (s == "White") {
+      _configTheme = "White";
+    } else if (s == "Black") {
+      _configTheme = "Black";
+    } else
+      _configTheme = "Error";
 
     saveAll();
-
-
   }
-
 
   //  -   -   -   -   ↓ Functions returning user's variables ↓    -   -   -   -   -   -
 
@@ -337,6 +347,30 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  int getTasksFinishedToday() {
+    return _varTasksFinishedToday;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  int getFlashCardsFinishedToday() {
+    return _varFlashCardsFinishedToday;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  int getTasksGoal() {
+    return _configPrefDailyTasks;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
+  int getFlashCardGoal() {
+    return _configPrefDailyFlashCards;
+  }
+
+  //  -   -   -   -   -   -   -   -   -   -
+
   bool isReminderUpcoming() {
     return _upcomingNotification;
   }
@@ -359,43 +393,31 @@ class User {
     return _varDailyGoalAchieved;
   }
 
-  Future <bool> getHasSeenIntroduction() async{
-
-
-
+  Future<bool> getHasSeenIntroduction() async {
     return _hasSeenIntroduction;
   }
 
-
-  void setHasSeenIntroductionTrue(){
-    _hasSeenIntroduction=true;
+  void setHasSeenIntroductionTrue() {
+    _hasSeenIntroduction = true;
     saveAll();
-
   }
 
-  void setHasSeenIntroductionFalse(){
-    _hasSeenIntroduction=false;
+  void setHasSeenIntroductionFalse() {
+    _hasSeenIntroduction = false;
     saveAll();
-
   }
 
-  bool hasSeenIntroduction(){
+  bool hasSeenIntroduction() {
     return _hasSeenIntroduction;
   }
 
-
-
-  String getName(){
+  String getName() {
     return _configUserName;
   }
 
   String getTheme() {
     return _configTheme;
   }
-
-
-
-
 }
 
 final User currentUser = User();
