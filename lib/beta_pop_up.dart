@@ -8,15 +8,15 @@ class BetaPopUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(31, 42, 95, 1.0),
+      backgroundColor: Color.fromRGBO(248, 245, 250, 1.0),
       body: Stack(children: [
         Positioned(
           width: MediaQuery.of(context).size.width,
           top: MediaQuery.of(context).size.height * 0.25,
           child: Image(
-            image: AssetImage('lib/assets/temporaryLogo.png'),
-            width: 150,
-            height: 121,
+            image: AssetImage('lib/assets/BaseLogoSwan.png'),
+            width: 300,
+            height: 242,
           ),
         ),
         Positioned(
@@ -31,7 +31,7 @@ class BetaPopUpPage extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 32,
-                      color: Colors.white,
+                      color: Colors.black
                     )),
                 TextSpan(
                     text: 'UWAGA!',

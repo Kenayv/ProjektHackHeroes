@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_hack_heroes/theme.dart';
 import 'package:project_hack_heroes/user.dart';
 import 'flash_cards_page.dart';
 
@@ -83,6 +84,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: usertheme.Primarybgcolor,
       // Wrap your content in a Scaffold to get the default app background
       appBar: AppBar(
         title: Text(currentFlashCardSet.getName()),
@@ -112,7 +114,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
         ],
       ),
       body: Container(
-        color: Colors.white, // Set the background color to white
+        color: usertheme.Primarybgcolor, // Set the background color to white
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -122,9 +124,9 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                 height: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.white, // Set the color to white as well
+                  color: usertheme.Primarybgcolor, // Set the color to white as well
                   border: Border.all(
-                    color: Colors.black,
+                    color: usertheme.TextColor,
                     width: 4.0, // Adjust this value to make the border thicker
                   ),
                 ),
@@ -134,11 +136,11 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                     crossFadeState: isFlipped ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     firstChild: Text(
                       currentCard.front,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20,color: usertheme.TextColor),
                     ),
                     secondChild: Text(
                       currentCard.back,
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20,color: usertheme.TextColor),
                     ),
                   ),
                 ),

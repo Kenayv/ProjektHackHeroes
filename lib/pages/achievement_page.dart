@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/theme.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AchievementPage extends StatelessWidget {
   @override
@@ -30,25 +31,25 @@ class AchievementPage extends StatelessWidget {
               mainAxisSpacing: 16.0, // Add vertical padding
               crossAxisSpacing: 16.0, // Add horizontal padding
               children: <Widget>[
-                AchievementTile('Pierwsze kroki', 'Zdobądź 1-dniowy Streak', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Bez Dnia Przerwy', 'Zdobądź 3-dniowy Streak', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('To już tydzień!', 'Zdobądź 7-dniowy Streak', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Sigma Grindset', 'Zdobądź 14-dniowy Streak', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Pierwsze kroki', 'Zdobądź 1-dniowy Streak', 'lib/assets/Wood-Streak.svg'),
+                AchievementTile('Bez Dnia Przerwy', 'Zdobądź 3-dniowy Streak', 'lib/assets/Copper-Streak.svg'),
+                AchievementTile('To już tydzień!', 'Zdobądź 7-dniowy Streak', 'lib/assets/Silver-Streak.svg'),
+                AchievementTile('Sigma Grindset', 'Zdobądź 14-dniowy Streak', 'lib/assets/Gold-Streak.svg'),
                 //
-                AchievementTile('Eat that frog!', 'ukończ 1 zadanie', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Szybka piątka', 'ukończ 5 zadań', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Hush-Hush', 'ukończ 20 zadań', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Hustler', 'ukończ 50 zadań', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Eat that frog!', 'ukończ 1 zadanie', 'lib/assets/Wood-Tasks alt.svg'),
+                AchievementTile('Szybka piątka', 'ukończ 5 zadań', 'lib/assets/Copper-Tasks.svg'),
+                AchievementTile('Hush-Hush', 'ukończ 20 zadań', 'lib/assets/Silver-Task.svg'),
+                AchievementTile('Hustler', 'ukończ 50 zadań', 'lib/assets/Gold-Task.svg'),
                 //
-                AchievementTile('Study', 'Osiągnij rekord 5 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Studi', 'Osiągnij rekord 15 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Stoody', 'Osiągnij rekord 25 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Stoodee', 'Osiągnij rekord 45 Fiszki Rush', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Study', 'Osiągnij rekord 5 Fiszki Rush', 'lib/assets/Wood-Rush.svg'),
+                AchievementTile('Studi', 'Osiągnij rekord 15 Fiszki Rush', 'lib/assets/Copper-Rush.svg'),
+                AchievementTile('Stoody', 'Osiągnij rekord 25 Fiszki Rush', 'lib/assets/Silver-Rush.svg'),
+                AchievementTile('Stoodee', 'Osiągnij rekord 45 Fiszki Rush', 'lib/assets/Gold-Rush.svg'),
                 //
-                AchievementTile('Le Fishe', 'Odgadnij 1 fiszkę', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('10/10', 'Odgadnij 10 fiszek', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Fifty-fifty', 'Odgadnij 50 fiszek', 'lib/assets/temporaryLogo.png'),
-                AchievementTile('Unstoppable ', 'Odgadnij 250 fiszek', 'lib/assets/temporaryLogo.png'),
+                AchievementTile('Le Fishe', 'Odgadnij 1 fiszkę', 'lib/assets/Wood-Fiszki.svg'),
+                AchievementTile('10/10', 'Odgadnij 10 fiszek', 'lib/assets/Copper-Fiszki.svg'),
+                AchievementTile('Fifty-fifty', 'Odgadnij 50 fiszek', 'lib/assets/Silver-Fiszki.svg'),
+                AchievementTile('Unstoppable ', 'Odgadnij 250 fiszek', 'lib/assets/Gold-Fiszki.svg'),
               ],
             ),
           ),
@@ -75,7 +76,7 @@ class AchievementTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Image.asset(
+            SvgPicture.asset(
               imagePath,
               width: 80.0, // Adjust the image size as needed
               height: 80.0,

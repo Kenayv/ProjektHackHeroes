@@ -35,12 +35,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Padding _buildTaskItem(String taskText) {
-    final randomColor = Color.fromRGBO(
-      Random().nextInt(256),
-      Random().nextInt(256),
-      Random().nextInt(256),
-      1.0,
-    );
+    final randomColor = usertheme.Taskcolor;
 
     return Padding(
       padding: const EdgeInsets.all(15.0),

@@ -308,7 +308,8 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Usuń lub zmień nazwę'),
+          backgroundColor: usertheme.Primarybgcolor,
+          title: Text('Usuń lub zmień nazwę',style: TextStyle(color: usertheme.TextColor)),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
