@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/theme.dart';
 import 'package:project_hack_heroes/user.dart';
@@ -25,7 +24,9 @@ class _HomePageState extends State<HomePage> {
         String content = file.readAsStringSync();
         List<dynamic> decodedTasks = jsonDecode(content);
         List<TodoTask> loadedTasks = decodedTasks.map((task) => TodoTask.fromJson(task)).toList();
-        tasks = loadedTasks;
+        setState(() {
+          tasks = loadedTasks;
+        });
       }
     } catch (e) {
       //FIXME: Tu powinien się wyświetlać na stronie TODO komunikat że się nie udało.

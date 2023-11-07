@@ -4,24 +4,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 class User {
   // WARNING: Those variables can be easily accessed and changed. They're found as SharedPreferences in the file system. It is not a problem though, as long, as there is no competetive use of those variables, such as friends-leaderboard. The only "cheating" that can be done at the current state is user changing the variables for personal use.
 
-  //user stats, will be stored in SharedPreferences
-  late int _statsHighScoreFlashCardsRush;
+  //user stats, vars, and config variables. will be stored in SharedPreferences. Can be accessed via get...() function
+  late int _statsHighScoreFlashCardsRush; // WORK-IN-PROGRESS
   late int _statsCompletedFlashCards;
   late int _statsFinishedTasks;
   late int _statsLongestStreak;
   late int _statsFailedTasks;
   late int _statsDayStreak;
-  late bool _hasSeenIntroduction = false;
+  late bool _hasSeenIntroduction;
 
-  //user variables, will be stored in SharedPreferences
   late DateTime _varLastDailyGoalCompletionDate;
   late DateTime _varLastLearnedDate;
   late bool _varDailyGoalAchieved;
   late int _varFlashCardsFinishedToday;
   late int _varTasksFinishedToday;
-  late bool _upcomingNotification;
+  late bool _upcomingNotification; // WORK-IN-PROGRESS
 
-  //user config variables, will be stored in SharedPreferences
   late String _configUserName;
   late int _configPrefDailyFlashCards;
   late int _configPrefDailyTasks;
@@ -53,7 +51,7 @@ class User {
 
   //Loads user stats and saves them as variables in User class.
   Future<void> _loadStats(SharedPreferences sharedPrefs) async {
-    _statsHighScoreFlashCardsRush = sharedPrefs.getInt('highScoreFlashCardsRush') ?? 0;
+    _statsHighScoreFlashCardsRush = sharedPrefs.getInt('highScoreFlashCardsRush') ?? 0; // WORK-IN-PROGRESS
     _statsCompletedFlashCards = sharedPrefs.getInt('completedFlashCards') ?? 0;
     _statsFinishedTasks = sharedPrefs.getInt('finishedTasks') ?? 0;
     _statsLongestStreak = sharedPrefs.getInt('longestStreak') ?? 0;
@@ -106,7 +104,7 @@ class User {
   Future<void> _saveStats(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
 
-    sharedPrefs.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush);
+    sharedPrefs.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush); // WORK-IN-PROGRESS
     sharedPrefs.setInt('completedFlashCards', _statsCompletedFlashCards);
     sharedPrefs.setInt('longestStreak', _statsLongestStreak);
     sharedPrefs.setInt('finishedTasks', _statsFinishedTasks);
@@ -209,6 +207,7 @@ class User {
   }
   //  -   -   -   -   -   -   -   -   -   -
 
+  // WORK-IN-PROGRESS
   void updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
     _statsHighScoreFlashCardsRush += highScore;
