@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import 'package:project_hack_heroes/theme.dart';
 import 'main.dart';
 
 class BetaPopUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(48, 54, 48, 1),
+      backgroundColor: Color.fromRGBO(31, 42, 95, 1.0),
       body: Stack(children: [
         Positioned(
           width: MediaQuery.of(context).size.width,

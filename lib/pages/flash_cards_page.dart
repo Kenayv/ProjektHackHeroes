@@ -219,7 +219,8 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Dodaj fiszkę lub zestaw'),
+          backgroundColor: usertheme.Primarybgcolor,
+          title: Text('Dodaj fiszkę lub zestaw',style: TextStyle(color: usertheme.TextColor)),
           content: StatefulBuilder(builder: (context, setState) {
             return SizedBox(
               width: 250, // Set the desired width
@@ -227,11 +228,13 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   DropdownButtonFormField<String>(
-                    decoration: InputDecoration(labelText: 'Zestaw fiszek'),
+                    dropdownColor: usertheme.Primarybgcolor,
+                    decoration: InputDecoration(labelText: 'Zestaw fiszek', labelStyle: TextStyle(color: usertheme.TextColor)),
                     items: fcSetNames.map((theme) {
                       return DropdownMenuItem<String>(
+
                         value: theme,
-                        child: Text(theme),
+                        child: Text(theme,style: TextStyle(color: usertheme.TextColor),),
                       );
                     }).toList(),
                     onChanged: (value) {
@@ -244,7 +247,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                     visible: selectedValue == newSetVal,
                     child: TextField(
                       controller: inputName,
-                      decoration: InputDecoration(labelText: 'Nazwa'),
+                      decoration: InputDecoration(labelText: 'Nazwa', labelStyle: TextStyle(color: usertheme.TextColor)),
                     ),
                   ),
                   Visibility(
@@ -253,11 +256,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                       children: [
                         TextField(
                           controller: inputFront,
-                          decoration: InputDecoration(labelText: 'Przód karty'),
+                          decoration: InputDecoration(labelText: 'Przód karty', labelStyle: TextStyle(color: usertheme.TextColor)),
                         ),
                         TextField(
                           controller: inputBack,
-                          decoration: InputDecoration(labelText: 'Tył karty'),
+                          decoration: InputDecoration(labelText: 'Tył karty', labelStyle: TextStyle(color: usertheme.TextColor)),
                         ),
                       ],
                     ),
@@ -311,7 +314,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
               children: <Widget>[
                 TextField(
                   controller: editSetController,
-                  decoration: InputDecoration(labelText: 'Nowa nazwa'),
+                  decoration: InputDecoration(labelText: 'Nowa nazwa', labelStyle: TextStyle(color: usertheme.TextColor)),
                 ),
               ],
             ),

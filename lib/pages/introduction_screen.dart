@@ -22,6 +22,7 @@ import 'time_picker_screen.dart';
 
 
 
+
 class IntroductionScreens extends StatefulWidget {
   const IntroductionScreens({Key? key}) : super(key: key);
 
@@ -37,15 +38,17 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(backgroundColor: Color.fromRGBO(248, 245, 250, 0.9999),shadowColor: Color.fromRGBO(201, 201, 201, 0.1),),
         body: Form(
           key: _formKey,
 
           child: IntroductionScreen(
               pages: [
                 PageViewModel(
-                  title: 'Welcome to Our App!',
-                  body: 'This is a brief introduction to our app.',
+                  title: 'Aplikacja Studee!',
+                  body: 'Co to jest?',
+                  image: Image.asset("lib/assets/BaseLogoSwan.png"),
+                  footer: Text("Jest to bardzo prosta aplikacja, stworzona w celu wspomagania nauki",textAlign: TextAlign.center,),
                   decoration: getPageDecoration(),
                 ),
                 PageViewModel(
@@ -67,8 +70,8 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                   ),
                 ),
                 PageViewModel(
-                  title: 'Customize Your Experience',
-                  body: 'Configure your app settings, theme, date, and username.',
+                  title: 'Skonfiguruj swoje ustawienia',
+                  body: 'Pamietaj by zaznaczyć także czas powiadomień!',
                   decoration: getPageDecoration(),
                   footer: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

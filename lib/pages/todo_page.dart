@@ -118,13 +118,15 @@ class _TodoPageState extends State<TodoPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edytuj zadanie'),
+          backgroundColor: usertheme.Primarybgcolor,
+          title: Text('Edytuj zadanie',style: TextStyle(color: usertheme.TextColor),),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: editTaskController,
-                  decoration: InputDecoration(labelText: 'Zadanie'),
+                  style: TextStyle(color: usertheme.TextColor),
+                  decoration: InputDecoration(labelText: 'Zadanie', labelStyle: TextStyle(color: usertheme.TextColor)),
                 ),
               ],
             ),
@@ -155,20 +157,23 @@ class _TodoPageState extends State<TodoPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Dodaj zadanie'),
+          backgroundColor: usertheme.Primarybgcolor,
+          title: Text('Dodaj zadanie',
+            style: TextStyle(color: usertheme.TextColor),),
           content: TextField(
             controller: taskController,
-            decoration: InputDecoration(labelText: 'Nowe zadanie'),
+            style: TextStyle(color: usertheme.TextColor),
+            decoration: InputDecoration(labelText: 'Nowe zadanie', labelStyle: TextStyle(color: usertheme.TextColor)),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Anuluj'),
+              child: Text('Anuluj',style: TextStyle(color: usertheme.TextColor),),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Dodaj'),
+              child: Text('Dodaj',style: TextStyle(color: usertheme.TextColor),),
               onPressed: () {
                 _addTask(taskController.text);
                 Navigator.of(context).pop();
