@@ -286,32 +286,45 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
     );
   }
 
+  void removeFlashCardSet(FlashCardSet setToRemove) {
+    flashCardSets.removeWhere((set) => set == setToRemove);
+    saveFlashCardSets();
+  }
+
   Future<void> _editSetDialog(FlashCardSet currentSet) async {
     TextEditingController editTaskController = TextEditingController();
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Task'),
+          title: Text('Zmień nazwę'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: editTaskController,
-                  decoration: InputDecoration(labelText: 'Task'),
+                  decoration: InputDecoration(labelText: 'Nowa nazwa'),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: Text('Usuń'),
+              onPressed: () {
+                removeFlashCardSet(currentSet);
+                Navigator.of(context).pop();
+                setState(() {});
+              },
+            ),
+            TextButton(
+              child: Text('Anuluj'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Save'),
+              child: Text('Zmień nazwę'),
               onPressed: () {},
             ),
           ],

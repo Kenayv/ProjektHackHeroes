@@ -118,26 +118,26 @@ class _TodoPageState extends State<TodoPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Task'),
+          title: Text('Edytuj zadanie'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: editTaskController,
-                  decoration: InputDecoration(labelText: 'Task'),
+                  decoration: InputDecoration(labelText: 'Zadanie'),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: Text('Anuluj'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Save'),
+              child: Text('Zapisz'),
               onPressed: () {
                 _editTask(index, editTaskController.text);
                 Navigator.of(context).pop();
