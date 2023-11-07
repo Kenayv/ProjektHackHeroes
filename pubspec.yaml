@@ -35,7 +35,7 @@ dependencies:
   shared_preferences: ^2.0.7
   cupertino_icons: ^1.0.2
   path_provider: ^2.0.3
-  introduction_screen: ^3.1.12  flutter_svg: ^2.0.5
+  flutter_svg: ^2.0.5
   introduction_screen: ^3.1.12
 dev_dependencies:
   flutter_test:
@@ -56,6 +56,27 @@ flutter:
   uses-material-design: true
   assets:
     - lib/assets/temporaryLogo.png
+    - lib/assets/zdjecie1.png
+    - lib/assets/zdjecie2.png
+    - lib/assets/BaseLogoSwan.png
+    - lib/assets/Copper-Fiszki.svg
+    - lib/assets/Copper-Rush.svg
+    - lib/assets/Copper-Streak.svg
+    - lib/assets/Copper-Tasks.svg
+    - lib/assets/Silver-Fiszki.svg
+    - lib/assets/Silver-Rush.svg
+    - lib/assets/Silver-Streak.svg
+    - lib/assets/Silver-Task.svg
+    - lib/assets/Gold-Fiszki.svg
+    - lib/assets/Gold-Rush.svg
+    - lib/assets/Gold-Streak.svg
+    - lib/assets/Gold-Task.svg
+    - lib/assets/Wood-Fiszki.svg
+    - lib/assets/Wood-Rush.svg
+    - lib/assets/Wood-Streak.svg
+    - lib/assets/Wood-Tasks alt.svg
+    - lib/assets/BurnOutSorry.svg
+    - lib/assets/BurnOutSorry.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

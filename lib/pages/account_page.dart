@@ -19,11 +19,7 @@ class AccountPage extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-<<<<<<< HEAD
-              currentUser.getUserName(),
-=======
               currentUser.getName(),
->>>>>>> ostatnie_szlify
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

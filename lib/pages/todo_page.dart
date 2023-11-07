@@ -48,13 +48,8 @@ class TodoPage extends StatefulWidget {
 }
 
 class _TodoPageState extends State<TodoPage> {
-  List<TodoTask> tasks = TodoPage().getTasks();
   TextEditingController taskController = TextEditingController();
-<<<<<<< HEAD
-
-=======
   List<TodoTask> tasks = TodoPage().getTasks();
->>>>>>> ostatnie_szlify
   void _saveTasks() async {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String filePath = '${appDocDir.path}/tasks.json';
@@ -73,8 +68,9 @@ class _TodoPageState extends State<TodoPage> {
         String content = file.readAsStringSync();
         List<dynamic> decodedTasks = jsonDecode(content);
         List<TodoTask> loadedTasks = decodedTasks.map((task) => TodoTask.fromJson(task)).toList();
-        setState(() {});
-        tasks = loadedTasks;
+        setState(() {
+          tasks = loadedTasks;
+        });
       }
     } catch (e) {
       //FIXME: Tu powinien się wyświetlać na stronie TODO komunikat że się nie udało.

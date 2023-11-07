@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 import 'package:project_hack_heroes/theme.dart';
 import 'package:project_hack_heroes/user.dart';
->>>>>>> ostatnie_szlify
 import 'flash_cards_page.dart';
 
 class FlashCardSetPage extends StatefulWidget {
@@ -29,8 +26,6 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
     });
   }
 
-<<<<<<< HEAD
-=======
   void showSettingsDialog(BuildContext context, FlashCardSet currentFlashCardSet, FlashCard currentFlashCard) {
     TextEditingController frontController = TextEditingController(text: currentFlashCard.front);
     TextEditingController backController = TextEditingController(text: currentFlashCard.back);
@@ -84,25 +79,16 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
     );
   }
 
->>>>>>> ostatnie_szlify
   _FlashCardSetPageState({required this.currentFlashCardSet});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-=======
       backgroundColor: usertheme.Primarybgcolor,
->>>>>>> ostatnie_szlify
       // Wrap your content in a Scaffold to get the default app background
       appBar: AppBar(
         title: Text(currentFlashCardSet.getName()),
         centerTitle: true,
-<<<<<<< HEAD
-      ),
-      body: Container(
-        color: Colors.white, // Set the background color to white
-=======
         actions: [
           PopupMenuButton<String>(
             onSelected: (String choice) {
@@ -129,7 +115,6 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
       ),
       body: Container(
         color: usertheme.Primarybgcolor, // Set the background color to white
->>>>>>> ostatnie_szlify
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -139,15 +124,9 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                 height: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-<<<<<<< HEAD
-                  color: Colors.white, // Set the color to white as well
-                  border: Border.all(
-                    color: Colors.black,
-=======
                   color: usertheme.Primarybgcolor, // Set the color to white as well
                   border: Border.all(
                     color: usertheme.TextColor,
->>>>>>> ostatnie_szlify
                     width: 4.0, // Adjust this value to make the border thicker
                   ),
                 ),
@@ -157,19 +136,11 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                     crossFadeState: isFlipped ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     firstChild: Text(
                       currentCard.front,
-<<<<<<< HEAD
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    secondChild: Text(
-                      currentCard.back,
-                      style: TextStyle(fontSize: 20),
-=======
                       style: TextStyle(fontSize: 20,color: usertheme.TextColor),
                     ),
                     secondChild: Text(
                       currentCard.back,
                       style: TextStyle(fontSize: 20,color: usertheme.TextColor),
->>>>>>> ostatnie_szlify
                     ),
                   ),
                 ),
@@ -195,10 +166,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-<<<<<<< HEAD
-=======
                         currentUser.incrCompletedFlashCard();
->>>>>>> ostatnie_szlify
                         setState(() {
                           flipCard();
                         });

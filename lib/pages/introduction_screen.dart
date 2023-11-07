@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import 'package:flutter/material.dart';
-import 'package:project_hack_heroes/main.dart';
-import 'package:introduction_screen/introduction_screen.dart';
-=======
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/main.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import '../beta_pop_up.dart';
->>>>>>> ostatnie_szlify
 import 'package:project_hack_heroes/user.dart';
 import 'time_picker_screen.dart';
 /*
@@ -19,12 +13,6 @@ import 'time_picker_screen.dart';
 *
 * */
 
-<<<<<<< HEAD
-//smieszne funkcje do smiesznych rzeczy
-
-//intrdduction screen
-
-=======
 
 //smieszne funkcje do smiesznych rzeczy
 
@@ -35,17 +23,12 @@ import 'time_picker_screen.dart';
 
 
 
->>>>>>> ostatnie_szlify
 class IntroductionScreens extends StatefulWidget {
   const IntroductionScreens({Key? key}) : super(key: key);
 
   @override
   _IntroductionScreensState createState() => _IntroductionScreensState();
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> ostatnie_szlify
 class _IntroductionScreensState extends State<IntroductionScreens> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String selectedTheme = 'White';
@@ -55,21 +38,6 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-        appBar: AppBar(),
-        body: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: IntroductionScreen(
-              pages: [
-                PageViewModel(
-                  title: 'Welcome to Our App!',
-                  body: 'This is a brief introduction to our app.',
-                  decoration: getPageDecoration(),
-                ),
-                PageViewModel(
-                  title: 'Meet the Creators',
-                  body: 'This app is made by:',
-=======
         appBar: AppBar(backgroundColor: Color.fromRGBO(248, 245, 250, 0.9999),shadowColor: Color.fromRGBO(201, 201, 201, 0.1),),
         body: Form(
           key: _formKey,
@@ -86,7 +54,6 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                 PageViewModel(
                   title: 'Autorzy',
                   body: 'Aplikacja została zrobiona przez:',
->>>>>>> ostatnie_szlify
                   image: AspectRatio(
                     aspectRatio: 1100 / 876,
                     child: Image.asset('lib/assets/zdjecie1.png'),
@@ -103,13 +70,8 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                   ),
                 ),
                 PageViewModel(
-<<<<<<< HEAD
-                  title: 'Customize Your Experience',
-                  body: 'Configure your app settings, theme, date, and username.',
-=======
                   title: 'Skonfiguruj swoje ustawienia',
                   body: 'Pamietaj by zaznaczyć także czas powiadomień!',
->>>>>>> ostatnie_szlify
                   decoration: getPageDecoration(),
                   footer: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,10 +90,7 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                           });
                         },
                       ),
-<<<<<<< HEAD
-=======
 
->>>>>>> ostatnie_szlify
                       TextFormField(
                         decoration: InputDecoration(labelText: 'Username'),
                         validator: (value) {
@@ -140,38 +99,14 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                           }
                           return null;
                         },
-<<<<<<< HEAD
-                        onSaved: (value) {
-                          username = value;
-=======
                         onChanged: (value) {    //nieoptymalne
 
                           username = value;
 
->>>>>>> ostatnie_szlify
                         },
                       ),
                       Center(
                           child: ElevatedButton(
-<<<<<<< HEAD
-                        onPressed: () async {
-                          final time = await Navigator.of(context).push(
-                            MaterialPageRoute<TimeOfDay?>(
-                              builder: (context) => TimePickerScreen(
-                                initialTime: selectedNotificationTime,
-                              ),
-                            ),
-                          );
-
-                          if (time != null) {
-                            setState(() {
-                              selectedNotificationTime = time;
-                            });
-                          }
-                        },
-                        child: Text('Select Notification Time'),
-                      )),
-=======
                             onPressed: () async {
                               final time = await Navigator.of(context).push(
                                 MaterialPageRoute<TimeOfDay?>(
@@ -191,14 +126,11 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                           )),
 
 
->>>>>>> ostatnie_szlify
                     ],
                   ),
                 ),
               ],
               onDone: () {
-<<<<<<< HEAD
-=======
 
                 currentUser.setName(username!);
 
@@ -208,30 +140,21 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                 currentUser.setTheme(selectedTheme);
 
 
->>>>>>> ostatnie_szlify
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => MainPage()),
                 );
 
                 currentUser.setHasSeenIntroductionTrue();
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> ostatnie_szlify
               },
               //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
               scrollPhysics: const ClampingScrollPhysics(),
               showDoneButton: true,
               showNextButton: true,
               showBackButton: true,
-<<<<<<< HEAD
-              back: const Icon(Icons.arrow_back),
-              next: const Icon(Icons.forward),
-              done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
-=======
 
               back:
               const Icon(Icons.arrow_back),
@@ -239,17 +162,10 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
               next: const Icon(Icons.forward),
               done:
               const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
->>>>>>> ostatnie_szlify
               dotsDecorator: getDotsDecorator()),
         ));
   }
 
-<<<<<<< HEAD
-  //method to customise the page style
-  PageDecoration getPageDecoration() {
-    return const PageDecoration(
-      pageColor: Colors.white,
-=======
 
   //method to customise the page style
   PageDecoration getPageDecoration() {
@@ -257,7 +173,6 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
 
       pageColor: Colors.white,
 
->>>>>>> ostatnie_szlify
       titlePadding: EdgeInsets.only(top: 50),
       bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
     );
@@ -277,11 +192,8 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
   }
 }
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> ostatnie_szlify
 class BulletPointListItem extends StatelessWidget {
   final String text;
 
@@ -302,8 +214,4 @@ class BulletPointListItem extends StatelessWidget {
       ),
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> ostatnie_szlify
