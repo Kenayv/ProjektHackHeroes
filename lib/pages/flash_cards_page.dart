@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+<<<<<<< HEAD
 import 'dart:math';
 import 'flash_card_set_page.dart';
 
@@ -13,22 +14,46 @@ class FlashCardSet {
 
   FlashCardSet({required this.fcSetName}) {
     _loadFlashCards();
+=======
+import 'package:project_hack_heroes/theme.dart';
+import 'dart:math';
+import 'flash_card_set_page.dart';
+import 'package:project_hack_heroes/main.dart';
+
+class FlashCardSet {
+  String fcSetName;
+  List<FlashCard> _flashCards = [];
+
+  FlashCardSet({required this.fcSetName}) {
+    loadFlashCards();
+>>>>>>> ostatnie_szlify
   }
 
   void addFlashCard(String frontText, String backText) {
     var contains = _flashCards.where((card) => card.front == frontText && card.back == backText);
     if (contains.isNotEmpty) return;
     _flashCards.add(FlashCard(front: frontText, back: backText));
+<<<<<<< HEAD
     _saveFlashCards();
+=======
+    saveFlashCards();
+>>>>>>> ostatnie_szlify
   }
 
   void removeById(int id) {
     if (_flashCards.length - 1 < id || id < 0) return;
     _flashCards.removeAt(id);
+<<<<<<< HEAD
     _saveFlashCards();
   }
 
   void _saveFlashCards() async {
+=======
+    saveFlashCards();
+  }
+
+  void saveFlashCards() async {
+>>>>>>> ostatnie_szlify
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String filePath = '${appDocDir.path}/flashcards.json';
@@ -45,7 +70,11 @@ class FlashCardSet {
   }
 
   //Reads FlashCards saved in FlashCards.json file and pushes them into FlashCards[] array
+<<<<<<< HEAD
   void _loadFlashCards() async {
+=======
+  void loadFlashCards() async {
+>>>>>>> ostatnie_szlify
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String filePath = '${appDocDir.path}/flashcards.json';
@@ -77,10 +106,24 @@ class FlashCardSet {
     return _flashCards[randomIndex];
   }
 
+<<<<<<< HEAD
+=======
+  List<FlashCard> getFlashCards() {
+    return _flashCards;
+  }
+
+>>>>>>> ostatnie_szlify
   String getName() {
     return fcSetName;
   }
 
+<<<<<<< HEAD
+=======
+  void setName(String newName) {
+    fcSetName = newName;
+  }
+
+>>>>>>> ostatnie_szlify
   int getLength() {
     return _flashCards.length;
   }
@@ -120,7 +163,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
 
   void saveFlashCardSets() {
     for (int i = 0; i < flashCardSets.length; i++) {
+<<<<<<< HEAD
       flashCardSets[i]._saveFlashCards();
+=======
+      flashCardSets[i].saveFlashCards();
+>>>>>>> ostatnie_szlify
     }
   }
 
@@ -140,7 +187,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
           if (setData is List) {
             FlashCardSet flashCardSet = FlashCardSet(fcSetName: setName);
 
+<<<<<<< HEAD
             flashCardSet._loadFlashCards();
+=======
+            flashCardSet.loadFlashCards();
+>>>>>>> ostatnie_szlify
             flashCardSets.add(flashCardSet);
           }
         });
@@ -154,8 +205,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   void initState() {
     super.initState();
     loadFlashCardSets().then((_) {
+<<<<<<< HEAD
       // Debug print statements
       print('Number of flashCardSets: ${flashCardSets.length}');
+=======
+>>>>>>> ostatnie_szlify
       setState(() {}); // Trigger a rebuild after loading data.
     });
   }
@@ -163,6 +217,10 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
+=======
+      backgroundColor: usertheme.Primarybgcolor,
+>>>>>>> ostatnie_szlify
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -170,7 +228,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
               padding: EdgeInsets.all(8.0),
               child: Text(
                 'Twoje zestawy fiszek:',
+<<<<<<< HEAD
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+=======
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
+>>>>>>> ostatnie_szlify
               ),
             ),
             ListView.builder(
@@ -190,7 +252,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
           _addFlashCardDialog();
         },
         child: Icon(Icons.add),
+<<<<<<< HEAD
         backgroundColor: Colors.blue,
+=======
+        backgroundColor: usertheme.Page2,
+>>>>>>> ostatnie_szlify
       ),
     );
   }
@@ -210,7 +276,12 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+<<<<<<< HEAD
           title: Text('Dodaj fiszkę lub zestaw'),
+=======
+          backgroundColor: usertheme.Primarybgcolor,
+          title: Text('Dodaj fiszkę lub zestaw',style: TextStyle(color: usertheme.TextColor)),
+>>>>>>> ostatnie_szlify
           content: StatefulBuilder(builder: (context, setState) {
             return SizedBox(
               width: 250, // Set the desired width
@@ -218,11 +289,21 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   DropdownButtonFormField<String>(
+<<<<<<< HEAD
                     decoration: InputDecoration(labelText: 'Zestaw fiszek'),
                     items: fcSetNames.map((theme) {
                       return DropdownMenuItem<String>(
                         value: theme,
                         child: Text(theme),
+=======
+                    dropdownColor: usertheme.Primarybgcolor,
+                    decoration: InputDecoration(labelText: 'Zestaw fiszek', labelStyle: TextStyle(color: usertheme.TextColor)),
+                    items: fcSetNames.map((theme) {
+                      return DropdownMenuItem<String>(
+
+                        value: theme,
+                        child: Text(theme,style: TextStyle(color: usertheme.TextColor),),
+>>>>>>> ostatnie_szlify
                       );
                     }).toList(),
                     onChanged: (value) {
@@ -235,7 +316,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                     visible: selectedValue == newSetVal,
                     child: TextField(
                       controller: inputName,
+<<<<<<< HEAD
                       decoration: InputDecoration(labelText: 'Nazwa'),
+=======
+                      decoration: InputDecoration(labelText: 'Nazwa', labelStyle: TextStyle(color: usertheme.TextColor)),
+>>>>>>> ostatnie_szlify
                     ),
                   ),
                   Visibility(
@@ -244,11 +329,19 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                       children: [
                         TextField(
                           controller: inputFront,
+<<<<<<< HEAD
                           decoration: InputDecoration(labelText: 'Przód karty'),
                         ),
                         TextField(
                           controller: inputBack,
                           decoration: InputDecoration(labelText: 'Tył karty'),
+=======
+                          decoration: InputDecoration(labelText: 'Przód karty', labelStyle: TextStyle(color: usertheme.TextColor)),
+                        ),
+                        TextField(
+                          controller: inputBack,
+                          decoration: InputDecoration(labelText: 'Tył karty', labelStyle: TextStyle(color: usertheme.TextColor)),
+>>>>>>> ostatnie_szlify
                         ),
                       ],
                     ),
@@ -285,6 +378,61 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
     );
   }
 
+<<<<<<< HEAD
+=======
+  void removeFlashCardSet(FlashCardSet setToRemove) {
+    flashCardSets.removeWhere((set) => set == setToRemove);
+    saveFlashCardSets();
+  }
+
+  Future<void> _editSetDialog(FlashCardSet currentSet) async {
+    TextEditingController editSetController = TextEditingController();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: usertheme.Primarybgcolor,
+          title: Text('Usuń lub zmień nazwę',style: TextStyle(color: usertheme.TextColor)),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  controller: editSetController,
+                  decoration: InputDecoration(labelText: 'Nowa nazwa', labelStyle: TextStyle(color: usertheme.TextColor)),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Usuń'),
+              onPressed: () {
+                removeFlashCardSet(currentSet);
+                Navigator.of(context).pop();
+                setState(() {});
+              },
+            ),
+            TextButton(
+              child: Text('Anuluj'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Zmień nazwę'),
+              onPressed: () {
+                currentSet.setName(editSetController.text);
+                Navigator.of(context).pop();
+                setState(() {});
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+>>>>>>> ostatnie_szlify
   Widget _buildFlashCardSetItem(FlashCardSet currentFlashCardSet) {
     final randomColor = Color.fromRGBO(
       Random().nextInt(256),
@@ -308,6 +456,12 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
           );
         }
       },
+<<<<<<< HEAD
+=======
+      onLongPress: () {
+        _editSetDialog(currentFlashCardSet);
+      },
+>>>>>>> ostatnie_szlify
       child: ListTile(
         title: Padding(
           padding: const EdgeInsets.all(10.0),
