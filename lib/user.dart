@@ -41,6 +41,8 @@ class User {
     _loadVars(sharedPrefs);
   }
 
+  //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+
   Future saveAll() async {
     final SharedPreferences sharedPrefs = await SharedPreferences.getInstance();
     _saveConfig(sharedPrefs);
@@ -63,6 +65,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
+  //Loads user info and saves it as variables in User class.
   Future<void> _loadVars(SharedPreferences sharedPrefs) async {
     final lastLearnedYear = sharedPrefs.getInt('lastLearnedYear') ?? 1999;
     final lastLearnedMonth = sharedPrefs.getInt('lastLearnedMonth') ?? 1;
@@ -117,6 +120,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
+  //Saves user info as SharedPrefs.
   Future<void> _saveVars(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
 
@@ -137,6 +141,7 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
+  //Saves user config as SharedPrefs.
   Future<void> _saveConfig(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
 
@@ -202,12 +207,14 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
+  //Invoked when user has completed his daily flashcards/tasks
   void achieveDailyGoal() {
     if (!_varDailyGoalAchieved) {
       _varDailyGoalAchieved = true;
       _updateDaysStreak(_statsDayStreak + 1);
     }
   }
+
   //  -   -   -   -   -   -   -   -   -   -
 
   //FIXME: WORK-IN-PROGRESS
@@ -241,16 +248,16 @@ class User {
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  void decrFinishedTask() {
-    _statsFinishedTasks--;
-    _varTasksFinishedToday--;
+  void incrFailedTask() {
+    _statsFailedTasks++;
     saveAll();
   }
 
   //  -   -   -   -   -   -   -   -   -   -
 
-  void incrFailedTask() {
-    _statsFailedTasks++;
+  void decrFinishedTask() {
+    _statsFinishedTasks--;
+    _varTasksFinishedToday--;
     saveAll();
   }
 
@@ -284,10 +291,14 @@ class User {
     saveAll();
   }
 
+  //  -   -   -   -   -   -   -   -   -   -
+
   void setName(String s) {
     _configUserName = s;
     saveAll();
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   void setTheme(String s) {
     if (s == "White") {
@@ -394,27 +405,26 @@ class User {
     return _varDailyGoalAchieved;
   }
 
-  Future<bool> getHasSeenIntroduction() async {
+  //  -   -   -   -   -   -   -   -   -   -
+
+  Future<bool> hasSeenIntroduction() async {
     return _hasSeenIntroduction;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   void setHasSeenIntroductionTrue() {
     _hasSeenIntroduction = true;
     saveAll();
   }
 
-  void setHasSeenIntroductionFalse() {
-    _hasSeenIntroduction = false;
-    saveAll();
-  }
-
-  bool hasSeenIntroduction() {
-    return _hasSeenIntroduction;
-  }
+  //  -   -   -   -   -   -   -   -   -   -
 
   String getName() {
     return _configUserName;
   }
+
+  //  -   -   -   -   -   -   -   -   -   -
 
   String getTheme() {
     return _configTheme;

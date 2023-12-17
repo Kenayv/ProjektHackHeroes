@@ -3,7 +3,7 @@ import 'package:project_hack_heroes/theme.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import '../user.dart';
+import 'package:project_hack_heroes/user.dart';
 import 'package:path_provider/path_provider.dart';
 
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -

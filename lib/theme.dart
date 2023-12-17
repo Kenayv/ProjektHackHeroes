@@ -46,8 +46,8 @@ class Theme {
     colorWhite = whiteclr;
   }
 
-  AppBar getAppBar(String pagetitle) {
-    late AppBar appbar = AppBar(
+  AppBar studeeAppBar(String pagetitle) {
+    return AppBar(
       shadowColor: appBarshadowcolor, // barely visible black shadow
       backgroundColor: appbarbgcolor,
       automaticallyImplyLeading: false,
@@ -81,8 +81,6 @@ class Theme {
         ),
       ),
     );
-
-    return appbar;
   }
 }
 
@@ -103,12 +101,12 @@ final Theme whitetheme = Theme(
 );
 
 /*
-    niebieski: #6aa3f8  106, 163, 248
-    czerwony: #fc6666   252, 102, 102
-    fiolet: #cdb2ff     205, 178, 255
-    zielony: #97e077    151, 224, 119
-
- */
+Light theme:
+  niebieski: #6aa3f8  106, 163, 248
+  czerwony: #fc6666   252, 102, 102
+  fiolet: #cdb2ff     205, 178, 255
+  zielony: #97e077    151, 224, 119
+*/
 
 final Theme blacktheme = Theme(
   const Color.fromRGBO(31, 42, 95, 1.0),
@@ -127,17 +125,12 @@ final Theme blacktheme = Theme(
 );
 
 /*
-
 Dark theme: #1f2a5f         31, 42, 95)
 
-    niebieski: #6aa3f8      106, 163, 248
-    Fiolet: #af8ef7         175, 142, 247
-    pomarańczowy: #ff8c4f   255, 140, 79
-    zielony: #55d389        85, 211, 137
+  niebieski: #6aa3f8      106, 163, 248
+  Fiolet: #af8ef7         175, 142, 247
+  pomarańczowy: #ff8c4f   255, 140, 79
+  zielony: #55d389        85, 211, 137
+*/
 
-
-
- */
-
-//first initialization of the usertheme
 Theme usertheme = (currentUser.getTheme() == "White" ? whitetheme : blacktheme);

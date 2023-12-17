@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Studee - Learn. The simple way.',
       home: FutureBuilder<bool>(
-        future: currentUser.getHasSeenIntroduction(),
+        future: currentUser.hasSeenIntroduction(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
@@ -50,7 +50,6 @@ class _MyAppState extends State<MyApp> {
             return Text('Error: ${snapshot.error}');
           } else {
             final hasSeenIntroduction = snapshot.data;
-
             if (hasSeenIntroduction == false) {
               return const IntroductionScreens();
             } else {
@@ -92,6 +91,7 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
   String currentPageTitle = 'Home';
 
+  //FIXME: Either this function should be put in theme.dart or the appbar should be moved here.
   Widget studeeNavBar() {
     return BottomNavigationBar(
       items: <BottomNavigationBarItem>[
@@ -134,7 +134,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: usertheme.getAppBar(currentPageTitle),
+      appBar: usertheme.studeeAppBar(currentPageTitle),
       body: screens[_selectedIndex],
       bottomNavigationBar: studeeNavBar(),
     );
