@@ -115,7 +115,6 @@ class User {
     sharedPrefs.setInt('failedTasks', _statsFailedTasks);
     sharedPrefs.setInt('dayStreak', _statsDayStreak);
     sharedPrefs.setBool('hasSeenIntroduction', _hasSeenIntroduction);
-    _varLastLearnedDate = DateTime.now();
   }
 
   //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
@@ -212,6 +211,7 @@ class User {
     if (!_varDailyGoalAchieved) {
       _varDailyGoalAchieved = true;
       _updateDaysStreak(_statsDayStreak + 1);
+      _varLastLearnedDate = DateTime.now();
     }
   }
 
