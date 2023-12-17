@@ -14,8 +14,10 @@ class FlashCardSetPage extends StatefulWidget {
 class _FlashCardSetPageState extends State<FlashCardSetPage> {
   final FlashCardSet currentFlashCardSet;
   late FlashCard currentCard = currentFlashCardSet.getRandFlashCard();
+  
   bool isFlipped = false;
   bool showRatingButtons = false;
+
   void flipCard() {
     setState(() {
       if (isFlipped) {

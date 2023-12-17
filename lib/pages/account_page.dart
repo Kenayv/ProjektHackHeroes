@@ -118,48 +118,41 @@ void _showAboutUsDialog(BuildContext context) {
         ),
         backgroundColor: usertheme.primarybgcolor,
         content: SizedBox(
-          height: 380, // Adjust the height as needed
+          height: 380,
           child: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                // Add your about us content here
-
                 Image.asset('lib/assets/zdjecie2.png', width: 150, height: 150),
-
                 Container(
-                  margin: const EdgeInsets.only(top: 3.0), // Adjust the margin as needed
+                  margin: const EdgeInsets.only(top: 3.0),
                   child: Text(
                     'Aplikacja Studee',
                     textAlign: TextAlign.center,
                     style: TextStyle(color: usertheme.textColor),
-                    // Set your desired alignment
                   ),
                 ),
-
                 Container(
-                  margin: const EdgeInsets.only(top: 12.0), // Adjust the margin as needed
+                  margin: const EdgeInsets.only(top: 12.0),
                   child: Text(
                     'Jestesmy uczniami Szkoly ZSTiO Meritum, klasy 4Bt',
-                    textAlign: TextAlign.center, // Set your desired alignment
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: usertheme.textColor),
                   ),
                 ),
-
                 Container(
-                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0), // Adjust the margin as needed
-
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0),
                   child: Text(
                     'Autorzy:',
-                    textAlign: TextAlign.center, // Set your desired alignment
+                    textAlign: TextAlign.center,
                     style: TextStyle(color: usertheme.textColor),
                   ),
                 ),
                 Text(
-                  '1. Janek Grosicki - ogólna struktura aplikacji',
+                  '1. Jan Grosicki - ogólna struktura aplikacji',
                   style: TextStyle(color: usertheme.textColor),
                 ),
                 Text(
-                  '2. Wiktor Gradzik -Lista ToDo  ',
+                  '2. Wiktor Gradzik - Lista ToDo  ',
                   style: TextStyle(color: usertheme.textColor),
                 ),
                 Text(
@@ -191,10 +184,9 @@ void _showSettingsDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) {
-      String username = currentUser.getName(); // Initialize with your default username.
-      String selectedTheme = currentUser.getTheme(); // Initialize with your default theme.
-      TimeOfDay selectedNotificationTime = TimeOfDay(
-          hour: currentUser.getPrefHour(), minute: currentUser.getPrefMin()); // Initialize with your default time.
+      String username = currentUser.getName();
+      String selectedTheme = currentUser.getTheme();
+      TimeOfDay selectedNotificationTime = TimeOfDay(hour: currentUser.getPrefHour(), minute: currentUser.getPrefMin());
 
       return AlertDialog(
         title: Text(
@@ -254,7 +246,7 @@ void _showSettingsDialog(BuildContext context) {
               currentUser.setPrefMin(selectedNotificationTime.minute);
 
               currentUser.setTheme(selectedTheme);
-              
+
               Navigator.of(context).pop();
             },
           ),
@@ -268,10 +260,4 @@ void _showSettingsDialog(BuildContext context) {
       );
     },
   );
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: AccountPage(),
-  ));
 }
