@@ -15,8 +15,6 @@ import 'theme.dart';
 //  -   -   -   -   -   -   -   -    -   -   -   -   -   -   -   -   -
 
 void main() async {
-
-
   WidgetsFlutterBinding.ensureInitialized();
   await currentUser.initUser();
   await noController.initNotifications();
