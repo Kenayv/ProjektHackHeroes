@@ -5,14 +5,14 @@ import 'flash_cards_page.dart';
 
 class FlashCardSetPage extends StatefulWidget {
   FlashCardSet flashCardSet;
-  FlashCardSetPage({required this.flashCardSet});
+  FlashCardSetPage({super.key, required this.flashCardSet});
 
   @override
   _FlashCardSetPageState createState() => _FlashCardSetPageState(currentFlashCardSet: flashCardSet);
 }
 
 class _FlashCardSetPageState extends State<FlashCardSetPage> {
-  FlashCardSet currentFlashCardSet;
+  final FlashCardSet currentFlashCardSet;
   late FlashCard currentCard = currentFlashCardSet.getRandFlashCard();
   bool isFlipped = false;
   bool showRatingButtons = false;
@@ -34,7 +34,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edytuj fiszkę'),
+          title: const Text('Edytuj fiszkę'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -55,13 +55,13 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                 Navigator.of(context).pop();
                 setState(() {});
               },
-              child: Text('Usuń'),
+              child: const Text('Usuń'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Anuluj'),
+              child: const Text('Anuluj'),
             ),
             TextButton(
               onPressed: () {
@@ -71,7 +71,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                   currentFlashCard.back = backController.text;
                 });
               },
-              child: Text('Zapisz'),
+              child: const Text('Zapisz'),
             ),
           ],
         );
@@ -84,7 +84,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: usertheme.Primarybgcolor,
+      backgroundColor: usertheme.primarybgcolor,
       // Wrap your content in a Scaffold to get the default app background
       appBar: AppBar(
         title: Text(currentFlashCardSet.getName()),
@@ -100,7 +100,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
               return ['settings'].map((String choice) {
                 return PopupMenuItem<String>(
                   value: choice,
-                  child: Row(
+                  child: const Row(
                     children: [
                       Icon(Icons.settings),
                       SizedBox(width: 8),
@@ -114,7 +114,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
         ],
       ),
       body: Container(
-        color: usertheme.Primarybgcolor, // Set the background color to white
+        color: usertheme.primarybgcolor, // Set the background color to white
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -124,28 +124,28 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                 height: 400,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: usertheme.Primarybgcolor, // Set the color to white as well
+                  color: usertheme.primarybgcolor, // Set the color to white as well
                   border: Border.all(
-                    color: usertheme.TextColor,
+                    color: usertheme.textColor,
                     width: 4.0, // Adjust this value to make the border thicker
                   ),
                 ),
                 child: Center(
                   child: AnimatedCrossFade(
-                    duration: Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 300),
                     crossFadeState: isFlipped ? CrossFadeState.showSecond : CrossFadeState.showFirst,
                     firstChild: Text(
                       currentCard.front,
-                      style: TextStyle(fontSize: 20,color: usertheme.TextColor),
+                      style: TextStyle(fontSize: 20, color: usertheme.textColor),
                     ),
                     secondChild: Text(
                       currentCard.back,
-                      style: TextStyle(fontSize: 20,color: usertheme.TextColor),
+                      style: TextStyle(fontSize: 20, color: usertheme.textColor),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               if (!isFlipped)
                 ElevatedButton(
                   onPressed: () {
@@ -157,7 +157,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                     height: 40,
                     width: 120,
                     alignment: Alignment.center,
-                    child: Text('Pokaż odpowiedź'),
+                    child: const Text('Pokaż odpowiedź'),
                   ),
                 ),
               if (isFlipped)
@@ -175,10 +175,10 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                         height: 50,
                         width: 80,
                         alignment: Alignment.center,
-                        child: Text('Dobrze'),
+                        child: const Text('Dobrze'),
                       ),
                     ),
-                    SizedBox(width: 20),
+                    const SizedBox(width: 20),
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
@@ -189,7 +189,7 @@ class _FlashCardSetPageState extends State<FlashCardSetPage> {
                         height: 50,
                         width: 80,
                         alignment: Alignment.center,
-                        child: Text('Źle'),
+                        child: const Text('Źle'),
                       ),
                     ),
                   ],

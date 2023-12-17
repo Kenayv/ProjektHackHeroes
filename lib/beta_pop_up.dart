@@ -1,19 +1,18 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
-import 'package:project_hack_heroes/theme.dart';
 import 'main.dart';
 
 class BetaPopUpPage extends StatelessWidget {
+  const BetaPopUpPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(248, 245, 250, 1.0),
+      backgroundColor: const Color.fromRGBO(248, 245, 250, 1.0),
       body: Stack(children: [
         Positioned(
           width: MediaQuery.of(context).size.width,
           top: MediaQuery.of(context).size.height * 0.25,
-          child: Image(
+          child: const Image(
             image: AssetImage('lib/assets/BaseLogoSwan.png'),
             width: 300,
             height: 242,
@@ -27,12 +26,7 @@ class BetaPopUpPage extends StatelessWidget {
             TextSpan(
               children: <TextSpan>[
                 TextSpan(
-                    text: 'Studee\n',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                      color: Colors.black
-                    )),
+                    text: 'Studee\n', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32, color: Colors.black)),
                 TextSpan(
                     text: 'UWAGA!',
                     style: TextStyle(
@@ -65,20 +59,20 @@ class BetaPopUpPage extends StatelessWidget {
               padding: const EdgeInsets.all(32.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(128, 224, 62, 1),
+                  backgroundColor: const Color.fromRGBO(128, 224, 62, 1),
                   foregroundColor: Colors.white,
                   shadowColor: Colors.greenAccent,
                   elevation: 3,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
-                  minimumSize: Size(200, 64),
+                  minimumSize: const Size(200, 64),
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MainPage()),
+                    MaterialPageRoute(builder: (context) => const MainPage()),
                   );
                 },
-                child: Text('Dalej', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
+                child: const Text('Dalej', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
               ),
             ))
       ]),

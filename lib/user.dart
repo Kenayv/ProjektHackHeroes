@@ -1,11 +1,12 @@
 import 'package:project_hack_heroes/notification_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:project_hack_heroes/theme.dart';
 
 class User {
   // WARNING: Those variables can be easily accessed and changed. They're found as SharedPreferences in the file system. It is not a problem though, as long, as there is no competetive use of those variables, such as friends-leaderboard. The only "cheating" that can be done at the current state is user changing the variables for personal use.
 
   //user stats, vars, and config variables. will be stored in SharedPreferences. Can be accessed via get...() function
-  late int _statsHighScoreFlashCardsRush; // WORK-IN-PROGRESS
+  late int _statsHighScoreFlashCardsRush; //FIXME: WORK-IN-PROGRESS
   late int _statsCompletedFlashCards;
   late int _statsFinishedTasks;
   late int _statsLongestStreak;
@@ -18,7 +19,7 @@ class User {
   late bool _varDailyGoalAchieved;
   late int _varFlashCardsFinishedToday;
   late int _varTasksFinishedToday;
-  late bool _upcomingNotification; // WORK-IN-PROGRESS
+  late bool _upcomingNotification; //FIXME: WORK-IN-PROGRESS
 
   late String _configUserName;
   late int _configPrefDailyFlashCards;
@@ -51,7 +52,7 @@ class User {
 
   //Loads user stats and saves them as variables in User class.
   Future<void> _loadStats(SharedPreferences sharedPrefs) async {
-    _statsHighScoreFlashCardsRush = sharedPrefs.getInt('highScoreFlashCardsRush') ?? 0; // WORK-IN-PROGRESS
+    _statsHighScoreFlashCardsRush = sharedPrefs.getInt('highScoreFlashCardsRush') ?? 0; //FIXME: WORK-IN-PROGRESS
     _statsCompletedFlashCards = sharedPrefs.getInt('completedFlashCards') ?? 0;
     _statsFinishedTasks = sharedPrefs.getInt('finishedTasks') ?? 0;
     _statsLongestStreak = sharedPrefs.getInt('longestStreak') ?? 0;
@@ -104,7 +105,7 @@ class User {
   Future<void> _saveStats(SharedPreferences sharedPrefs) async {
     //WARNING: this function might be very sub-optimal, because it is invoked on every User variable change. If it happens to be visibly laggy, only changed variable should be updated as SharedPref. For now, the definition can stay as it is for the sake of simplicity.
 
-    sharedPrefs.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush); // WORK-IN-PROGRESS
+    sharedPrefs.setInt('highScoreFlashCardsRush', _statsHighScoreFlashCardsRush); //FIXME: WORK-IN-PROGRESS
     sharedPrefs.setInt('completedFlashCards', _statsCompletedFlashCards);
     sharedPrefs.setInt('longestStreak', _statsLongestStreak);
     sharedPrefs.setInt('finishedTasks', _statsFinishedTasks);
@@ -185,8 +186,10 @@ class User {
 
       //if the last month was 29 days long, and it's a leap year, skip to case 27:
       case 28:
-        if (_varLastDailyGoalCompletionDate.year % 4 == 0 && _varLastDailyGoalCompletionDate.month == DateTime.february)
+        if (_varLastDailyGoalCompletionDate.year % 4 == 0 &&
+            _varLastDailyGoalCompletionDate.month == DateTime.february) {
           return true;
+        }
 
       //if the last month was 28 days long and it was february
       case 27:
@@ -207,7 +210,7 @@ class User {
   }
   //  -   -   -   -   -   -   -   -   -   -
 
-  // WORK-IN-PROGRESS
+  //FIXME: WORK-IN-PROGRESS
   void updateFCRushHighScore(int highScore) {
     if (highScore <= 0) return;
     _statsHighScoreFlashCardsRush += highScore;
@@ -291,9 +294,10 @@ class User {
       _configTheme = "White";
     } else if (s == "Black") {
       _configTheme = "Black";
-    } else
+    } else {
       _configTheme = "Error";
-
+    }
+    usertheme = (currentUser.getTheme() == "White" ? whitetheme : blacktheme);
     saveAll();
   }
 

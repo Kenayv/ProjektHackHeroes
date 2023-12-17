@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/theme.dart';
 import '../user.dart';
-import 'package:project_hack_heroes/main.dart';
 
 class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: usertheme.Primarybgcolor,
+      backgroundColor: usertheme.primarybgcolor,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            CircleAvatar(
+            const SizedBox(height: 20),
+            const CircleAvatar(
               radius: 70,
               backgroundImage: AssetImage('lib/assets/BurnOutSorry.png'),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               currentUser.getName(),
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: usertheme.TextColor,
+                color: usertheme.textColor,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -37,9 +38,9 @@ class AccountPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -49,15 +50,15 @@ class AccountPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: usertheme.TextColor,
+                        color: usertheme.textColor,
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   _buildStatItem('Obecny Streak', currentUser.getDayStreak().toString()),
                   _buildStatItem('Ukończone zadania', currentUser.getFinishedTasks().toString()),
                   _buildStatItem('Nieukończone zadania', currentUser.getFailedTasks().toString()),
-                  _buildStatItem('Wykonanych zadań', currentUser.getTaskCompletion().toStringAsFixed(2) + '%'),
+                  _buildStatItem('Wykonanych zadań', '${currentUser.getTaskCompletion().toStringAsFixed(2)}%'),
                   _buildStatItem('Rekord Fiszki Rush', currentUser.getHighScoreFCRush().toString()),
                   _buildStatItem('Ukończone Fiszki', currentUser.getCompletedFC().toString()),
                   _buildStatItem('Najdłuższy Streak', currentUser.getLongestStreak().toString()),
@@ -91,14 +92,14 @@ class AccountPage extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 16,
-            color: usertheme.TextColor,
+            color: usertheme.textColor,
           ),
         ),
         Text(
           value,
           style: TextStyle(
             fontSize: 16,
-            color: usertheme.TextColor,
+            color: usertheme.textColor,
           ),
         ),
       ],
@@ -113,10 +114,10 @@ void _showAboutUsDialog(BuildContext context) {
       return AlertDialog(
         title: Text(
           'About Us',
-          style: TextStyle(color: usertheme.TextColor),
+          style: TextStyle(color: usertheme.textColor),
         ),
-        backgroundColor: usertheme.Primarybgcolor,
-        content: Container(
+        backgroundColor: usertheme.primarybgcolor,
+        content: SizedBox(
           height: 380, // Adjust the height as needed
           child: SingleChildScrollView(
             child: ListBody(
@@ -126,48 +127,48 @@ void _showAboutUsDialog(BuildContext context) {
                 Image.asset('lib/assets/zdjecie2.png', width: 150, height: 150),
 
                 Container(
-                  margin: EdgeInsets.only(top: 3.0), // Adjust the margin as needed
+                  margin: const EdgeInsets.only(top: 3.0), // Adjust the margin as needed
                   child: Text(
                     'Aplikacja Studee',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: usertheme.TextColor),
+                    style: TextStyle(color: usertheme.textColor),
                     // Set your desired alignment
                   ),
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(top: 12.0), // Adjust the margin as needed
+                  margin: const EdgeInsets.only(top: 12.0), // Adjust the margin as needed
                   child: Text(
                     'Jestesmy uczniami Szkoly ZSTiO Meritum, klasy 4Bt',
                     textAlign: TextAlign.center, // Set your desired alignment
-                    style: TextStyle(color: usertheme.TextColor),
+                    style: TextStyle(color: usertheme.textColor),
                   ),
                 ),
 
                 Container(
-                  margin: EdgeInsets.only(top: 4.0, bottom: 4.0), // Adjust the margin as needed
+                  margin: const EdgeInsets.only(top: 4.0, bottom: 4.0), // Adjust the margin as needed
 
                   child: Text(
                     'Autorzy:',
                     textAlign: TextAlign.center, // Set your desired alignment
-                    style: TextStyle(color: usertheme.TextColor),
+                    style: TextStyle(color: usertheme.textColor),
                   ),
                 ),
                 Text(
                   '1. Janek Grosicki - ogólna struktura aplikacji',
-                  style: TextStyle(color: usertheme.TextColor),
+                  style: TextStyle(color: usertheme.textColor),
                 ),
                 Text(
                   '2. Wiktor Gradzik -Lista ToDo  ',
-                  style: TextStyle(color: usertheme.TextColor),
+                  style: TextStyle(color: usertheme.textColor),
                 ),
                 Text(
                   '3. Konrad Kaspirowicz- Fiszki, ikonki',
-                  style: TextStyle(color: usertheme.TextColor),
+                  style: TextStyle(color: usertheme.textColor),
                 ),
                 Text(
                   '4. Marcin Skrzypek - Introduction Screen, mniejsze screeny',
-                  style: TextStyle(color: usertheme.TextColor),
+                  style: TextStyle(color: usertheme.textColor),
                 ),
               ],
             ),
@@ -175,7 +176,7 @@ void _showAboutUsDialog(BuildContext context) {
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Close'),
+            child: const Text('Close'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -198,21 +199,21 @@ void _showSettingsDialog(BuildContext context) {
       return AlertDialog(
         title: Text(
           'Customize Your Experience',
-          style: TextStyle(color: usertheme.TextColor),
+          style: TextStyle(color: usertheme.textColor),
         ),
-        backgroundColor: usertheme.Primarybgcolor,
+        backgroundColor: usertheme.primarybgcolor,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             DropdownButtonFormField<String>(
-              dropdownColor: usertheme.Primarybgcolor,
+              dropdownColor: usertheme.primarybgcolor,
               value: selectedTheme,
               items: ['White', 'Black'].map((theme) {
                 return DropdownMenuItem<String>(
                   value: theme,
                   child: Text(
                     theme,
-                    style: TextStyle(color: usertheme.TextColor),
+                    style: TextStyle(color: usertheme.textColor),
                   ),
                 );
               }).toList(),
@@ -222,8 +223,8 @@ void _showSettingsDialog(BuildContext context) {
             ),
             TextFormField(
               initialValue: username,
-              style: TextStyle(color: usertheme.TextColor),
-              decoration: InputDecoration(labelText: 'Username', labelStyle: TextStyle(color: usertheme.TextColor)),
+              style: TextStyle(color: usertheme.textColor),
+              decoration: InputDecoration(labelText: 'Username', labelStyle: TextStyle(color: usertheme.textColor)),
               onChanged: (value) {
                 username = value;
               },
@@ -239,26 +240,26 @@ void _showSettingsDialog(BuildContext context) {
                   selectedNotificationTime = time;
                 }
               },
-              child: Text('Notification Time'),
+              child: const Text('Notification Time'),
             ),
           ],
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Save'),
+            child: const Text('Save'),
             onPressed: () {
-              currentUser.setName(username!);
+              currentUser.setName(username);
 
-              currentUser.setPrefHour(selectedNotificationTime!.hour);
-              currentUser.setPrefMin(selectedNotificationTime!.minute);
+              currentUser.setPrefHour(selectedNotificationTime.hour);
+              currentUser.setPrefMin(selectedNotificationTime.minute);
 
               currentUser.setTheme(selectedTheme);
-
+              
               Navigator.of(context).pop();
             },
           ),
           TextButton(
-            child: Text('Close'),
+            child: const Text('Close'),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -270,7 +271,7 @@ void _showSettingsDialog(BuildContext context) {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: AccountPage(),
   ));
 }

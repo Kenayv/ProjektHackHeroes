@@ -4,10 +4,11 @@ import 'package:project_hack_heroes/user.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 import 'todo_page.dart';
-import 'dart:math';
 import 'dart:io';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Padding _buildTaskItem(String taskText) {
-    final randomColor = usertheme.Taskcolor;
+    final randomColor = usertheme.taskcolor;
 
     return Padding(
       padding: const EdgeInsets.all(15.0),
@@ -43,12 +44,12 @@ class _HomePageState extends State<HomePage> {
         height: 120,
         decoration: BoxDecoration(
           color: randomColor,
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
         ),
         child: Center(
           child: Text(
             taskText,
-            style: TextStyle(fontSize: 20, color: Colors.white),
+            style: const TextStyle(fontSize: 20, color: Colors.white),
           ),
         ),
       ),
@@ -59,103 +60,97 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     _loadTasks();
     return Scaffold(
-        backgroundColor: usertheme.Primarybgcolor,
+        backgroundColor: usertheme.primarybgcolor,
         body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  height: 120,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "STUDEE",
-                        style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold, color: usertheme.TextColor),
-                      ),
-                      Text(
-                        "dzisiaj:",
-                        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: usertheme.TextColor),
-                      ),
-                    ],
-                  ),
-                ),
-                // Pozostała zawartość
-                Container(
-                  child: SizedBox(
-                    height: 40,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.33,
-                          height: 50,
-                          child: Center(
-                            child: Text("Streak: " + currentUser.getDayStreak().toString() + '🔥',
-                                style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.33,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                                "fiszek: " +
-                                    currentUser.getFlashCardsFinishedToday().toString() +
-                                    '/' +
-                                    currentUser.getFlashCardGoal().toString(),
-                                style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.33,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                                "zadań:" +
-                                    currentUser.getTasksFinishedToday().toString() +
-                                    '/' +
-                                    currentUser.getTasksGoal().toString(),
-                                style: TextStyle(fontSize: 18, color: usertheme.TextColor)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Container(
-                  child: SizedBox(
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Zadania do ukończenia:",
-                          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: usertheme.TextColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Column(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 120,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        TodoTask todo = tasks[index];
-                        if (todo.isCompleted) return null;
-                        return SizedBox(
-                          // Wrap the Container with a SizedBox
-                          width: MediaQuery.of(context).size.width * 0.7, // Set width to 80% of the screen width
-                          child: _buildTaskItem(todo.task),
-                        );
-                      },
+                    Text(
+                      "STUDEE",
+                      style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold, color: usertheme.textColor),
+                    ),
+                    Text(
+                      "dzisiaj:",
+                      style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: usertheme.textColor),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              // Pozostała zawartość
+              SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      height: 50,
+                      child: Center(
+                        child: Text("Streak: " + currentUser.getDayStreak().toString() + '🔥',
+                            style: TextStyle(fontSize: 18, color: usertheme.textColor)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                            "fiszek: " +
+                                currentUser.getFlashCardsFinishedToday().toString() +
+                                '/' +
+                                currentUser.getFlashCardGoal().toString(),
+                            style: TextStyle(fontSize: 18, color: usertheme.textColor)),
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.33,
+                      height: 50,
+                      child: Center(
+                        child: Text(
+                            "zadań:" +
+                                currentUser.getTasksFinishedToday().toString() +
+                                '/' +
+                                currentUser.getTasksGoal().toString(),
+                            style: TextStyle(fontSize: 18, color: usertheme.textColor)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 50,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Zadania do ukończenia:",
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: usertheme.textColor),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: tasks.length,
+                    itemBuilder: (context, index) {
+                      TodoTask todo = tasks[index];
+                      if (todo.isCompleted) return null;
+                      return SizedBox(
+                        // Wrap the Container with a SizedBox
+                        width: MediaQuery.of(context).size.width * 0.7, // Set width to 80% of the screen width
+                        child: _buildTaskItem(todo.task),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
           ),
         ));
   }

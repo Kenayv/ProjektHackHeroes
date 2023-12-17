@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -7,7 +5,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:project_hack_heroes/theme.dart';
 import 'dart:math';
 import 'flash_card_set_page.dart';
-import 'package:project_hack_heroes/main.dart';
 
 class FlashCardSet {
   String fcSetName;
@@ -41,9 +38,7 @@ class FlashCardSet {
 
       // Write the JSON data to the file (this will overwrite any existing content)
       file.writeAsStringSync(jsonEncode(jsonData));
-    } catch (e) {
-      print("Error while saving flashcards: $e");
-    }
+    } catch (e) {}
   }
 
   //Reads FlashCards saved in FlashCards.json file and pushes them into FlashCards[] array
@@ -65,16 +60,13 @@ class FlashCardSet {
           _flashCards = loadedFlashCards;
         } else {
           // Handle the case where "fcSetName" does not exist in the JSON file
-          print("The '$fcSetName' object does not exist in the JSON file.");
         }
       }
-    } catch (e) {
-      print("Error while loading flashcards: $e");
-    }
+    } catch (e) {}
   }
 
   FlashCard getRandFlashCard() {
-    if (_flashCards.length <= 0) throw Exception("brak kart w tym zestawie!");
+    if (_flashCards.isEmpty) throw Exception("brak kart w tym zestawie!");
     final randomIndex = Random().nextInt(_flashCards.length);
     return _flashCards[randomIndex];
   }
@@ -121,6 +113,8 @@ class FlashCard {
 }
 
 class FlashCardsPage extends StatefulWidget {
+  const FlashCardsPage({super.key});
+
   @override
   _FlashCardsPageState createState() => _FlashCardsPageState();
 }
@@ -155,9 +149,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
           }
         });
       }
-    } catch (e) {
-      print("Error while loading FlashCardSets: $e");
-    }
+    } catch (e) {}
   }
 
   @override
@@ -171,20 +163,20 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: usertheme.Primarybgcolor,
+      backgroundColor: usertheme.primarybgcolor,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Twoje zestawy fiszek:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.textColor),
               ),
             ),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: flashCardSets.length,
               itemBuilder: (context, index) {
                 FlashCardSet flashCardSet = flashCardSets[index];
@@ -198,8 +190,8 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
         onPressed: () {
           _addFlashCardDialog();
         },
-        child: Icon(Icons.add),
-        backgroundColor: usertheme.Page2,
+        backgroundColor: usertheme.page2,
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -219,8 +211,8 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: usertheme.Primarybgcolor,
-          title: Text('Dodaj fiszkę lub zestaw',style: TextStyle(color: usertheme.TextColor)),
+          backgroundColor: usertheme.primarybgcolor,
+          title: Text('Dodaj fiszkę lub zestaw', style: TextStyle(color: usertheme.textColor)),
           content: StatefulBuilder(builder: (context, setState) {
             return SizedBox(
               width: 250, // Set the desired width
@@ -228,13 +220,16 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   DropdownButtonFormField<String>(
-                    dropdownColor: usertheme.Primarybgcolor,
-                    decoration: InputDecoration(labelText: 'Zestaw fiszek', labelStyle: TextStyle(color: usertheme.TextColor)),
+                    dropdownColor: usertheme.primarybgcolor,
+                    decoration:
+                        InputDecoration(labelText: 'Zestaw fiszek', labelStyle: TextStyle(color: usertheme.textColor)),
                     items: fcSetNames.map((theme) {
                       return DropdownMenuItem<String>(
-
                         value: theme,
-                        child: Text(theme,style: TextStyle(color: usertheme.TextColor),),
+                        child: Text(
+                          theme,
+                          style: TextStyle(color: usertheme.textColor),
+                        ),
                       );
                     }).toList(),
                     onChanged: (value) {
@@ -247,7 +242,8 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                     visible: selectedValue == newSetVal,
                     child: TextField(
                       controller: inputName,
-                      decoration: InputDecoration(labelText: 'Nazwa', labelStyle: TextStyle(color: usertheme.TextColor)),
+                      decoration:
+                          InputDecoration(labelText: 'Nazwa', labelStyle: TextStyle(color: usertheme.textColor)),
                     ),
                   ),
                   Visibility(
@@ -256,11 +252,13 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                       children: [
                         TextField(
                           controller: inputFront,
-                          decoration: InputDecoration(labelText: 'Przód karty', labelStyle: TextStyle(color: usertheme.TextColor)),
+                          decoration: InputDecoration(
+                              labelText: 'Przód karty', labelStyle: TextStyle(color: usertheme.textColor)),
                         ),
                         TextField(
                           controller: inputBack,
-                          decoration: InputDecoration(labelText: 'Tył karty', labelStyle: TextStyle(color: usertheme.TextColor)),
+                          decoration: InputDecoration(
+                              labelText: 'Tył karty', labelStyle: TextStyle(color: usertheme.textColor)),
                         ),
                       ],
                     ),
@@ -271,13 +269,13 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
           }),
           actions: <Widget>[
             TextButton(
-              child: Text('Anuluj'),
+              child: const Text('Anuluj'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Dodaj'),
+              child: const Text('Dodaj'),
               onPressed: () {
                 if (selectedValue == newSetVal) {
                   flashCardSets.add(FlashCardSet(fcSetName: inputName.text));
@@ -308,21 +306,22 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: usertheme.Primarybgcolor,
-          title: Text('Usuń lub zmień nazwę',style: TextStyle(color: usertheme.TextColor)),
+          backgroundColor: usertheme.primarybgcolor,
+          title: Text('Usuń lub zmień nazwę', style: TextStyle(color: usertheme.textColor)),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: editSetController,
-                  decoration: InputDecoration(labelText: 'Nowa nazwa', labelStyle: TextStyle(color: usertheme.TextColor)),
+                  decoration:
+                      InputDecoration(labelText: 'Nowa nazwa', labelStyle: TextStyle(color: usertheme.textColor)),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Usuń'),
+              child: const Text('Usuń'),
               onPressed: () {
                 removeFlashCardSet(currentSet);
                 Navigator.of(context).pop();
@@ -330,13 +329,13 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
               },
             ),
             TextButton(
-              child: Text('Anuluj'),
+              child: const Text('Anuluj'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Zmień nazwę'),
+              child: const Text('Zmień nazwę'),
               onPressed: () {
                 currentSet.setName(editSetController.text);
                 Navigator.of(context).pop();
@@ -382,7 +381,7 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
             height: 92,
             decoration: BoxDecoration(
               color: randomColor,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             child: Center(
               child: Column(
@@ -390,11 +389,11 @@ class _FlashCardsPageState extends State<FlashCardsPage> {
                 children: [
                   Text(
                     currentFlashCardSet.getName(),
-                    style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'Ilość kart: ${currentFlashCardSet.getLength()}',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ],
               ),

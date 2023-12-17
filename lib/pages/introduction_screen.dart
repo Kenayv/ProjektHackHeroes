@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/main.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import '../beta_pop_up.dart';
 import 'package:project_hack_heroes/user.dart';
 import 'time_picker_screen.dart';
 /*
@@ -13,15 +11,9 @@ import 'time_picker_screen.dart';
 *
 * */
 
-
 //smieszne funkcje do smiesznych rzeczy
 
-
 //intrdduction screen
-
-
-
-
 
 class IntroductionScreens extends StatefulWidget {
   const IntroductionScreens({Key? key}) : super(key: key);
@@ -29,6 +21,7 @@ class IntroductionScreens extends StatefulWidget {
   @override
   _IntroductionScreensState createState() => _IntroductionScreensState();
 }
+
 class _IntroductionScreensState extends State<IntroductionScreens> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String selectedTheme = 'White';
@@ -38,17 +31,22 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: Color.fromRGBO(248, 245, 250, 0.9999),shadowColor: Color.fromRGBO(201, 201, 201, 0.1),),
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(248, 245, 250, 0.9999),
+          shadowColor: const Color.fromRGBO(201, 201, 201, 0.1),
+        ),
         body: Form(
           key: _formKey,
-
           child: IntroductionScreen(
               pages: [
                 PageViewModel(
                   title: 'Aplikacja Studee!',
                   body: 'Co to jest?',
                   image: Image.asset("lib/assets/BaseLogoSwan.png"),
-                  footer: Text("Jest to bardzo prosta aplikacja, stworzona w celu wspomagania nauki",textAlign: TextAlign.center,),
+                  footer: const Text(
+                    "Jest to bardzo prosta aplikacja, stworzona w celu wspomagania nauki",
+                    textAlign: TextAlign.center,
+                  ),
                   decoration: getPageDecoration(),
                 ),
                 PageViewModel(
@@ -59,7 +57,7 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                     child: Image.asset('lib/assets/zdjecie1.png'),
                   ),
                   decoration: getPageDecoration(),
-                  footer: Column(
+                  footer: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       BulletPointListItem('Janek Grosicki'),
@@ -90,48 +88,44 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
                           });
                         },
                       ),
-
                       TextFormField(
-                        decoration: InputDecoration(labelText: 'Username'),
+                        decoration: const InputDecoration(labelText: 'Username'),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Username is required';
                           }
                           return null;
                         },
-                        onChanged: (value) {    //nieoptymalne
+                        onChanged: (value) {
+                          //nieoptymalne
 
                           username = value;
-
                         },
                       ),
                       Center(
                           child: ElevatedButton(
-                            onPressed: () async {
-                              final time = await Navigator.of(context).push(
-                                MaterialPageRoute<TimeOfDay?>(
-                                  builder: (context) => TimePickerScreen(
-                                    initialTime: selectedNotificationTime,
-                                  ),
-                                ),
-                              );
+                        onPressed: () async {
+                          final time = await Navigator.of(context).push(
+                            MaterialPageRoute<TimeOfDay?>(
+                              builder: (context) => TimePickerScreen(
+                                initialTime: selectedNotificationTime,
+                              ),
+                            ),
+                          );
 
-                              if (time != null) {
-                                setState(() {
-                                  selectedNotificationTime = time;
-                                });
-                              }
-                            },
-                            child: Text('Select Notification Time',overflow: TextOverflow.ellipsis),
-                          )),
-
-
+                          if (time != null) {
+                            setState(() {
+                              selectedNotificationTime = time;
+                            });
+                          }
+                        },
+                        child: const Text('Select Notification Time', overflow: TextOverflow.ellipsis),
+                      )),
                     ],
                   ),
                 ),
               ],
               onDone: () {
-
                 currentUser.setName(username!);
 
                 currentUser.setPrefHour(selectedNotificationTime!.hour);
@@ -139,40 +133,29 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
 
                 currentUser.setTheme(selectedTheme);
 
-
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MainPage()),
+                  MaterialPageRoute(builder: (context) => const MainPage()),
                 );
 
                 currentUser.setHasSeenIntroductionTrue();
-
-
-
               },
               //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
               scrollPhysics: const ClampingScrollPhysics(),
               showDoneButton: true,
               showNextButton: true,
               showBackButton: true,
-
-              back:
-              const Icon(Icons.arrow_back),
-
+              back: const Icon(Icons.arrow_back),
               next: const Icon(Icons.forward),
-              done:
-              const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
+              done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
               dotsDecorator: getDotsDecorator()),
         ));
   }
 
-
   //method to customise the page style
   PageDecoration getPageDecoration() {
     return const PageDecoration(
-
       pageColor: Colors.white,
-
       titlePadding: EdgeInsets.only(top: 50),
       bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
     );
@@ -192,23 +175,21 @@ class _IntroductionScreensState extends State<IntroductionScreens> {
   }
 }
 
-
-
 class BulletPointListItem extends StatelessWidget {
   final String text;
 
-  BulletPointListItem(this.text);
+  const BulletPointListItem(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center, // Center align the children
         children: [
-          Icon(Icons.arrow_forward, size: 12),
-          SizedBox(width: 8),
+          const Icon(Icons.arrow_forward, size: 12),
+          const SizedBox(width: 8),
           Text(text),
         ],
       ),

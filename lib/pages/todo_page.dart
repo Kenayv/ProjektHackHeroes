@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, unused_element, avoid_print, prefer_const_constructors, sort_child_properties_last
-
 import 'package:flutter/material.dart';
 import 'package:project_hack_heroes/theme.dart';
 import 'dart:async';
@@ -38,6 +36,8 @@ class TodoTask {
 //  -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
 class TodoPage extends StatefulWidget {
+  TodoPage({super.key});
+
   @override
   _TodoPageState createState() => _TodoPageState();
 
@@ -118,28 +118,31 @@ class _TodoPageState extends State<TodoPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: usertheme.Primarybgcolor,
-          title: Text('Edytuj zadanie',style: TextStyle(color: usertheme.TextColor),),
+          backgroundColor: usertheme.primarybgcolor,
+          title: Text(
+            'Edytuj zadanie',
+            style: TextStyle(color: usertheme.textColor),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: editTaskController,
-                  style: TextStyle(color: usertheme.TextColor),
-                  decoration: InputDecoration(labelText: 'Zadanie', labelStyle: TextStyle(color: usertheme.TextColor)),
+                  style: TextStyle(color: usertheme.textColor),
+                  decoration: InputDecoration(labelText: 'Zadanie', labelStyle: TextStyle(color: usertheme.textColor)),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Anuluj'),
+              child: const Text('Anuluj'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Zapisz'),
+              child: const Text('Zapisz'),
               onPressed: () {
                 _editTask(index, editTaskController.text);
                 Navigator.of(context).pop();
@@ -157,23 +160,31 @@ class _TodoPageState extends State<TodoPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: usertheme.Primarybgcolor,
-          title: Text('Dodaj zadanie',
-            style: TextStyle(color: usertheme.TextColor),),
+          backgroundColor: usertheme.primarybgcolor,
+          title: Text(
+            'Dodaj zadanie',
+            style: TextStyle(color: usertheme.textColor),
+          ),
           content: TextField(
             controller: taskController,
-            style: TextStyle(color: usertheme.TextColor),
-            decoration: InputDecoration(labelText: 'Nowe zadanie', labelStyle: TextStyle(color: usertheme.TextColor)),
+            style: TextStyle(color: usertheme.textColor),
+            decoration: InputDecoration(labelText: 'Nowe zadanie', labelStyle: TextStyle(color: usertheme.textColor)),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Anuluj',style: TextStyle(color: usertheme.TextColor),),
+              child: Text(
+                'Anuluj',
+                style: TextStyle(color: usertheme.textColor),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Dodaj',style: TextStyle(color: usertheme.TextColor),),
+              child: Text(
+                'Dodaj',
+                style: TextStyle(color: usertheme.textColor),
+              ),
               onPressed: () {
                 _addTask(taskController.text);
                 Navigator.of(context).pop();
@@ -190,17 +201,6 @@ class _TodoPageState extends State<TodoPage> {
     return ListTile(
       title: Dismissible(
         key: Key(todo.hashCode.toString()),
-        child: ListTile(
-          title: Text(
-            todo.task,
-            style: TextStyle(
-                decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
-                color: usertheme.TextColor),
-          ),
-          onLongPress: () {
-            _editTaskDialog(context, tasks.indexOf(todo));
-          },
-        ),
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
             if (!todo.isCompleted) currentUser.incrFailedTask();
@@ -212,8 +212,8 @@ class _TodoPageState extends State<TodoPage> {
         background: Container(
           color: Colors.red,
           alignment: Alignment.centerLeft,
-          padding: EdgeInsets.only(left: 20.0),
-          child: Icon(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: const Icon(
             Icons.delete,
             color: Colors.white,
             size: 30,
@@ -222,12 +222,23 @@ class _TodoPageState extends State<TodoPage> {
         secondaryBackground: Container(
           color: Colors.green,
           alignment: Alignment.centerRight,
-          padding: EdgeInsets.only(right: 20.0),
-          child: Icon(
+          padding: const EdgeInsets.only(right: 20.0),
+          child: const Icon(
             Icons.check,
             color: Colors.white,
             size: 30,
           ),
+        ),
+        child: ListTile(
+          title: Text(
+            todo.task,
+            style: TextStyle(
+                decoration: todo.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
+                color: usertheme.textColor),
+          ),
+          onLongPress: () {
+            _editTaskDialog(context, tasks.indexOf(todo));
+          },
         ),
       ),
     );
@@ -245,20 +256,20 @@ class _TodoPageState extends State<TodoPage> {
     List<TodoTask> completedTasks = tasks.where((task) => task.isCompleted).toList();
 
     return Scaffold(
-      backgroundColor: usertheme.Primarybgcolor, // Set the background color here
+      backgroundColor: usertheme.primarybgcolor, // Set the background color here
       body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.textColor),
               ),
             ),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: incompleteTasks.length,
               itemBuilder: (context, index) {
                 TodoTask todo = incompleteTasks[index];
@@ -266,15 +277,15 @@ class _TodoPageState extends State<TodoPage> {
               },
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Completed Tasks',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.TextColor),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: usertheme.textColor),
               ),
             ),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: completedTasks.length,
               itemBuilder: (context, index) {
                 TodoTask todo = completedTasks[index];
@@ -288,8 +299,8 @@ class _TodoPageState extends State<TodoPage> {
         onPressed: () {
           _addTaskDialog();
         },
-        child: Icon(Icons.add),
-        backgroundColor: usertheme.Page1,
+        backgroundColor: usertheme.page1,
+        child: const Icon(Icons.add),
       ),
     );
   }
