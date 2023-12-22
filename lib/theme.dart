@@ -16,6 +16,7 @@ class Theme {
   late Color taskcolor;
   late Color colorWhite;
 
+
   Theme(
     Color primarybgclr,
     Color secondarybgclr,
@@ -44,6 +45,7 @@ class Theme {
     page5 = pg5;
     taskcolor = taskclr;
     colorWhite = whiteclr;
+
   }
 
   AppBar studeeAppBar(String pagetitle) {

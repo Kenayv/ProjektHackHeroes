@@ -3,8 +3,8 @@ import 'package:project_hack_heroes/theme.dart';
 import 'package:project_hack_heroes/user.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
-import 'todo_page.dart';
 import 'dart:io';
+import 'todo_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,9 +14,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TodoTask> tasks = TodoPage().getTasks();
+  List<TodoTask> tasks = [];
 
-  void _loadTasks() async {
+  @override
+  void initState() {
+    super.initState();
+    _loadTasks();
+  }
+
+  Future<void> _loadTasks() async {
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
       String filePath = '${appDocDir.path}/tasks.json';
@@ -25,9 +31,11 @@ class _HomePageState extends State<HomePage> {
         String content = file.readAsStringSync();
         List<dynamic> decodedTasks = jsonDecode(content);
         List<TodoTask> loadedTasks = decodedTasks.map((task) => TodoTask.fromJson(task)).toList();
-        setState(() {
-          tasks = loadedTasks;
-        });
+        if (mounted) {
+          setState(() {
+            tasks = loadedTasks;
+          });
+        }
       }
     } catch (e) {
       //FIXME: Tu powinien się wyświetlać na stronie TODO komunikat że się nie udało.
@@ -58,100 +66,98 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _loadTasks();
     return Scaffold(
-        backgroundColor: usertheme.primarybgcolor,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 120,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "STUDEE",
-                      style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold, color: usertheme.textColor),
-                    ),
-                    Text(
-                      "dzisiaj:",
-                      style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: usertheme.textColor),
-                    ),
-                  ],
-                ),
-              ),
-              // Pozostała zawartość
-              SizedBox(
-                height: 40,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      height: 50,
-                      child: Center(
-                        child: Text("Streak: " + currentUser.getDayStreak().toString() + '🔥',
-                            style: TextStyle(fontSize: 18, color: usertheme.textColor)),
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      height: 50,
-                      child: Center(
-                        child: Text(
-                            "fiszek: " +
-                                currentUser.getFlashCardsFinishedToday().toString() +
-                                '/' +
-                                currentUser.getFlashCardGoal().toString(),
-                            style: TextStyle(fontSize: 18, color: usertheme.textColor)),
-                      ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.33,
-                      height: 50,
-                      child: Center(
-                        child: Text(
-                            "zadań:" +
-                                currentUser.getTasksFinishedToday().toString() +
-                                '/' +
-                                currentUser.getTasksGoal().toString(),
-                            style: TextStyle(fontSize: 18, color: usertheme.textColor)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Zadania do ukończenia:",
-                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: usertheme.textColor),
-                    ),
-                  ],
-                ),
-              ),
-              Column(
+      backgroundColor: usertheme.primarybgcolor,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 120,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: tasks.length,
-                    itemBuilder: (context, index) {
-                      TodoTask todo = tasks[index];
-                      if (todo.isCompleted) return null;
-                      return SizedBox(
-                        // Wrap the Container with a SizedBox
-                        width: MediaQuery.of(context).size.width * 0.7, // Set width to 80% of the screen width
-                        child: _buildTaskItem(todo.task),
-                      );
-                    },
+                  Text(
+                    "STUDEE",
+                    style: TextStyle(fontSize: 56, fontWeight: FontWeight.bold, color: usertheme.textColor),
+                  ),
+                  Text(
+                    "dzisiaj:",
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: usertheme.textColor),
                   ),
                 ],
               ),
-            ],
-          ),
-        ));
+            ),
+            SizedBox(
+              height: 40,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    height: 50,
+                    child: Center(
+                      child: Text("Streak: " + currentUser.getDayStreak().toString() + '🔥',
+                          style: TextStyle(fontSize: 18, color: usertheme.textColor)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                          "fiszek: " +
+                              currentUser.getFlashCardsFinishedToday().toString() +
+                              '/' +
+                              currentUser.getFlashCardGoal().toString(),
+                          style: TextStyle(fontSize: 18, color: usertheme.textColor)),
+                    ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.33,
+                    height: 50,
+                    child: Center(
+                      child: Text(
+                          "zadań:" +
+                              currentUser.getTasksFinishedToday().toString() +
+                              '/' +
+                              currentUser.getTasksGoal().toString(),
+                          style: TextStyle(fontSize: 18, color: usertheme.textColor)),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 50,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Zadania do ukończenia:",
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: usertheme.textColor),
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: tasks.length,
+                  itemBuilder: (context, index) {
+                    TodoTask todo = tasks[index];
+                    if (todo.isCompleted) return null;
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      child: _buildTaskItem(todo.task),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
